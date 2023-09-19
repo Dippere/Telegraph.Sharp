@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31025.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4126B773-C84E-4618-A4B5-0AA9AA1CC500}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{FB924CAF-2B6D-41FE-9BB5-E6B91AE74256}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8731A2CB-09E1-4287-9333-657275449D86}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GithubActions", "GithubActions", "{543304DE-01AB-484D-A515-51F8A8796F90}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\main.yml = .github\workflows\main.yml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telegraph.Sharp", "src\Telegraph.Sharp\Telegraph.Sharp.csproj", "{F0F156EA-E9DE-4E86-9349-7A7E75982B7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telegraph.Sharp.Tests.Unit", "tests\Telegraph.Sharp.Tests.Unit\Telegraph.Sharp.Tests.Unit.csproj", "{2DFDBD25-B967-4B44-A08C-1AABFBC45E83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telegraph.Sharp.Tests.Integ", "tests\Telegraph.Sharp.Tests.Integ\Telegraph.Sharp.Tests.Integ.csproj", "{AC37A785-2F68-4D9E-BE78-4B34BA4A108C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F0F156EA-E9DE-4E86-9349-7A7E75982B7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0F156EA-E9DE-4E86-9349-7A7E75982B7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0F156EA-E9DE-4E86-9349-7A7E75982B7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0F156EA-E9DE-4E86-9349-7A7E75982B7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DFDBD25-B967-4B44-A08C-1AABFBC45E83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DFDBD25-B967-4B44-A08C-1AABFBC45E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DFDBD25-B967-4B44-A08C-1AABFBC45E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DFDBD25-B967-4B44-A08C-1AABFBC45E83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC37A785-2F68-4D9E-BE78-4B34BA4A108C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC37A785-2F68-4D9E-BE78-4B34BA4A108C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC37A785-2F68-4D9E-BE78-4B34BA4A108C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC37A785-2F68-4D9E-BE78-4B34BA4A108C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F0F156EA-E9DE-4E86-9349-7A7E75982B7D} = {8731A2CB-09E1-4287-9333-657275449D86}
+		{2DFDBD25-B967-4B44-A08C-1AABFBC45E83} = {FB924CAF-2B6D-41FE-9BB5-E6B91AE74256}
+		{AC37A785-2F68-4D9E-BE78-4B34BA4A108C} = {FB924CAF-2B6D-41FE-9BB5-E6B91AE74256}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{543304DE-01AB-484D-A515-51F8A8796F90} = {4126B773-C84E-4618-A4B5-0AA9AA1CC500}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {19D066D4-516C-4D63-A928-09D97E2DF039}
+	EndGlobalSection
+EndGlobal
