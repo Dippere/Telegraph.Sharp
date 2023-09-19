@@ -184,12 +184,12 @@ public class RequestsTests : IClassFixture<RequestsFixture>
         var editedAccount1 = await _fixture.TelegraphClient.EditAccountInfoAsync(_fixture.AccountShortName);
         Assert.NotNull(editedAccount1);
         Assert.Equal(_fixture.AccountShortName, editedAccount1.ShortName);
-        Task.Delay(3500).Wait();
+        await Task.Delay(3500);
         var editedAccount2 =
             await _fixture.TelegraphClient.EditAccountInfoAsync(authorName: _fixture.AccountAuthorName);
         Assert.NotNull(editedAccount2);
         Assert.Equal(_fixture.AccountAuthorName, editedAccount2.AuthorName);
-        Task.Delay(3500).Wait();
+        await Task.Delay(3500);
         var editedAccount3 = await _fixture.TelegraphClient.EditAccountInfoAsync(authorUrl: _fixture.AccountAuthorUrl);
         Assert.NotNull(editedAccount3);
         Assert.Equal(_fixture.AccountAuthorUrl, editedAccount3.AuthorUrl);
