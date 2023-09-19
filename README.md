@@ -1,9 +1,8 @@
 # Telegraph.Sharp
 
 [![package](https://img.shields.io/nuget/vpre/Telegraph.Sharp.svg)](https://www.nuget.org/packages/Telegraph.Sharp)
-[![build](https://github.com/Dippere/Telegraph.Sharp/actions/workflows/main.yml/badge.svg)](https://github.com/Dippere/Telegraph.Sharp/actions/workflows/main.yml/badge.svg)
 
-Simple to use API client for [Telegra.ph](https://telegra.ph).
+Simple to use API client for [Telegra.ph](https://telegra.ph) on .NET 6.
 
 ## Quickstart
 
