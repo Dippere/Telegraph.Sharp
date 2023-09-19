@@ -37,8 +37,8 @@ public sealed class RequestsFixture : IDisposable
         set => TelegraphClient.AccessToken = value;
     }
 
-    public string PagePath { get; set; }
-    
+    public string PagePath { get; set; } = null!;
+
 
     public void Dispose()
     {
