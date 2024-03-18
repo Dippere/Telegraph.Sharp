@@ -4,8 +4,8 @@
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
         <ImplicitUsings>disable</ImplicitUsings>
-        <TargetFramework>net6.0</TargetFramework>
-        <LangVersion>11</LangVersion>
+        <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>12</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>

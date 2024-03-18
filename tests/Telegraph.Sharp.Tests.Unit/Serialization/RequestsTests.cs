@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json;
 using Telegraph.Sharp.Requests;
+using Telegraph.Sharp.Tests.Unit.Data;
 using Telegraph.Sharp.Types;
 using Xunit;
 
@@ -16,7 +17,7 @@ public class RequestsTests
             AuthorName = "test1",
             AuthorUrl = "test2"
         };
-        var json = JsonConvert.SerializeObject(request);
+        var json = JsonSerializer.Serialize(request,SerialOpt.SerializerOptions);
         Assert.Contains("\"author_url\":\"test2\"", json);
     }
 
@@ -25,10 +26,11 @@ public class RequestsTests
     {
         var request = new CreatePage("test", "Title", new List<Node>())
         {
+            
             AuthorName = "test1",
             AuthorUrl = "test2"
         };
-        var json = JsonConvert.SerializeObject(request);
+        var json = JsonSerializer.Serialize(request,SerialOpt.SerializerOptions);
         Assert.Contains("\"author_url\":\"test2\"", json);
     }
 }

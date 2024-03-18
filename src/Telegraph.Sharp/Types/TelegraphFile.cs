@@ -1,12 +1,10 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Telegraph.Sharp.Types;
 
 /// <summary>
 /// This object represents the file uploaded to Telegraph.
 /// </summary>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class TelegraphFile
 {
     /// <summary>
@@ -22,7 +20,6 @@ public class TelegraphFile
     /// <summary>
     /// Soucre value.
     /// </summary>
-    [JsonProperty]
     public string Src { get; }
 
 

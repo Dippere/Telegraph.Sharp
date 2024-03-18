@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using Telegraph.Sharp.Requests.Abstractions;
+﻿using Telegraph.Sharp.Requests.Abstractions;
 using Telegraph.Sharp.Types;
 
 namespace Telegraph.Sharp.Requests;
@@ -10,7 +8,6 @@ namespace Telegraph.Sharp.Requests;
 ///     On success, returns an <see cref="Account" /> object with new <see cref="Account.AccessToken" /> and
 ///     <see cref="Account.AuthUrl" /> fields.
 /// </summary>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class RevokeAccessToken : ApiRequestBase<Account>, IAccessTokenTarget
 {
     /// <summary>
@@ -20,6 +17,5 @@ public class RevokeAccessToken : ApiRequestBase<Account>, IAccessTokenTarget
     public RevokeAccessToken(string accessToken) : base("revokeAccessToken") => AccessToken = accessToken;
 
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
-    public string AccessToken { get; }
+    public string AccessToken { get; init; }
 }

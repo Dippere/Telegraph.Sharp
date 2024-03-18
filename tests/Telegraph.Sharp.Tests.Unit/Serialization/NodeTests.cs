@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json;
+using Telegraph.Sharp.Tests.Unit.Data;
 using Telegraph.Sharp.Types;
 using Xunit;
 
@@ -17,7 +18,7 @@ public class NodeTests
             Node.ImageFigure("https://telegra.ph/images/logo.png", "Logo")
         };
 
-        var json = JsonConvert.SerializeObject(nodes);
+        var json = JsonSerializer.Serialize(nodes,SerialOpt.SerializerOptions);
         Assert.Contains("\"tag\":\"figcaption\"", json);
     }
 
@@ -61,7 +62,7 @@ public class NodeTests
                                  }
                              ]
                              """;
-        var nodes = JsonConvert.DeserializeObject<List<Node>>(value);
+        var nodes = JsonSerializer.Deserialize<List<Node>>(value,SerialOpt.SerializerOptions);
         Assert.NotNull(nodes);
         Assert.Equal(3, nodes.Count);
         Assert.Equal("Test header", nodes[0].Children![0].Value);

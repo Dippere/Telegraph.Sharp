@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Telegraph.Sharp.Types;
 
@@ -7,24 +6,22 @@ namespace Telegraph.Sharp.Types;
 /// Represents a API response result.
 /// </summary>
 /// <typeparam name="T">Expected type of operation result.</typeparam>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class TelegraphApiResponse<T>
 {
     /// <summary>
     /// Gets a value indicating whether the request was successful.
     /// </summary>
-    [JsonProperty] 
     public bool Ok { get; set; }
 
     /// <summary>
     /// Gets the result object.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public T? Result { get; set; }
 
     /// <summary>
     /// Contains information about why a request was unsuccessful.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public string? Error { get; set; }
 }

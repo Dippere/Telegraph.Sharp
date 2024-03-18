@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Telegraph.Sharp.Extensions;
 
@@ -15,12 +15,7 @@ internal static class StreamExtensions
         where T : class
     {
         if (stream is null || !stream.CanRead) return default;
-
-        using var streamReader = new StreamReader(stream);
-        using var jsonTextReader = new JsonTextReader(streamReader);
-
-        var jsonSerializer = JsonSerializer.CreateDefault();
-        var searchResult = jsonSerializer.Deserialize<T>(jsonTextReader);
+        var searchResult = JsonSerializer.Deserialize<T>(stream,JsonSerializerExtensions.JsonSerializerOpt);
 
         return searchResult;
     }
