@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Text.Json.Serialization;
 using Telegraph.Sharp.Requests.Abstractions;
 using Telegraph.Sharp.Types;
 
@@ -10,7 +9,6 @@ namespace Telegraph.Sharp.Requests;
 ///     Use this method to get information about a Telegraph account.
 ///     Returns an <see cref="Account" /> object on success.
 /// </summary>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class GetAccountInfo : ApiRequestBase<Account>, IAccessTokenTarget
 {
     /// <summary>
@@ -23,14 +21,13 @@ public class GetAccountInfo : ApiRequestBase<Account>, IAccessTokenTarget
     ///     List of account fields to return.
     ///     Available fields: "short_name", "author_name", "author_url", "auth_url","page_count".
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public List<string> Fields { get; set; } = null!;
 
     /// <summary>
     ///     Required. Access token of the Telegraph account.
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
-    public string AccessToken { get; }
+    public string AccessToken { get; init; }
 
 
     /// <summary>
@@ -60,7 +57,7 @@ public class GetAccountInfo : ApiRequestBase<Account>, IAccessTokenTarget
         var list = new List<string>();
         if (!shortName && !authorName && !authorUrl && !authUrl && !pageCount)
         {
-            list.AddRange(new[] { "short_name", "author_name", "author_url" });
+            list.AddRange(["short_name", "author_name", "author_url" ]);
         }
         else
         {

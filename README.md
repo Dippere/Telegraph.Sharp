@@ -2,7 +2,9 @@
 
 [![package](https://img.shields.io/nuget/vpre/Telegraph.Sharp.svg)](https://www.nuget.org/packages/Telegraph.Sharp)
 
-Simple to use API client for [Telegra.ph](https://telegra.ph) on .NET 6.
+Simple to use API client for [Telegra.ph](https://telegra.ph) on .NET 8.
+
+For other dotnet version use package [version 1](https://www.nuget.org/packages/Telegraph.Sharp/1.0.0) instead.
 
 ## Quickstart
 
@@ -13,10 +15,10 @@ using Telegraph.Sharp;
 using Telegraph.Sharp.Types;
 
 // Create API client
-var telegraphClient = new TelegraphClient();
+ITelegraphClient telegraphClient = new TelegraphClient();
 
 // Create Telegraph account
-var account = await telegraphClient.CreateAccountAsync("Short Name", "Author name", "Author URL");
+Account account = await telegraphClient.CreateAccountAsync("Short Name", "Author name", "Author URL");
 
 // Provide access token
 telegraphClient.AccessToken = account.AccessToken;
@@ -28,5 +30,5 @@ var pageContent = new List<Node>
     Node.P("Test page")
 };
 
-var page = await telegraphClient.CreatePageAsync("Title", pageContent);
+Page page = await telegraphClient.CreatePageAsync("Title", pageContent);
 ```

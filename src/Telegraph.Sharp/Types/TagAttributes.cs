@@ -1,31 +1,29 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Telegraph.Sharp.Types;
 
 /// <summary>
 ///     Attributes of the DOM element. Key of object represents name of attribute, value represents value of attribute.
 /// </summary>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class TagAttributes
 {
-    private string? _src;
+    private readonly string? _src;
 
     
     /// <summary>
     /// Link value.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    public string? Href { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+    public string? Href { get; init; }
 
     /// <summary>
     /// Source value.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public string? Src
     {
         get => _src;
-        set => _src = value is null ? null :
-            value.StartsWith(Constants.Telegpaph) ? value.Substring(Constants.Telegpaph.Length) : value;
+        init => _src = value is null ? null :
+            value.StartsWith(Constants.Telegpaph) ? value[Constants.Telegpaph.Length..] : value;
     }
 }

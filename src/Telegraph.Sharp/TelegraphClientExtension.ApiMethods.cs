@@ -135,7 +135,7 @@ public static partial class TelegraphClientExtension
         await telegraphClient.MakeApiRequestAsync(
             new GetPage(path)
             {
-                ReturnContent = returnContent
+                ReturnContent = returnContent,
             }, cancellationToken
         ).ConfigureAwait(false);
 

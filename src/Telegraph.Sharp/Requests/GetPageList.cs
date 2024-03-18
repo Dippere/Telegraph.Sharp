@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using Telegraph.Sharp.Requests.Abstractions;
 using Telegraph.Sharp.Types;
 
@@ -9,7 +8,6 @@ namespace Telegraph.Sharp.Requests;
 ///     Use this method to get a list of pages belonging to a Telegraph account.
 ///     Returns a <see cref="PageList" /> object, sorted by most recently created pages first.
 /// </summary>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class GetPageList : ApiRequestBase<PageList>, IAccessTokenTarget
 {
     /// <summary>
@@ -21,18 +19,17 @@ public class GetPageList : ApiRequestBase<PageList>, IAccessTokenTarget
     /// <summary>
     ///     Sequential number of the first page to be returned.
     /// </summary>
-    [JsonProperty("offset", DefaultValueHandling = DefaultValueHandling.Include)]
+    [JsonInclude]
     public int Offset { get; set; }
 
     /// <summary>
     ///     Limits the number of pages to be retrieved.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
+    [JsonInclude]
     public int Limit { get; set; }
 
     /// <summary>
     ///     Required. Access token of the Telegraph account.
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
-    public string AccessToken { get; }
+    public string AccessToken { get; init; }
 }

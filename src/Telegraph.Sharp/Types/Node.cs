@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using Telegraph.Sharp.Converters;
 
 namespace Telegraph.Sharp.Types;
@@ -22,7 +22,8 @@ public partial class Node
     ///     Name of the DOM element. Available tags: a, aside, b, blockquote, br, code, em, figcaption, figure, h3, h4, hr, i,
     ///     iframe, img, li, ol, p, pre, s, strong, u, ul, video.
     /// </summary>
-    [JsonProperty("tag", NullValueHandling = NullValueHandling.Ignore)]
+    [JsonPropertyName("tag")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public string TagValue
     {
         get => Tag.ToString().ToLower();
@@ -48,13 +49,14 @@ public partial class Node
     ///     Optional. Attributes of the DOM element. Key of object represents name of attribute, value represents value of
     ///     attribute. Available attributes: href, src.
     /// </summary>
-    [JsonProperty("attrs", DefaultValueHandling = DefaultValueHandling.Ignore)]
+    [JsonPropertyName("attrs")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public TagAttributes? Attributes { get; set; }
 
     /// <summary>
     ///     Optional. List of child nodes for the DOM element.
     /// </summary>
-    [JsonProperty("children", DefaultValueHandling = DefaultValueHandling.Ignore)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public List<Node>? Children { get; set; }
 
     #region Constructors

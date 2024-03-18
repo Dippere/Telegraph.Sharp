@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using Telegraph.Sharp.Types;
 
 namespace Telegraph.Sharp.Requests;
@@ -9,7 +8,6 @@ namespace Telegraph.Sharp.Requests;
 ///     Returns a <see cref="PageViews" /> object on success.
 ///     By default, the total number of page views will be returned.
 /// </summary>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class GetViews : ApiRequestBase<PageViews>
 {
     /// <summary>
@@ -25,30 +23,29 @@ public class GetViews : ApiRequestBase<PageViews>
     ///     Required. Path to the Telegraph page (in the format Title-12-31, where 12 is the month and 31 the day the article
     ///     was first published).
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
-    public string Path { get; set; }
+    public string Path { get; init; }
 
     /// <summary>
     ///     Required if month is passed. If passed, the number of page views for the requested year will be returned.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public int? Year { get; set; }
 
     /// <summary>
     ///     Required if day is passed. If passed, the number of page views for the requested month will be returned.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public int? Month { get; set; }
 
     /// <summary>
     ///     Required if hour is passed. If passed, the number of page views for the requested day will be returned.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public int? Day { get; set; }
 
     /// <summary>
     ///     If passed, the number of page views for the requested hour will be returned.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public int? Hour { get; set; }
 }

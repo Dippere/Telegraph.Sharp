@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Telegraph.Sharp.Types;
 
 namespace Telegraph.Sharp.Requests;
@@ -9,7 +7,6 @@ namespace Telegraph.Sharp.Requests;
 ///     Use this method to edit an existing Telegraph page.
 ///     On success, returns a <see cref="Page" /> object.
 /// </summary>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class EditPage : CreatePage
 {
     /// <summary>
@@ -26,6 +23,5 @@ public class EditPage : CreatePage
     /// <summary>
     ///     Required. Path to the page.
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
-    public string Path { get; }
+    public string Path { get; init; }
 }

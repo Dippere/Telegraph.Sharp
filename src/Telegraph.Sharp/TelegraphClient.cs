@@ -100,8 +100,7 @@ public async Task<TResponse> MakeRequestAsync<TResponse>(
     Func<HttpResponseMessage, Task<TResponse>> deserializeFunc,
     CancellationToken cancellationToken = default)
 {
-    if (request is null)
-        throw new ArgumentNullException(nameof(request));
+    ArgumentNullException.ThrowIfNull(request);
 
     using var httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
     httpRequest.Content = request.ToHttpContent();

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using Telegraph.Sharp.Types;
 
 namespace Telegraph.Sharp.Requests;
@@ -8,7 +7,6 @@ namespace Telegraph.Sharp.Requests;
 ///     Use this method to get a Telegraph page.
 ///     Returns a <see cref="Page" /> object on success.
 /// </summary>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class GetPage : ApiRequestBase<Page>
 {
     /// <summary>
@@ -24,12 +22,11 @@ public class GetPage : ApiRequestBase<Page>
     ///     Required. Path to the Telegraph page (in the format Title-12-31, i.e. everything that comes after
     ///     http://telegra.ph/).
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
-    public string Path { get; }
+    public string Path { get; init; }
 
     /// <summary>
     ///     If <see langword ="true"/>, content field will be returned in Page object.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool ReturnContent { get; set; }
 }

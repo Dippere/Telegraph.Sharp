@@ -3,15 +3,15 @@
     <PropertyGroup>
         <Nullable>enable</Nullable>
         <RootNamespace>Telegraph.Sharp</RootNamespace>
-        <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
-        <LangVersion>11</LangVersion>
+        <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>12</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <PackageVersion>1.0.0</PackageVersion>
+        <PackageVersion>2.0.0</PackageVersion>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Title>Telegraph.Sharp</Title>
         <Description>
@@ -29,10 +29,6 @@
             $(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb
         </AllowedOutputExtensionsInPackageBuildOutputFolder>
     </PropertyGroup>
-    
-    <ItemGroup>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
-    </ItemGroup>
 
     <ItemGroup>
         <None Include="../../package-icon.png">

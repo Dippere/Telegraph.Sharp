@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Text.Json.Serialization;
 using Telegraph.Sharp.Requests.Abstractions;
 using Telegraph.Sharp.Types;
 
@@ -10,7 +9,6 @@ namespace Telegraph.Sharp.Requests;
 ///     Use this method to create a new Telegraph page.
 ///     On success, returns a <see cref="Page" /> object.
 /// </summary>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class CreatePage : ApiRequestBase<Page>, IAccessTokenTarget
 {
     /// <summary>
@@ -37,35 +35,32 @@ public class CreatePage : ApiRequestBase<Page>, IAccessTokenTarget
     /// <summary>
     ///     Required. Page title.
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
-    public string Title { get; }
+    public string Title { get; init; }
 
     /// <summary>
     ///     Author name, displayed below the article's title.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public string? AuthorName { get; set; }
 
     /// <summary>
     ///     Profile link, opened when users click on the author's name below the title.
     ///     Can be any link, not necessarily to a Telegram profile or channel.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public string? AuthorUrl { get; set; }
 
     /// <summary>
     ///     Required. Content of the page.
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
-    public List<Node> Content { get; }
+    public List<Node> Content { get; init; }
 
     /// <summary>
     ///     If <see langword= "true"/>, a content field will be returned in the Page object.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool ReturnContent { get; set; }
 
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
-    public string AccessToken { get; }
+    public string AccessToken { get; init; }
 }

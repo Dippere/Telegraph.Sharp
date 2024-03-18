@@ -1,4 +1,5 @@
 ﻿using Telegraph.Sharp.Types;
+using Xunit;
 
 namespace Telegraph.Sharp.Tests.Integ.Data;
 
@@ -32,7 +33,7 @@ public record FileTestCase
 
     public static FileTestCase Mp4MaxSize => new FileTestCase("test10MB.mp4", FileTypeEnum.MP4);
     
-    public static readonly IEnumerable<object[]> TestCasesData = TestCases.Select(x => new object[] {x});
+    public static readonly TheoryData<FileTestCase> TestCasesData = new(TestCases);
 
     public override string ToString() => FileToUpload.FileType.ToString();
 }

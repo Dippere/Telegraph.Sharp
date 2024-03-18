@@ -1,7 +1,8 @@
 ﻿using System.Net.Http;
 using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Telegraph.Sharp.Extensions;
 using Telegraph.Sharp.Requests.Abstractions;
 
 namespace Telegraph.Sharp.Requests;
@@ -10,7 +11,6 @@ namespace Telegraph.Sharp.Requests;
 ///     Represents an API request.
 /// </summary>
 /// <typeparam name="TResponse">Type of result expected in result.</typeparam>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public abstract class ApiRequestBase<TResponse> : IRequest<TResponse>
 {
 
@@ -29,11 +29,11 @@ public abstract class ApiRequestBase<TResponse> : IRequest<TResponse>
     public virtual HttpContent ToHttpContent()
     {
         var content = new StringContent(
-            JsonConvert.SerializeObject(this),
+            JsonSerializer.Serialize(this,GetType(), JsonSerializerExtensions.JsonSerializerOpt),
             Encoding.UTF8,
             "application/json"
         );
-        content.Headers.ContentType!.CharSet = null;
+       content.Headers.ContentType!.CharSet = null;
         return content;
     }
 }
