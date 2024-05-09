@@ -17,7 +17,7 @@ public class RequestsTests
             AuthorName = "test1",
             AuthorUrl = "test2"
         };
-        var json = JsonSerializer.Serialize(request,SerialOpt.SerializerOptions);
+        var json = JsonSerializer.Serialize(request, SerialOpt.SerializerOptions);
         Assert.Contains("\"author_url\":\"test2\"", json);
     }
 
@@ -26,11 +26,10 @@ public class RequestsTests
     {
         var request = new CreatePage("test", "Title", new List<Node>())
         {
-            
             AuthorName = "test1",
             AuthorUrl = "test2"
         };
-        var json = JsonSerializer.Serialize(request,SerialOpt.SerializerOptions);
+        var json = JsonSerializer.Serialize(request, SerialOpt.SerializerOptions);
         Assert.Contains("\"author_url\":\"test2\"", json);
     }
 }

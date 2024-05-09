@@ -14,7 +14,7 @@ internal class NodeConverter : JsonConverter<Node>
     {
         using var document = JsonDocument.ParseValue(ref reader);
         var rootElement = document.RootElement;
-        if(rootElement.ValueKind == JsonValueKind.String)
+        if (rootElement.ValueKind == JsonValueKind.String)
         {
             return new Node { Value = rootElement.GetString()! };
         }
@@ -24,7 +24,7 @@ internal class NodeConverter : JsonConverter<Node>
         {
             node.TagValue = tagElement.GetString()!;
         }
-        
+
         if (rootElement.TryGetProperty("attrs", out var attrsElement))
         {
             node.Attributes = attrsElement.Deserialize<TagAttributes>(options);
@@ -41,7 +41,7 @@ internal class NodeConverter : JsonConverter<Node>
 
     public override void Write(Utf8JsonWriter writer, Node value, JsonSerializerOptions options)
     {
-        if(!string.IsNullOrEmpty(value.Value))
+        if (!string.IsNullOrEmpty(value.Value))
         {
             writer.WriteStringValue(value.Value);
             return;
@@ -60,7 +60,6 @@ internal class NodeConverter : JsonConverter<Node>
         }
 
         writer.WriteEndObject();
-
     }
 
 }

@@ -6,6 +6,6 @@ internal static class JsonSerializerExtensions
 {
    public static readonly JsonSerializerOptions JsonSerializerOpt = new()
    {
-        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
+      PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
    };
 }

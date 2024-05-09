@@ -26,7 +26,6 @@ public class NodeTests
         Assert.Equal(TagEnum.P, node.Tag);
     }
 
-
     [Fact(DisplayName = "A")]
     public void A_Tests()
     {
@@ -71,7 +70,6 @@ public class NodeTests
         Assert.Equal(url, node4.Attributes!.Href);
     }
 
-
     [Fact(DisplayName = "Br")]
     public void Br_Tests()
     {
@@ -83,7 +81,6 @@ public class NodeTests
     {
         CheckNodeNullChildren(Node.Hr(), TagEnum.Hr);
     }
-
 
     [Fact(DisplayName = "Ol child test")]
     public void Ol_Tests()
@@ -200,7 +197,6 @@ public class NodeTests
         Assert.StartsWith("Invalid link.", exception.Message);
     }
 
-
     [Fact(DisplayName = "Figure")]
     public void Figure_Tests()
     {
@@ -278,7 +274,6 @@ public class NodeTests
     }
 
     #endregion
-
 
     #region Private methods
 

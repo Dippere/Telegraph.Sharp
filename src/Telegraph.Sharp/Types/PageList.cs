@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Telegraph.Sharp.Types;
@@ -19,5 +18,4 @@ public class PageList
     /// </summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public List<Page> Pages { get; set; } = null!;
-
 }

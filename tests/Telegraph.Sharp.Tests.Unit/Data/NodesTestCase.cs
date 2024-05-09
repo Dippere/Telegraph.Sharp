@@ -21,7 +21,7 @@ public record NodesTestCase(
     private const string Text2C = "text2";
 
     private static readonly NodesTestCase[] TestCases =
-    {
+    [
         new(TagEnum.Pre, Node.Pre(), Node.Pre(SingleC), SingleC, Node.Pre(Text1C, Text2C), Text1C, Text2C,
             Node.Pre(Array.Empty<Node>())), // Pre
         new(TagEnum.Code, Node.Code(), Node.Code(SingleC), SingleC, Node.Code(Text1C, Text2C), Text1C, Text2C,
@@ -56,7 +56,7 @@ public record NodesTestCase(
             Node.Ol(Array.Empty<Node>())), // Ol
         new(TagEnum.Ul, Node.Ul(), Node.Ul(SingleC), SingleC, Node.Ul(Text1C, Text2C), Text1C, Text2C,
             Node.Ul(Array.Empty<Node>())) // Ul
-    };
+    ];
 
     public static IEnumerable<object[]> TestCasesData =>
         TestCases.Select(testCase => new object[] { testCase });

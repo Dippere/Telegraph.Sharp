@@ -26,6 +26,6 @@ public class TelegraphFile
     /// <summary>
     /// Link value.
     /// </summary>
-    [JsonIgnore] 
+    [JsonIgnore]
     public string Url { get; }
 }

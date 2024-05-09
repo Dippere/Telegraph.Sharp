@@ -7,7 +7,6 @@ namespace Telegraph.Sharp.Requests.Abstractions;
 /// </summary>
 public interface IRequest
 {
-
     /// <summary>
     ///     Method name.
     /// </summary>

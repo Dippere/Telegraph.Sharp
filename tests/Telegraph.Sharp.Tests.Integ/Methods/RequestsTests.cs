@@ -17,7 +17,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
     public RequestsTests(RequestsFixture fixture) => _fixture = fixture;
 
     #region API
-    
+
     #region Node equals checker
 
     private static void CheckNodesEquality(IReadOnlyList<Node> actual, IReadOnlyList<Node> expected)
@@ -222,7 +222,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
         Assert.NotNull(fileUploaded.Src);
     }
 
-    
+
     [Fact(DisplayName = "Upload multiple files")]
     [TestPriority(21)]
     public async Task UploadMultipleFiles()
@@ -232,16 +232,16 @@ public class RequestsTests : IClassFixture<RequestsFixture>
         Assert.NotEmpty(files);
         foreach (var file in files)
         {
-               Assert.NotEmpty(file.Src);
-               Assert.NotEmpty(file.Url);
+            Assert.NotEmpty(file.Src);
+            Assert.NotEmpty(file.Url);
         }
     }
-    
+
     [Fact(DisplayName = "Upload single file should throw by size >5 MB")]
     [TestPriority(22)]
     public async Task UploadSingleFileShouldThrow()
     {
-      await Assert.ThrowsAsync<TelegraphException>(async () => await _fixture.TelegraphClient.UploadFileAsync(FileTestCase.Mp4MaxSize.FileToUpload));
+        await Assert.ThrowsAsync<TelegraphException>(async () => await _fixture.TelegraphClient.UploadFileAsync(FileTestCase.Mp4MaxSize.FileToUpload));
     }
     #endregion
 }

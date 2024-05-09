@@ -5,7 +5,7 @@ namespace Telegraph.Sharp.Tests.Integ.Data;
 
 public record FileTestCase
 {
-    public FileTestCase(string path, FileTypeEnum  fileType)
+    public FileTestCase(string path, FileTypeEnum fileType)
     {
         const string filesPath = "Files/";
         var stream = File.OpenRead(filesPath + path);
@@ -32,7 +32,7 @@ public record FileTestCase
     };
 
     public static FileTestCase Mp4MaxSize => new FileTestCase("test10MB.mp4", FileTypeEnum.MP4);
-    
+
     public static readonly TheoryData<FileTestCase> TestCasesData = new(TestCases);
 
     public override string ToString() => FileToUpload.FileType.ToString();

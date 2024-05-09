@@ -29,7 +29,6 @@ public class GetAccountInfo : ApiRequestBase<Account>, IAccessTokenTarget
     /// </summary>
     public string AccessToken { get; init; }
 
-
     /// <summary>
     ///     Set fields to return.
     /// </summary>
@@ -57,7 +56,7 @@ public class GetAccountInfo : ApiRequestBase<Account>, IAccessTokenTarget
         var list = new List<string>();
         if (!shortName && !authorName && !authorUrl && !authUrl && !pageCount)
         {
-            list.AddRange(["short_name", "author_name", "author_url" ]);
+            list.AddRange(["short_name", "author_name", "author_url"]);
         }
         else
         {

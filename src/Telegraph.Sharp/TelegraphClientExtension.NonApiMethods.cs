@@ -12,7 +12,6 @@ namespace Telegraph.Sharp;
 /// </summary>
 public static partial class TelegraphClientExtension
 {
-
     /// <summary>
     /// Use this method to upload file to Telegraph.
     /// </summary>
@@ -24,11 +23,10 @@ public static partial class TelegraphClientExtension
     /// <returns>Returns an <see cref="TelegraphFile"/> object.</returns>
     public static async Task<TelegraphFile> UploadFileAsync(
         this ITelegraphClient telegraphClient,
-        FileToUpload fileToUpload, 
+        FileToUpload fileToUpload,
         CancellationToken cancellationToken = default) =>
         (await telegraphClient.MakeNonApiRequestAsync(new UploadFile(fileToUpload), cancellationToken)
             .ConfigureAwait(false)).First();
-
 
     /// <summary>
     /// Use this method to upload files to Telegraph.
@@ -41,7 +39,7 @@ public static partial class TelegraphClientExtension
     /// <returns>Returns an list of <see cref="TelegraphFile"/> object.</returns>
     public static async Task<List<TelegraphFile>> UploadFilesAsync(
         this ITelegraphClient telegraphClient,
-        List<FileToUpload> filesToUpload, 
+        List<FileToUpload> filesToUpload,
         CancellationToken cancellationToken = default)
     {
         var result = new List<TelegraphFile>(filesToUpload.Count);
@@ -53,9 +51,7 @@ public static partial class TelegraphClientExtension
         }
         return result;
     }
-    
-    
-    
+
     private static List<List<FileToUpload>> GetBySize(IReadOnlyList<FileToUpload> fileToUploads)
     {
         const long maxSize = 20 * 1024 * 1024; //maxsize for one post upload request
@@ -66,7 +62,7 @@ public static partial class TelegraphClientExtension
         for (var i = 0; i < fileToUploads.Count; i++)
         {
             var fileSize = fileToUploads[i].Content.Length;
-            
+
             if (currentSize + fileSize > maxSize)
             {
                 result.Add(currentGroup);
@@ -84,12 +80,12 @@ public static partial class TelegraphClientExtension
 
         return result;
     }
-    
+
     private static async Task<List<TelegraphFile>> UploadSeveralFiles(
         this ITelegraphClient telegraphClient,
         List<FileToUpload> files,
         CancellationToken token = default) =>
         await telegraphClient.MakeNonApiRequestAsync(
-            new UploadFiles(files),token
+            new UploadFiles(files), token
         ).ConfigureAwait(false);
 }

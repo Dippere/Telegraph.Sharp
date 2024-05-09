@@ -7,7 +7,7 @@ namespace Telegraph.Sharp.Requests;
 ///     Use this method to upload single file to Telegraph.
 ///     Returns a list of <see cref="TelegraphFile"/> with one object inside it.
 /// </summary>
-public sealed class UploadFile : FileUploadBase 
+public sealed class UploadFile : FileUploadBase
 {
     /// <summary>
     /// Required. The file that will be uploaded to Telegraph.
@@ -21,8 +21,7 @@ public sealed class UploadFile : FileUploadBase
     ///     The file that will be uploaded to Telegraph.
     /// </param>
     public UploadFile(FileToUpload fileToUpload) => FileToUpload = fileToUpload;
-  
-    
+
     /// <inheritdoc />
     public override HttpContent ToHttpContent()
     {

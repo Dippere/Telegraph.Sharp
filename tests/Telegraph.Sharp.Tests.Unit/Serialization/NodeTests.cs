@@ -18,10 +18,9 @@ public class NodeTests
             Node.ImageFigure("https://telegra.ph/images/logo.png", "Logo")
         };
 
-        var json = JsonSerializer.Serialize(nodes,SerialOpt.SerializerOptions);
+        var json = JsonSerializer.Serialize(nodes, SerialOpt.SerializerOptions);
         Assert.Contains("\"tag\":\"figcaption\"", json);
     }
-
 
     [Fact]
     public void DeserializeNode_ReturnsCorrectNode()
@@ -62,7 +61,7 @@ public class NodeTests
                                  }
                              ]
                              """;
-        var nodes = JsonSerializer.Deserialize<List<Node>>(value,SerialOpt.SerializerOptions);
+        var nodes = JsonSerializer.Deserialize<List<Node>>(value, SerialOpt.SerializerOptions);
         Assert.NotNull(nodes);
         Assert.Equal(3, nodes.Count);
         Assert.Equal("Test header", nodes[0].Children![0].Value);

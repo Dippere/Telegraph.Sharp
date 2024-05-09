@@ -15,7 +15,7 @@ public class FileToUpload
     {
         Content = content;
         FileType = type;
-        Type = FileType switch 
+        Type = FileType switch
         {
             FileTypeEnum.MP4 => "video/mp4",
             FileTypeEnum.PNG => "image/png",
@@ -29,12 +29,12 @@ public class FileToUpload
     /// <summary>
     /// File content represented as <see cref="Stream"/> object.
     /// </summary>
-    public Stream Content { get;  }
-    
+    public Stream Content { get; }
+
     /// <summary>
     /// <see cref="FileTypeEnum"/> value.
     /// </summary>
-    public FileTypeEnum FileType { get;  }
+    public FileTypeEnum FileType { get; }
 
     /// <summary>
     /// Mediatype value.
@@ -52,25 +52,25 @@ public class FileToUpload
     /// </summary>
     /// <param name="content">File content represented as <see cref="Stream"/> object.</param>
     public static FileToUpload Png(Stream content) => new FileToUpload(content, FileTypeEnum.PNG);
-    
+
     /// <summary>
     /// Creates a <see cref="FileTypeEnum.MP4"/>-format <see cref="FileToUpload"/>.
     /// </summary>
     /// <param name="content">File content represented as <see cref="Stream"/> object.</param>
     public static FileToUpload Mp4(Stream content) => new FileToUpload(content, FileTypeEnum.MP4);
-    
+
     /// <summary>
     /// Creates a <see cref="FileTypeEnum.GIF"/>-format <see cref="FileToUpload"/>.
     /// </summary>
     /// <param name="content">File content represented as <see cref="Stream"/> object.</param>
     public static FileToUpload Gif(Stream content) => new FileToUpload(content, FileTypeEnum.GIF);
-    
+
     /// <summary>
     /// Creates a <see cref="FileTypeEnum.JPG"/>-format <see cref="FileToUpload"/>.
     /// </summary>
     /// <param name="content">File content represented as <see cref="Stream"/> object.</param>
     public static FileToUpload Jpg(Stream content) => new FileToUpload(content, FileTypeEnum.JPG);
-    
+
     /// <summary>
     /// Creates a new instance of <see cref="StreamContent"/> from this <see cref="FileToUpload"/>.
     /// </summary>

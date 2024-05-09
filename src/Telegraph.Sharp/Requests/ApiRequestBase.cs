@@ -13,13 +13,11 @@ namespace Telegraph.Sharp.Requests;
 /// <typeparam name="TResponse">Type of result expected in result.</typeparam>
 public abstract class ApiRequestBase<TResponse> : IRequest<TResponse>
 {
-
     /// <summary>
     ///     Initializes an instance of request.
     /// </summary>
     /// <param name="methodName">API method.</param>
     protected ApiRequestBase(string methodName) => MethodName = methodName;
-
 
     /// <inheritdoc />
     [JsonIgnore]
@@ -29,11 +27,11 @@ public abstract class ApiRequestBase<TResponse> : IRequest<TResponse>
     public virtual HttpContent ToHttpContent()
     {
         var content = new StringContent(
-            JsonSerializer.Serialize(this,GetType(), JsonSerializerExtensions.JsonSerializerOpt),
+            JsonSerializer.Serialize(this, GetType(), JsonSerializerExtensions.JsonSerializerOpt),
             Encoding.UTF8,
             "application/json"
         );
-       content.Headers.ContentType!.CharSet = null;
+        content.Headers.ContentType!.CharSet = null;
         return content;
     }
 }

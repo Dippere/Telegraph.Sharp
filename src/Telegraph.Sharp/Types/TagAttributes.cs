@@ -9,7 +9,6 @@ public class TagAttributes
 {
     private readonly string? _src;
 
-    
     /// <summary>
     /// Link value.
     /// </summary>

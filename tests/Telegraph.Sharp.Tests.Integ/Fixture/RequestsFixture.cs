@@ -39,9 +39,9 @@ public sealed class RequestsFixture : IDisposable
 
     public string PagePath { get; set; } = null!;
 
-
     public void Dispose()
     {
+        _httpClient.CancelPendingRequests();
         _httpClient.Dispose();
     }
 }

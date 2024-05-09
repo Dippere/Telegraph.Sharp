@@ -38,7 +38,7 @@ internal static class HttpResponseMessageExtensions
                 contentStream = await httpResponse.Content
                     .ReadAsStreamAsync()
                     .ConfigureAwait(false);
-                    
+
                 deserializedObject = contentStream
                     .DeserializeJsonFromStream<T>();
             }
@@ -62,11 +62,7 @@ internal static class HttpResponseMessageExtensions
         }
         finally
         {
-#if NET6_0_OR_GREATER
             if (contentStream is not null) await contentStream.DisposeAsync().ConfigureAwait(false);
-#else
-            contentStream?.Dispose();
-#endif
         }
     }
 
