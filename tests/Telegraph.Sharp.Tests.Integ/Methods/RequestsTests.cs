@@ -31,7 +31,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
             Assert.Equal(expected[i].Tag, actual[i].Tag);
             Assert.Equal(expected[i].Attributes?.Src, actual[i].Attributes?.Src);
             Assert.Equal(expected[i].Attributes?.Href, actual[i].Attributes?.Href);
-            if (actual[i].Children != null && expected[i].Children != null)
+            if (actual[i].Children is not null && expected[i].Children is not null)
                 CheckNodesEquality(actual[i].Children!, expected[i].Children!);
         }
     }
@@ -221,7 +221,6 @@ public class RequestsTests : IClassFixture<RequestsFixture>
         Assert.NotNull(fileUploaded.Url);
         Assert.NotNull(fileUploaded.Src);
     }
-
 
     [Fact(DisplayName = "Upload multiple files")]
     [TestPriority(21)]

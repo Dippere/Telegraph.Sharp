@@ -27,7 +27,7 @@ public sealed class TelegraphClient : ITelegraphClient
     ///     Thrown if <paramref name="accessToken" /> format is invalid.
     /// </exception>
     public TelegraphClient(string accessToken, HttpClient? httpClient = null) : this(httpClient) =>
-        AccessToken = !string.IsNullOrEmpty(accessToken)
+        _accessToken = !string.IsNullOrEmpty(accessToken)
             ? accessToken
             : throw new ArgumentNullException(nameof(accessToken));
 
@@ -37,13 +37,12 @@ public sealed class TelegraphClient : ITelegraphClient
     /// </summary>
     /// <param name="httpClient">A custom <see cref="HttpClient" />.</param>
     public TelegraphClient(HttpClient? httpClient = null) => _httpClient = httpClient ?? new HttpClient();
-
-    /// <inheritdoc/>
-    public string? AccessToken { get; set; }
+    
+    private readonly string? _accessToken;
 
     /// <inheritdoc/>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="request"/> is null or request is <see cref="IAccessTokenTarget"/> and <see cref="AccessToken"/> is null.
+    /// <paramref name="request"/> is null or request is <see cref="IAccessTokenTarget"/> and access token is null.
     /// </exception>
     /// <exception cref="RequestException">
     ///     Request failed.
@@ -52,12 +51,12 @@ public sealed class TelegraphClient : ITelegraphClient
      IRequest<TResponse> request,
      CancellationToken cancellationToken = default)
     {
-        if (request is IAccessTokenTarget && AccessToken is null)
-            throw new ArgumentNullException(nameof(AccessToken));
+        if (request is IAccessTokenTarget)
+            ArgumentNullException.ThrowIfNull(_accessToken);
 
         return await MakeRequestAsync(
             request,
-            $"{Constants.TelegpaphApi}/{request.MethodName}",
+            $"{Constants.TelegpaphApiUrl}/{request.MethodName}",
             async (httpResponse) =>
             {
                 var apiResponse = await httpResponse.DeserializeContentAsync<TelegraphApiResponse<TResponse>>().ConfigureAwait(false);
@@ -82,11 +81,10 @@ public sealed class TelegraphClient : ITelegraphClient
         CancellationToken cancellationToken = default) where TResponse : class =>
         await MakeRequestAsync(
             request,
-            $"{Constants.Telegpaph}/{request.MethodName}",
+            $"{Constants.TelegpaphUrl}/{request.MethodName}",
             async httpResponse => await httpResponse.DeserializeContentAsync<TResponse>().ConfigureAwait(false),
             cancellationToken
         ).ConfigureAwait(false);
-
 
     /// <inheritdoc/>
     /// <exception cref="ArgumentNullException">

@@ -1,8 +1,12 @@
-﻿namespace Telegraph.Sharp.Types;
+﻿using System.Text.Json.Serialization;
+using Telegraph.Sharp.Serialization;
+
+namespace Telegraph.Sharp.Types;
 
 /// <summary>
 ///     Name of the DOM element.
 /// </summary>
+[JsonConverter(typeof(TagEnumConverter))]
 public enum TagEnum
 {
     /// <summary>

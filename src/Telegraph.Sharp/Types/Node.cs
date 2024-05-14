@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using Telegraph.Sharp.Converters;
+using Telegraph.Sharp.Serialization;
 
 namespace Telegraph.Sharp.Types;
 
@@ -23,26 +21,6 @@ public partial class Node
     ///     iframe, img, li, ol, p, pre, s, strong, u, ul, video.
     /// </summary>
     [JsonPropertyName("tag")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public string TagValue
-    {
-        get => Tag.ToString().ToLower();
-        set
-        {
-            var name = Enum.GetNames(typeof(TagEnum))
-                .FirstOrDefault(v => string.Equals(v, value, StringComparison.CurrentCultureIgnoreCase));
-
-            if (name != null)
-                Tag = (TagEnum)Enum.Parse(typeof(TagEnum), name);
-            else
-                Tag = TagEnum.P;
-        }
-    }
-
-    /// <summary>
-    ///     Value of the TagValue.
-    /// </summary>
-    [JsonIgnore]
     public TagEnum Tag { get; set; }
 
     /// <summary>

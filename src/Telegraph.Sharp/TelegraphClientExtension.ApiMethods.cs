@@ -273,8 +273,9 @@ public static partial class TelegraphClientExtension
     public static async Task<Account> RevokeAccessTokenAsync(
         this ITelegraphClient telegraphClient,
         CancellationToken cancellationToken = default
-    ) =>
-        await telegraphClient.MakeApiRequestAsync(
+    ){
+        return await telegraphClient.MakeApiRequestAsync(
             new RevokeAccessToken(telegraphClient.AccessToken!), cancellationToken
         ).ConfigureAwait(false);
+    }
 }

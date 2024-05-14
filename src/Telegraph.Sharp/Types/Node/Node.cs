@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Telegraph.Sharp.Exceptions;
+using Telegraph.Sharp.Extensions;
 
 namespace Telegraph.Sharp.Types;
 
@@ -502,24 +502,16 @@ public partial class Node
     {
         var resources = new Dictionary<string, string>
         {
-            { "youtube\\.com", "youtube" },
-            { "youtu\\.be", "youtube" },
-            { "twitter\\.com", "twitter" },
-            { "vimeo\\.com", "vimeo" }
+            { "youtube.com", "youtube" },
+            { "youtu.be", "youtube" },
+            { "twitter.com", "twitter" },
+            { "vimeo.com", "vimeo" }
         };
+        var match = RegexExtensions.LinkRegex().Match(src);
+        if (!match.Success)
+            throw new TelegraphException("Invalid link.");
 
-        var linkValidator = new Regex($"(http(s)?://)?(?<resource>({string.Join(")|(", resources.Keys)}))(/.*)?");
-
-        if (!linkValidator.IsMatch(src))
-            throw new TelegraphException(
-                $"Invalid link. Allowed resources: {string.Join(", ", resources.Values.Distinct())}");
-
-        var resource = linkValidator.Match(src)
-            .Groups["resource"]
-            .Value;
-
-        return CreateNode(TagEnum.Iframe,
-            attributes: new TagAttributes { Src = $"/embed/{resources[resource.Replace(".", "\\.")]}?url={src}" });
+        return CreateNode(TagEnum.Iframe, attributes: new TagAttributes { Src = $"/embed/{resources[match.Groups["resource"].Value]}?url={src}" });
     }
 
     #endregion

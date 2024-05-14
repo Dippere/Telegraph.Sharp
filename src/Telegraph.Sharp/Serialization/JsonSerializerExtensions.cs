@@ -1,8 +1,8 @@
 using System.Text.Json;
 
-namespace Telegraph.Sharp.Extensions;
+namespace Telegraph.Sharp.Serialization;
 
-internal static class JsonSerializerExtensions
+internal static class JsonSerializerDefaultOptions
 {
    public static readonly JsonSerializerOptions JsonSerializerOpt = new()
    {

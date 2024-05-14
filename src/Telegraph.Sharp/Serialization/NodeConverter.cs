@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Telegraph.Sharp.Types;
 
-namespace Telegraph.Sharp.Converters;
+namespace Telegraph.Sharp.Serialization;
 
 internal class NodeConverter : JsonConverter<Node>
 {
@@ -14,30 +14,18 @@ internal class NodeConverter : JsonConverter<Node>
     {
         using var document = JsonDocument.ParseValue(ref reader);
         var rootElement = document.RootElement;
-        if (rootElement.ValueKind == JsonValueKind.String)
+        return rootElement.ValueKind switch
         {
-            return new Node { Value = rootElement.GetString()! };
-        }
-        var node = new Node();
-
-        if (rootElement.TryGetProperty("tag", out var tagElement))
-        {
-            node.TagValue = tagElement.GetString()!;
-        }
-
-        if (rootElement.TryGetProperty("attrs", out var attrsElement))
-        {
-            node.Attributes = attrsElement.Deserialize<TagAttributes>(options);
-        }
-
-        if (rootElement.TryGetProperty("children", out var childrenElement))
-        {
-            node.Children = childrenElement.Deserialize<List<Node>>(options);
-        }
-
-        return node;
+            JsonValueKind.String => new Node { Value = rootElement.GetString()! },
+            JsonValueKind.Object => new Node
+            {
+                Tag = rootElement.TryGetProperty("tag", out var tagElement) ? tagElement.Deserialize<TagEnum>(options) : default,
+                Attributes = rootElement.TryGetProperty("attrs", out var attrsElement) ? attrsElement.Deserialize<TagAttributes>(options) : default,
+                Children = rootElement.TryGetProperty("children", out var childrenElement) ? childrenElement.Deserialize<List<Node>>(options) : default
+            },
+            _ => throw new JsonException("Invalid node")
+        };
     }
-
 
     public override void Write(Utf8JsonWriter writer, Node value, JsonSerializerOptions options)
     {
@@ -47,8 +35,9 @@ internal class NodeConverter : JsonConverter<Node>
             return;
         }
         writer.WriteStartObject();
-        writer.WriteString("tag", value.TagValue);
-        if (value.Attributes != null)
+        writer.WritePropertyName("tag");
+        JsonSerializer.Serialize(writer, value.Tag, options);
+        if (value.Attributes is not null)
         {
             writer.WritePropertyName("attrs");
             JsonSerializer.Serialize(writer, value.Attributes, options);
@@ -61,5 +50,4 @@ internal class NodeConverter : JsonConverter<Node>
 
         writer.WriteEndObject();
     }
-
 }

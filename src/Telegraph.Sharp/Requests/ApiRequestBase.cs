@@ -2,8 +2,8 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Telegraph.Sharp.Extensions;
 using Telegraph.Sharp.Requests.Abstractions;
+using Telegraph.Sharp.Serialization;
 
 namespace Telegraph.Sharp.Requests;
 
@@ -27,7 +27,7 @@ public abstract class ApiRequestBase<TResponse> : IRequest<TResponse>
     public virtual HttpContent ToHttpContent()
     {
         var content = new StringContent(
-            JsonSerializer.Serialize(this, GetType(), JsonSerializerExtensions.JsonSerializerOpt),
+            JsonSerializer.Serialize(this, GetType(), JsonSerializerDefaultOptions.JsonSerializerOpt),
             Encoding.UTF8,
             "application/json"
         );
