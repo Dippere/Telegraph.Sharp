@@ -11,37 +11,36 @@ public sealed class RequestsFixture : IDisposable
 
     public readonly string AccountShortName = "testShortName2";
 
-    public readonly List<Node> ContentForCreate = new()
-    {
+    public readonly List<Node> ContentForCreate =
+    [
         Node.H3("Test header"),
         Node.P("Hello, World!"),
         Node.ImageFigure("https://telegra.ph/images/logo.png", "Logo")
-    };
+    ];
 
-    public readonly List<Node> ContentForEdit = new()
-    {
+    public readonly List<Node> ContentForEdit =
+    [
         Node.H3("Test header2"),
         Node.P("Hello, World!"),
         Node.ImageFigure("https://telegra.ph/images/logo.png", "Logo")
-    };
+    ];
 
-    private readonly HttpClient _httpClient = new();
+    public readonly HttpClient HttpClient = new();
 
-    public RequestsFixture() => TelegraphClient = new TelegraphClient(_httpClient);
+    public RequestsFixture() => TelegraphClient = new TelegraphClient(HttpClient);
 
-    public TelegraphClient TelegraphClient { get; }
+    public TelegraphClient TelegraphClient { get; set; }
 
     public string? AccessToken
     {
         get => TelegraphClient.AccessToken;
-        set => TelegraphClient.AccessToken = value;
     }
 
     public string PagePath { get; set; } = null!;
 
     public void Dispose()
     {
-        _httpClient.CancelPendingRequests();
-        _httpClient.Dispose();
+        HttpClient.CancelPendingRequests();
+        HttpClient.Dispose();
     }
 }

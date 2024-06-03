@@ -16,6 +16,8 @@ namespace Telegraph.Sharp;
 /// </summary>
 public sealed class TelegraphClient : ITelegraphClient
 {
+    /// <inheritdoc/>
+    public string? AccessToken { get; init; }
     private readonly HttpClient _httpClient;
 
     /// <summary>
@@ -27,7 +29,7 @@ public sealed class TelegraphClient : ITelegraphClient
     ///     Thrown if <paramref name="accessToken" /> format is invalid.
     /// </exception>
     public TelegraphClient(string accessToken, HttpClient? httpClient = null) : this(httpClient) =>
-        _accessToken = !string.IsNullOrEmpty(accessToken)
+        AccessToken = !string.IsNullOrEmpty(accessToken)
             ? accessToken
             : throw new ArgumentNullException(nameof(accessToken));
 
@@ -37,8 +39,6 @@ public sealed class TelegraphClient : ITelegraphClient
     /// </summary>
     /// <param name="httpClient">A custom <see cref="HttpClient" />.</param>
     public TelegraphClient(HttpClient? httpClient = null) => _httpClient = httpClient ?? new HttpClient();
-    
-    private readonly string? _accessToken;
 
     /// <inheritdoc/>
     /// <exception cref="ArgumentNullException">
@@ -52,7 +52,7 @@ public sealed class TelegraphClient : ITelegraphClient
      CancellationToken cancellationToken = default)
     {
         if (request is IAccessTokenTarget)
-            ArgumentNullException.ThrowIfNull(_accessToken);
+            ArgumentNullException.ThrowIfNull(AccessToken);
 
         return await MakeRequestAsync(
             request,
@@ -110,7 +110,7 @@ public sealed class TelegraphClient : ITelegraphClient
 
         return await deserializeFunc(httpResponse).ConfigureAwait(false);
     }
-    
+
     private static async Task<HttpResponseMessage> SendRequestAsync(
         HttpClient httpClient,
         HttpRequestMessage httpRequest,

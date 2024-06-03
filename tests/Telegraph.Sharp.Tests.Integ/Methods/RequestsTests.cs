@@ -53,7 +53,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
         Assert.Equal(shortName, account.ShortName);
         Assert.Equal(authorName ?? string.Empty, account.AuthorName);
         Assert.Equal(authorUrl ?? string.Empty, account.AuthorUrl);
-        _fixture.AccessToken = account.AccessToken;
+        _fixture.TelegraphClient = new TelegraphClient(account.AccessToken!, _fixture.HttpClient);
     }
 
     [Fact(DisplayName = "Get page")]

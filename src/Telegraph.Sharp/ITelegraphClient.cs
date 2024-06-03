@@ -12,6 +12,11 @@ namespace Telegraph.Sharp;
 public interface ITelegraphClient
 {
     /// <summary>
+    /// Access token of the Telegraph account.
+    /// </summary>
+    string? AccessToken { get; init; }
+
+    /// <summary>
     /// Send a request to API.
     /// </summary>
     /// <typeparam name="TResponse">Type of expected result in the response object.</typeparam>
@@ -54,4 +59,3 @@ public interface ITelegraphClient
             Func<HttpResponseMessage, Task<TResponse>> deserializeFunc,
             CancellationToken cancellationToken = default);
 }
-
