@@ -14,14 +14,14 @@ Sample code to create a new page:
 using Telegraph.Sharp;
 using Telegraph.Sharp.Types;
 
-// Create API client
+// Create client
 ITelegraphClient telegraphClient = new TelegraphClient();
+
+// Or with API access token for access to all methods
+ITelegraphClient telegraphClient = new TelegraphClient("<ACCESS TOKEN>");
 
 // Create Telegraph account
 Account account = await telegraphClient.CreateAccountAsync("Short Name", "Author name", "Author URL");
-
-// Provide access token
-telegraphClient.AccessToken = account.AccessToken;
 
 // Create new page
 var pageContent = new List<Node>
