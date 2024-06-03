@@ -2,6 +2,6 @@
 
 internal static class Constants
 {
-    public const string TelegpaphApi = "https://api.telegra.ph";
-    public const string Telegpaph = "https://telegra.ph";
+    public const string TelegpaphApiUrl = "https://api.telegra.ph";
+    public const string TelegpaphUrl = "https://telegra.ph";
 }

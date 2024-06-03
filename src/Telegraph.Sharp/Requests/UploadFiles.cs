@@ -17,13 +17,12 @@ public sealed class UploadFiles : FileUploadBase
     /// The files that will be uploaded to Telegraph.
     /// </param>
     public UploadFiles(List<FileToUpload> filesToUpload) => FilesToUpload = filesToUpload;
-    
+
     /// <summary>
     /// Required. The files that will be uploaded to Telegraph.
     /// </summary>
     public List<FileToUpload> FilesToUpload { get; }
-    
-    
+
     /// <inheritdoc />
     public override HttpContent ToHttpContent()
     {
@@ -36,6 +35,5 @@ public sealed class UploadFiles : FileUploadBase
         }
 
         return requestContent;
-
     }
 }

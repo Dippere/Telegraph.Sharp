@@ -11,7 +11,7 @@
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <PackageVersion>2.0.0</PackageVersion>
+        <PackageVersion>2.1.8</PackageVersion>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Title>Telegraph.Sharp</Title>
         <Description>
@@ -30,6 +30,9 @@
         </AllowedOutputExtensionsInPackageBuildOutputFolder>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="System.Text.Json" Version="8.0.3" />
+    </ItemGroup>
     <ItemGroup>
         <None Include="../../package-icon.png">
             <Pack>true</Pack>

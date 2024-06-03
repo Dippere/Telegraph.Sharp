@@ -17,7 +17,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
     public RequestsTests(RequestsFixture fixture) => _fixture = fixture;
 
     #region API
-    
+
     #region Node equals checker
 
     private static void CheckNodesEquality(IReadOnlyList<Node> actual, IReadOnlyList<Node> expected)
@@ -31,7 +31,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
             Assert.Equal(expected[i].Tag, actual[i].Tag);
             Assert.Equal(expected[i].Attributes?.Src, actual[i].Attributes?.Src);
             Assert.Equal(expected[i].Attributes?.Href, actual[i].Attributes?.Href);
-            if (actual[i].Children != null && expected[i].Children != null)
+            if (actual[i].Children is not null && expected[i].Children is not null)
                 CheckNodesEquality(actual[i].Children!, expected[i].Children!);
         }
     }
@@ -53,7 +53,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
         Assert.Equal(shortName, account.ShortName);
         Assert.Equal(authorName ?? string.Empty, account.AuthorName);
         Assert.Equal(authorUrl ?? string.Empty, account.AuthorUrl);
-        _fixture.AccessToken = account.AccessToken;
+        _fixture.TelegraphClient = new TelegraphClient(account.AccessToken!, _fixture.HttpClient);
     }
 
     [Fact(DisplayName = "Get page")]
@@ -222,7 +222,6 @@ public class RequestsTests : IClassFixture<RequestsFixture>
         Assert.NotNull(fileUploaded.Src);
     }
 
-    
     [Fact(DisplayName = "Upload multiple files")]
     [TestPriority(21)]
     public async Task UploadMultipleFiles()
@@ -232,16 +231,16 @@ public class RequestsTests : IClassFixture<RequestsFixture>
         Assert.NotEmpty(files);
         foreach (var file in files)
         {
-               Assert.NotEmpty(file.Src);
-               Assert.NotEmpty(file.Url);
+            Assert.NotEmpty(file.Src);
+            Assert.NotEmpty(file.Url);
         }
     }
-    
+
     [Fact(DisplayName = "Upload single file should throw by size >5 MB")]
     [TestPriority(22)]
     public async Task UploadSingleFileShouldThrow()
     {
-      await Assert.ThrowsAsync<TelegraphException>(async () => await _fixture.TelegraphClient.UploadFileAsync(FileTestCase.Mp4MaxSize.FileToUpload));
+        await Assert.ThrowsAsync<TelegraphException>(async () => await _fixture.TelegraphClient.UploadFileAsync(FileTestCase.Mp4MaxSize.FileToUpload));
     }
     #endregion
 }

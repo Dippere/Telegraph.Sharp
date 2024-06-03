@@ -14,7 +14,7 @@ public class TelegraphFile
     public TelegraphFile(string src)
     {
         Src = src;
-        Url = Constants.Telegpaph + Src;
+        Url = Constants.TelegpaphUrl + Src;
     }
 
     /// <summary>
@@ -26,6 +26,6 @@ public class TelegraphFile
     /// <summary>
     /// Link value.
     /// </summary>
-    [JsonIgnore] 
+    [JsonIgnore]
     public string Url { get; }
 }

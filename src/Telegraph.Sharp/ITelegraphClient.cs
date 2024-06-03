@@ -12,9 +12,9 @@ namespace Telegraph.Sharp;
 public interface ITelegraphClient
 {
     /// <summary>
-    ///     Access token of the Telegraph account.
+    /// Access token of the Telegraph account.
     /// </summary>
-    string? AccessToken { get; set; }
+    string? AccessToken { get; init; }
 
     /// <summary>
     /// Send a request to API.
@@ -28,7 +28,7 @@ public interface ITelegraphClient
     Task<TResponse> MakeApiRequestAsync<TResponse>(
         IRequest<TResponse> request,
         CancellationToken cancellationToken = default);
-    
+
     /// <summary>
     /// Send a request to Telegraph.
     /// </summary>
@@ -38,9 +38,9 @@ public interface ITelegraphClient
     /// A cancellation token that can be used by other objects or threads to receive notice of cancellation.
     /// </param>
     /// <returns>Result of the request.</returns>
-        Task<TResponse> MakeNonApiRequestAsync<TResponse>(
-            IRequest<TResponse> request,
-            CancellationToken cancellationToken = default) where TResponse : class;
+    Task<TResponse> MakeNonApiRequestAsync<TResponse>(
+        IRequest<TResponse> request,
+        CancellationToken cancellationToken = default) where TResponse : class;
 
     /// <summary>
     /// Send a request.
@@ -58,5 +58,4 @@ public interface ITelegraphClient
             string url,
             Func<HttpResponseMessage, Task<TResponse>> deserializeFunc,
             CancellationToken cancellationToken = default);
-    }
-
+}

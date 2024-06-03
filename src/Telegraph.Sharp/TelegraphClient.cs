@@ -16,6 +16,8 @@ namespace Telegraph.Sharp;
 /// </summary>
 public sealed class TelegraphClient : ITelegraphClient
 {
+    /// <inheritdoc/>
+    public string? AccessToken { get; init; }
     private readonly HttpClient _httpClient;
 
     /// <summary>
@@ -39,53 +41,33 @@ public sealed class TelegraphClient : ITelegraphClient
     public TelegraphClient(HttpClient? httpClient = null) => _httpClient = httpClient ?? new HttpClient();
 
     /// <inheritdoc/>
-    public string? AccessToken { get;  set; }
-
-    /// <inheritdoc/>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="request"/> is null or request is <see cref="IAccessTokenTarget"/> and <see cref="AccessToken"/> is null.
+    /// <paramref name="request"/> is null or request is <see cref="IAccessTokenTarget"/> and access token is null.
     /// </exception>
     /// <exception cref="RequestException">
     ///     Request failed.
     /// </exception>
-   public async Task<TResponse> MakeApiRequestAsync<TResponse>(
-    IRequest<TResponse> request,
-    CancellationToken cancellationToken = default)
-{
-    if (request is IAccessTokenTarget && AccessToken is null)
-        throw new ArgumentNullException(nameof(AccessToken));
+    public async Task<TResponse> MakeApiRequestAsync<TResponse>(
+     IRequest<TResponse> request,
+     CancellationToken cancellationToken = default)
+    {
+        if (request is IAccessTokenTarget)
+            ArgumentNullException.ThrowIfNull(AccessToken);
 
-    return await MakeRequestAsync(
-        request,
-        $"{Constants.TelegpaphApi}/{request.MethodName}",
-        async (httpResponse) => {
-            var apiResponse = await httpResponse.DeserializeContentAsync<TelegraphApiResponse<TResponse>>().ConfigureAwait(false);
-            if (apiResponse.Ok is false)
-                throw new RequestException(apiResponse.Error!);
+        return await MakeRequestAsync(
+            request,
+            $"{Constants.TelegpaphApiUrl}/{request.MethodName}",
+            async (httpResponse) =>
+            {
+                var apiResponse = await httpResponse.DeserializeContentAsync<TelegraphApiResponse<TResponse>>().ConfigureAwait(false);
+                if (apiResponse.Ok is false)
+                    throw new RequestException(apiResponse.Error!);
 
-            return apiResponse.Result!;
-        },
-        cancellationToken
-    ).ConfigureAwait(false);
-}
-
-    /// <inheritdoc/>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="request"/> is null.
-    /// </exception>
-    /// <exception cref="RequestException">
-    ///     Request failed.
-    /// </exception>
-public async Task<TResponse> MakeNonApiRequestAsync<TResponse>(
-    IRequest<TResponse> request,
-    CancellationToken cancellationToken = default) where TResponse : class =>
-    await MakeRequestAsync(
-        request,
-        $"{Constants.Telegpaph}/{request.MethodName}",
-        async httpResponse => await httpResponse.DeserializeContentAsync<TResponse>().ConfigureAwait(false),
-        cancellationToken
-    ).ConfigureAwait(false);
-
+                return apiResponse.Result!;
+            },
+            cancellationToken
+        ).ConfigureAwait(false);
+    }
 
     /// <inheritdoc/>
     /// <exception cref="ArgumentNullException">
@@ -94,23 +76,41 @@ public async Task<TResponse> MakeNonApiRequestAsync<TResponse>(
     /// <exception cref="RequestException">
     ///     Request failed.
     /// </exception>
-public async Task<TResponse> MakeRequestAsync<TResponse>(
-    IRequest<TResponse> request,
-    string url,
-    Func<HttpResponseMessage, Task<TResponse>> deserializeFunc,
-    CancellationToken cancellationToken = default)
-{
-    ArgumentNullException.ThrowIfNull(request);
+    public async Task<TResponse> MakeNonApiRequestAsync<TResponse>(
+        IRequest<TResponse> request,
+        CancellationToken cancellationToken = default) where TResponse : class =>
+        await MakeRequestAsync(
+            request,
+            $"{Constants.TelegpaphUrl}/{request.MethodName}",
+            async httpResponse => await httpResponse.DeserializeContentAsync<TResponse>().ConfigureAwait(false),
+            cancellationToken
+        ).ConfigureAwait(false);
 
-    using var httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
-    httpRequest.Content = request.ToHttpContent();
+    /// <inheritdoc/>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="request"/> is null.
+    /// </exception>
+    /// <exception cref="RequestException">
+    ///     Request failed.
+    /// </exception>
+    public async Task<TResponse> MakeRequestAsync<TResponse>(
+        IRequest<TResponse> request,
+        string url,
+        Func<HttpResponseMessage, Task<TResponse>> deserializeFunc,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(request);
 
-    using var httpResponse = await SendRequestAsync(_httpClient, httpRequest, cancellationToken).ConfigureAwait(false);
-    if (httpResponse.StatusCode != HttpStatusCode.OK)
-        throw new RequestException($"Response with code: {httpResponse.StatusCode}");
+        using var httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
+        httpRequest.Content = request.ToHttpContent();
 
-    return await deserializeFunc(httpResponse).ConfigureAwait(false);
-}
+        using var httpResponse = await SendRequestAsync(_httpClient, httpRequest, cancellationToken).ConfigureAwait(false);
+        if (httpResponse.StatusCode != HttpStatusCode.OK)
+            throw new RequestException($"Response with code: {httpResponse.StatusCode}");
+
+        return await deserializeFunc(httpResponse).ConfigureAwait(false);
+    }
+
     private static async Task<HttpResponseMessage> SendRequestAsync(
         HttpClient httpClient,
         HttpRequestMessage httpRequest,

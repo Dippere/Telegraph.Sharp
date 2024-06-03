@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Telegraph.Sharp.Exceptions;
+using Telegraph.Sharp.Extensions;
 
-// ReSharper disable once CheckNamespace
 namespace Telegraph.Sharp.Types;
 
 public partial class Node
@@ -11,11 +10,8 @@ public partial class Node
     private static Node CreateNode(TagEnum tag, IEnumerable<Node>? children = null, TagAttributes? attributes = null)
     {
         var node = new Node { Tag = tag };
-
         if (children is not null) node.Children = children.ToList();
-
         if (attributes is not null) node.Attributes = attributes;
-
         return node;
     }
 
@@ -99,13 +95,13 @@ public partial class Node
     /// Creates a <see cref="Node"/> with tag <see cref="TagEnum.A"/>.
     /// </summary>
     public static Node A() => CreateNode(TagEnum.A, attributes: new TagAttributes());
-    
+
     /// <summary>
     /// Creates a <see cref="Node"/> with tag <see cref="TagEnum.A"/> and href attribute.
     /// </summary>
     /// <param name="href">Href value.</param>
     public static Node A(string href) => CreateNode(TagEnum.A, attributes: new TagAttributes { Href = href });
-    
+
     /// <summary>
     /// Creates a <see cref="Node"/> with tag <see cref="TagEnum.A"/>, href attribute and a child node with given text.
     /// </summary>
@@ -114,7 +110,6 @@ public partial class Node
     public static Node A(string href, string text) =>
         CreateNode(TagEnum.A, new List<Node> { text }, new TagAttributes { Href = href });
 
-    
     /// <summary>
     /// Creates a <see cref="Node"/> with tag <see cref="TagEnum.A"/>, href attribute and a child node with given text.
     /// </summary>
@@ -155,12 +150,12 @@ public partial class Node
     #endregion
 
     #region I
-    
+
     /// <summary>
     /// Creates a <see cref="Node"/> with tag <see cref="TagEnum.I"/>.
     /// </summary>
     public static Node I() => CreateNode(TagEnum.I);
-    
+
     /// <summary>
     /// Creates a <see cref="Node"/> with tag <see cref="TagEnum.I"/> and a child node with given text.
     /// </summary>
@@ -432,7 +427,7 @@ public partial class Node
     /// Creates a <see cref="Node"/> with tag <see cref="TagEnum.Ol"/> and given child nodes as <see cref="TagEnum.Li"/> nodes.
     /// </summary>
     /// <param name="lists">Child nodes.</param>
-    public static Node Ol(IEnumerable<IEnumerable<Node>> lists) => 
+    public static Node Ol(IEnumerable<IEnumerable<Node>> lists) =>
         CreateNode(TagEnum.Ol, lists.Select(Li));
 
     #endregion
@@ -450,7 +445,6 @@ public partial class Node
     /// <param name="nodes">Child nodes.</param>
     public static Node Ul(IEnumerable<Node> nodes) => CreateNode(TagEnum.Ul, nodes);
 
-
     /// <inheritdoc cref="Ul(IEnumerable{Node})"/>
     public static Node Ul(params Node[] nodes) => CreateNode(TagEnum.Ul, nodes);
 
@@ -458,7 +452,7 @@ public partial class Node
     /// Creates a <see cref="Node"/> with tag <see cref="TagEnum.Ul"/> and given child nodes as <see cref="TagEnum.Li"/> nodes.
     /// </summary>
     /// <param name="lists">Child nodes.</param>
-    public static Node Ul(IEnumerable<IEnumerable<Node>> lists) => 
+    public static Node Ul(IEnumerable<IEnumerable<Node>> lists) =>
         CreateNode(TagEnum.Ul, lists.Select(Li));
 
     #endregion
@@ -500,7 +494,6 @@ public partial class Node
     /// </summary>
     public static Node Iframe() => CreateNode(TagEnum.Iframe, attributes: new TagAttributes());
 
-    
     /// <summary>
     /// Creates a <see cref="Node"/> with tag <see cref="TagEnum.Iframe"/> from provided link.
     /// </summary>
@@ -509,24 +502,16 @@ public partial class Node
     {
         var resources = new Dictionary<string, string>
         {
-            { "youtube\\.com", "youtube" },
-            { "youtu\\.be", "youtube" },
-            { "twitter\\.com", "twitter" },
-            { "vimeo\\.com", "vimeo" }
+            { "youtube.com", "youtube" },
+            { "youtu.be", "youtube" },
+            { "twitter.com", "twitter" },
+            { "vimeo.com", "vimeo" }
         };
+        var match = RegexExtensions.LinkRegex().Match(src);
+        if (!match.Success)
+            throw new TelegraphException("Invalid link.");
 
-        var linkValidator = new Regex($"(http(s)?://)?(?<resource>({string.Join(")|(", resources.Keys)}))(/.*)?");
-
-        if (!linkValidator.IsMatch(src))
-            throw new TelegraphException(
-                $"Invalid link. Allowed resources: {string.Join(", ", resources.Values.Distinct())}");
-
-        var resource = linkValidator.Match(src)
-            .Groups["resource"]
-            .Value;
-
-        return CreateNode(TagEnum.Iframe,
-            attributes: new TagAttributes { Src = $"/embed/{resources[resource.Replace(".", "\\.")]}?url={src}" });
+        return CreateNode(TagEnum.Iframe, attributes: new TagAttributes { Src = $"/embed/{resources[match.Groups["resource"].Value]}?url={src}" });
     }
 
     #endregion

@@ -15,17 +15,9 @@ public class NodeTests
         var node = new Node();
         Assert.Null(node.Children);
         Assert.Equal(TagEnum.P, node.Tag);
-        Assert.Equal("p", node.TagValue);
-
-        node.TagValue = "h3";
-        Assert.Equal("h3", node.TagValue);
+        node.Tag = TagEnum.H3;
         Assert.Equal(TagEnum.H3, node.Tag);
-
-        node.TagValue = "unknown";
-        Assert.Equal("p", node.TagValue);
-        Assert.Equal(TagEnum.P, node.Tag);
     }
-
 
     [Fact(DisplayName = "A")]
     public void A_Tests()
@@ -71,7 +63,6 @@ public class NodeTests
         Assert.Equal(url, node4.Attributes!.Href);
     }
 
-
     [Fact(DisplayName = "Br")]
     public void Br_Tests()
     {
@@ -83,7 +74,6 @@ public class NodeTests
     {
         CheckNodeNullChildren(Node.Hr(), TagEnum.Hr);
     }
-
 
     [Fact(DisplayName = "Ol child test")]
     public void Ol_Tests()
@@ -196,10 +186,12 @@ public class NodeTests
 
         var url3 = "https://example.link/";
         var exception = Assert.Throws<TelegraphException>(() => Node.Iframe(url3));
-
         Assert.StartsWith("Invalid link.", exception.Message);
-    }
 
+        var url4 = "https://www.youtu.be/watch?v=123456";
+        var node4 = Node.Iframe(url4);
+        Assert.Equal("/embed/youtube?url=" + url4, node4.Attributes!.Src);
+    }
 
     [Fact(DisplayName = "Figure")]
     public void Figure_Tests()
@@ -278,7 +270,6 @@ public class NodeTests
     }
 
     #endregion
-
 
     #region Private methods
 

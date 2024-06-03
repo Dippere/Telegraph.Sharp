@@ -1,5 +1,4 @@
-﻿using System.Net.Http;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using Telegraph.Sharp.Types;
 
 namespace Telegraph.Sharp.Requests;

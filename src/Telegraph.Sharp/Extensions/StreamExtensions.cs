@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text.Json;
+using Telegraph.Sharp.Serialization;
 
 namespace Telegraph.Sharp.Extensions;
 
@@ -15,8 +16,7 @@ internal static class StreamExtensions
         where T : class
     {
         if (stream is null || !stream.CanRead) return default;
-        var searchResult = JsonSerializer.Deserialize<T>(stream,JsonSerializerExtensions.JsonSerializerOpt);
-
+        var searchResult = JsonSerializer.Deserialize<T>(stream, JsonSerializerDefaultOptions.JsonSerializerOpt);
         return searchResult;
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Runtime.Serialization;
 
 namespace Telegraph.Sharp.Exceptions;
-
 
 /// <summary>
 /// Represents a inner library exception.
