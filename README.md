@@ -4,8 +4,6 @@
 
 Simple to use API client for [Telegra.ph](https://telegra.ph) on .NET 8.
 
-For other dotnet version use package [version 1](https://www.nuget.org/packages/Telegraph.Sharp/1.0.0) instead.
-
 ## Quickstart
 
 Sample code to create a new page:
