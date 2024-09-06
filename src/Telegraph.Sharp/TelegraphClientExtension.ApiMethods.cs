@@ -9,7 +9,7 @@ namespace Telegraph.Sharp;
 /// <summary>
 ///     Extension methods that map to requests from API documentation.
 /// </summary>
-public static partial class TelegraphClientExtension
+public static class TelegraphClientExtension
 {
     /// <summary>
     /// Use this method to create a new account.
@@ -35,7 +35,7 @@ public static partial class TelegraphClientExtension
         string? authorUrl = default,
         CancellationToken cancellationToken = default
     ) =>
-        await telegraphClient.MakeApiRequestAsync(
+        await telegraphClient.MakeRequestAsync(
             new CreateAccount(shortName)
             {
                 AuthorName = authorName,
@@ -70,7 +70,7 @@ public static partial class TelegraphClientExtension
         bool returnContent = default,
         CancellationToken cancellationToken = default
     ) =>
-        await telegraphClient.MakeApiRequestAsync(
+        await telegraphClient.MakeRequestAsync(
             new CreatePage(telegraphClient.AccessToken!, title, content)
             {
                 AuthorName = authorName,
@@ -106,7 +106,7 @@ public static partial class TelegraphClientExtension
         bool returnContent = default,
         CancellationToken cancellationToken = default
     ) =>
-        await telegraphClient.MakeApiRequestAsync(
+        await telegraphClient.MakeRequestAsync(
             new EditPage(telegraphClient.AccessToken!, path, title, content)
             {
                 AuthorName = authorName,
@@ -132,7 +132,7 @@ public static partial class TelegraphClientExtension
         bool returnContent = default,
         CancellationToken cancellationToken = default
     ) =>
-        await telegraphClient.MakeApiRequestAsync(
+        await telegraphClient.MakeRequestAsync(
             new GetPage(path)
             {
                 ReturnContent = returnContent,
@@ -155,7 +155,7 @@ public static partial class TelegraphClientExtension
         int limit = 50,
         CancellationToken cancellationToken = default
     ) =>
-        await telegraphClient.MakeApiRequestAsync(
+        await telegraphClient.MakeRequestAsync(
             new GetPageList(telegraphClient.AccessToken!)
             {
                 Limit = limit,
@@ -195,7 +195,7 @@ public static partial class TelegraphClientExtension
         int? hour = default,
         CancellationToken cancellationToken = default
     ) =>
-        await telegraphClient.MakeApiRequestAsync(
+        await telegraphClient.MakeRequestAsync(
             new GetViews(path)
             {
                 Year = year,
@@ -223,7 +223,7 @@ public static partial class TelegraphClientExtension
         string? authorUrl = default,
         CancellationToken cancellationToken = default
     ) =>
-        await telegraphClient.MakeApiRequestAsync(
+        await telegraphClient.MakeRequestAsync(
             new EditAccountInfo(telegraphClient.AccessToken!)
             {
                 ShortName = shortName,
@@ -258,7 +258,7 @@ public static partial class TelegraphClientExtension
     {
         var request = new GetAccountInfo(telegraphClient.AccessToken!);
         request.SetFields(shortName, authorName, authorUrl, authUrl, pageCount);
-        return await telegraphClient.MakeApiRequestAsync(request, cancellationToken
+        return await telegraphClient.MakeRequestAsync(request, cancellationToken
         ).ConfigureAwait(false);
     }
 
@@ -274,7 +274,7 @@ public static partial class TelegraphClientExtension
         this ITelegraphClient telegraphClient,
         CancellationToken cancellationToken = default
     ){
-        return await telegraphClient.MakeApiRequestAsync(
+        return await telegraphClient.MakeRequestAsync(
             new RevokeAccessToken(telegraphClient.AccessToken!), cancellationToken
         ).ConfigureAwait(false);
     }

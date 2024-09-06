@@ -1,5 +1,4 @@
 ﻿using Telegraph.Sharp.Exceptions;
-using Telegraph.Sharp.Tests.Integ.Data;
 using Telegraph.Sharp.Tests.Integ.Fixture;
 using Telegraph.Sharp.Tests.Integ.Order;
 using Telegraph.Sharp.Types;
@@ -15,8 +14,6 @@ public class RequestsTests : IClassFixture<RequestsFixture>
     private readonly RequestsFixture _fixture;
 
     public RequestsTests(RequestsFixture fixture) => _fixture = fixture;
-
-    #region API
 
     #region Node equals checker
 
@@ -206,41 +203,5 @@ public class RequestsTests : IClassFixture<RequestsFixture>
         Assert.NotNull(revokedAccessToken.AuthUrl);
     }
 
-    #endregion
-    #endregion
-
-    #region Not API
-
-    [Theory(DisplayName = "Upload single file")]
-    [MemberData(nameof(FileTestCase.TestCasesData), MemberType = typeof(FileTestCase))]
-    [TestPriority(20)]
-    public async Task UploadSingleFile(FileTestCase fileToUpload)
-    {
-        var fileUploaded = await _fixture.TelegraphClient.UploadFileAsync(fileToUpload.FileToUpload);
-        Assert.NotNull(fileUploaded);
-        Assert.NotNull(fileUploaded.Url);
-        Assert.NotNull(fileUploaded.Src);
-    }
-
-    [Fact(DisplayName = "Upload multiple files")]
-    [TestPriority(21)]
-    public async Task UploadMultipleFiles()
-    {
-        var files = await _fixture.TelegraphClient.UploadFilesAsync(FileTestCase.TestCases.Select(x => x.FileToUpload).ToList());
-        Assert.NotNull(files);
-        Assert.NotEmpty(files);
-        foreach (var file in files)
-        {
-            Assert.NotEmpty(file.Src);
-            Assert.NotEmpty(file.Url);
-        }
-    }
-
-    [Fact(DisplayName = "Upload single file should throw by size >5 MB")]
-    [TestPriority(22)]
-    public async Task UploadSingleFileShouldThrow()
-    {
-        await Assert.ThrowsAsync<TelegraphException>(async () => await _fixture.TelegraphClient.UploadFileAsync(FileTestCase.Mp4MaxSize.FileToUpload));
-    }
     #endregion
 }
