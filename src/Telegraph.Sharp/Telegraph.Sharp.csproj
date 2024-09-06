@@ -11,7 +11,7 @@
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <PackageVersion>2.1.9</PackageVersion>
+        <PackageVersion>2.2.0</PackageVersion>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Title>Telegraph.Sharp</Title>
         <Description>
