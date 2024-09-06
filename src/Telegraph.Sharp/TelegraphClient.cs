@@ -10,7 +10,6 @@ using Telegraph.Sharp.Types;
 
 namespace Telegraph.Sharp;
 
-
 /// <summary>
 ///     A client to use the Telegraph API.
 /// </summary>
@@ -32,59 +31,12 @@ public sealed class TelegraphClient : ITelegraphClient
         AccessToken = !string.IsNullOrEmpty(accessToken)
             ? accessToken
             : throw new ArgumentNullException(nameof(accessToken));
-
-
+    
     /// <summary>
     ///     Create a new <see cref="TelegraphClient" /> instance.
     /// </summary>
     /// <param name="httpClient">A custom <see cref="HttpClient" />.</param>
     public TelegraphClient(HttpClient? httpClient = null) => _httpClient = httpClient ?? new HttpClient();
-
-    /// <inheritdoc/>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="request"/> is null or request is <see cref="IAccessTokenTarget"/> and access token is null.
-    /// </exception>
-    /// <exception cref="RequestException">
-    ///     Request failed.
-    /// </exception>
-    public async Task<TResponse> MakeApiRequestAsync<TResponse>(
-     IRequest<TResponse> request,
-     CancellationToken cancellationToken = default)
-    {
-        if (request is IAccessTokenTarget)
-            ArgumentNullException.ThrowIfNull(AccessToken);
-
-        return await MakeRequestAsync(
-            request,
-            $"{Constants.TelegpaphApiUrl}/{request.MethodName}",
-            async (httpResponse) =>
-            {
-                var apiResponse = await httpResponse.DeserializeContentAsync<TelegraphApiResponse<TResponse>>().ConfigureAwait(false);
-                if (apiResponse.Ok is false)
-                    throw new RequestException(apiResponse.Error!);
-
-                return apiResponse.Result!;
-            },
-            cancellationToken
-        ).ConfigureAwait(false);
-    }
-
-    /// <inheritdoc/>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="request"/> is null.
-    /// </exception>
-    /// <exception cref="RequestException">
-    ///     Request failed.
-    /// </exception>
-    public async Task<TResponse> MakeNonApiRequestAsync<TResponse>(
-        IRequest<TResponse> request,
-        CancellationToken cancellationToken = default) where TResponse : class =>
-        await MakeRequestAsync(
-            request,
-            $"{Constants.TelegpaphUrl}/{request.MethodName}",
-            async httpResponse => await httpResponse.DeserializeContentAsync<TResponse>().ConfigureAwait(false),
-            cancellationToken
-        ).ConfigureAwait(false);
 
     /// <inheritdoc/>
     /// <exception cref="ArgumentNullException">
@@ -95,20 +47,24 @@ public sealed class TelegraphClient : ITelegraphClient
     /// </exception>
     public async Task<TResponse> MakeRequestAsync<TResponse>(
         IRequest<TResponse> request,
-        string url,
-        Func<HttpResponseMessage, Task<TResponse>> deserializeFunc,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(request);
+        if (request is IAccessTokenTarget)
+            ArgumentNullException.ThrowIfNull(AccessToken);
 
-        using var httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
+        using var httpRequest = new HttpRequestMessage(HttpMethod.Post,  $"{Constants.TelegpaphApiUrl}/{request.MethodName}");
         httpRequest.Content = request.ToHttpContent();
 
         using var httpResponse = await SendRequestAsync(_httpClient, httpRequest, cancellationToken).ConfigureAwait(false);
         if (httpResponse.StatusCode != HttpStatusCode.OK)
             throw new RequestException($"Response with code: {httpResponse.StatusCode}");
 
-        return await deserializeFunc(httpResponse).ConfigureAwait(false);
+        var apiResponse = await httpResponse.DeserializeContentAsync<TelegraphApiResponse<TResponse>>().ConfigureAwait(false);
+        if (apiResponse.Ok is false)
+            throw new RequestException(apiResponse.Error!);
+
+        return apiResponse.Result!;
     }
 
     private static async Task<HttpResponseMessage> SendRequestAsync(

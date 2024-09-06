@@ -31,10 +31,7 @@ public sealed class RequestsFixture : IDisposable
 
     public TelegraphClient TelegraphClient { get; set; }
 
-    public string? AccessToken
-    {
-        get => TelegraphClient.AccessToken;
-    }
+    public string? AccessToken => TelegraphClient.AccessToken;
 
     public string PagePath { get; set; } = null!;
 
