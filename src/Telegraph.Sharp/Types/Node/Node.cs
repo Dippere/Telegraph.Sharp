@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Telegraph.Sharp.Exceptions;
-using Telegraph.Sharp.Extensions;
 
 namespace Telegraph.Sharp.Types;
 
@@ -507,11 +506,25 @@ public partial class Node
             { "twitter.com", "twitter" },
             { "vimeo.com", "vimeo" }
         };
-        var match = RegexExtensions.LinkRegex().Match(src);
-        if (!match.Success)
-            throw new TelegraphException("Invalid link.");
 
-        return CreateNode(TagEnum.Iframe, attributes: new TagAttributes { Src = $"/embed/{resources[match.Groups["resource"].Value]}?url={src}" });
+        if (!System.Uri.TryCreate(src, System.UriKind.Absolute, out var uri))
+        {
+            throw new TelegraphException("Invalid URL format.");
+        }
+
+        var host = uri.Host;
+        foreach (var resource in resources)
+        {
+            if (host.EndsWith(resource.Key, System.StringComparison.OrdinalIgnoreCase))
+            {
+                return CreateNode(TagEnum.Iframe, attributes: new TagAttributes
+                {
+                    Src = $"/embed/{resource.Value}?url={src}"
+                });
+            }
+        }
+
+        throw new TelegraphException("Invalid link.");
     }
 
     #endregion
