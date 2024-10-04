@@ -19,7 +19,7 @@
         <Authors>Dippere</Authors>
         <Copyright>Copyright © Dippere 2023-2024</Copyright>
         <PackageIcon>package-icon.png</PackageIcon>
-        <PaclageReadmeFile>README.md</PaclageReadmeFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageProjectUrl>https://github.com/Dippere/Telegraph.Sharp</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Dippere/Telegraph.Sharp.git</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
