@@ -62,7 +62,13 @@ internal static class HttpResponseMessageExtensions
         }
         finally
         {
-            if (contentStream is not null) await contentStream.DisposeAsync().ConfigureAwait(false);
+            if (contentStream is not null) {
+#if NET6_0_OR_GREATER
+            await contentStream.DisposeAsync().ConfigureAwait(false);
+#else
+            contentStream.Dispose();
+#endif
+            }
         }
     }
 
