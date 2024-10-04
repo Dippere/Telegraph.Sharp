@@ -17,7 +17,6 @@ public class NodeTests
             Node.P("Hello, World!"),
             Node.ImageFigure("https://telegra.ph/images/logo.png", "Logo")
         };
-
         var json = JsonSerializer.Serialize(nodes, SerialOpt.SerializerOptions);
         Assert.Contains("\"tag\":\"figcaption\"", json);
     }

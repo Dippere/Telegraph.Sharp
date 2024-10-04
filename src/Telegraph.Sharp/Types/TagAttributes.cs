@@ -23,6 +23,6 @@ public class TagAttributes
     {
         get => _src;
         init => _src = value is null ? null :
-            value.StartsWith(Constants.TelegpaphUrl) ? value[Constants.TelegpaphUrl.Length..] : value;
+            value.StartsWith(Constants.TelegpaphUrl) ? value.Substring(Constants.TelegpaphUrl.Length) : value;
     }
 }

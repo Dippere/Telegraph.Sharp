@@ -49,9 +49,10 @@ public sealed class TelegraphClient : ITelegraphClient
         IRequest<TResponse> request,
         CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(request);
-        if (request is IAccessTokenTarget)
-            ArgumentNullException.ThrowIfNull(AccessToken);
+        if (request == null)
+            throw new ArgumentNullException(nameof(request));
+        if (request is IAccessTokenTarget && AccessToken == null)
+            throw new ArgumentNullException(nameof(AccessToken));
 
         using var httpRequest = new HttpRequestMessage(HttpMethod.Post,  $"{Constants.TelegpaphApiUrl}/{request.MethodName}");
         httpRequest.Content = request.ToHttpContent();
@@ -92,7 +93,6 @@ public sealed class TelegraphClient : ITelegraphClient
                 exception
             );
         }
-
         return httpResponse;
     }
 }
