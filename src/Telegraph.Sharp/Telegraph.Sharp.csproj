@@ -12,7 +12,7 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <PackageVersion>2.3.1</PackageVersion>
+        <PackageVersion>2.3.2</PackageVersion>
         <Title>Telegraph.Sharp</Title>
         <Description>Simple to use api-client for Telegra.ph API.</Description>
         <PackageId>Telegraph.Sharp</PackageId>
