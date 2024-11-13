@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Telegraph.Sharp.Requests;
 using Telegraph.Sharp.Tests.Unit.Data;
 using Telegraph.Sharp.Types;

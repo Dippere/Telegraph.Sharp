@@ -17,7 +17,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
 
     #region Node equals checker
 
-    private static void CheckNodesEquality(IReadOnlyList<Node> actual, IReadOnlyList<Node> expected)
+    private static void CheckNodesEquality(List<Node> actual, List<Node> expected)
     {
         Assert.NotNull(actual);
         Assert.NotNull(expected);

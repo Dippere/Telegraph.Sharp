@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Telegraph.Sharp.Types;
+﻿using Telegraph.Sharp.Types;
+using Xunit;
 
 namespace Telegraph.Sharp.Tests.Unit.Data;
 
@@ -58,8 +56,7 @@ public record NodesTestCase(
             Node.Ul(Array.Empty<Node>())) // Ul
     ];
 
-    public static IEnumerable<object[]> TestCasesData =>
-        TestCases.Select(testCase => new object[] { testCase });
+    public static TheoryData<NodesTestCase> TestCasesData => new(TestCases);
 
     public override string ToString() => TagEnum.ToString();
 }

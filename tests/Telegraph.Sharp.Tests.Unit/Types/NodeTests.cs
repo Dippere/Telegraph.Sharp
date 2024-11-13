@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Telegraph.Sharp.Exceptions;
 using Telegraph.Sharp.Tests.Unit.Data;
 using Telegraph.Sharp.Types;
