@@ -9,8 +9,10 @@ public partial class Node
     private static Node CreateNode(TagEnum tag, IEnumerable<Node>? children = null, TagAttributes? attributes = null)
     {
         var node = new Node { Tag = tag };
-        if (children is not null) node.Children = children.ToList();
-        if (attributes is not null) node.Attributes = attributes;
+        if (children is not null)
+            node.Children = children.ToList();
+        if (attributes is not null)
+            node.Attributes = attributes;
         return node;
     }
 

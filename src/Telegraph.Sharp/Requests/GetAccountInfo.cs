@@ -60,11 +60,16 @@ public class GetAccountInfo : ApiRequestBase<Account>, IAccessTokenTarget
         }
         else
         {
-            if (shortName) list.Add("short_name");
-            if (authorName) list.Add("author_name");
-            if (authorUrl) list.Add("author_url");
-            if (authUrl) list.Add("auth_url");
-            if (pageCount) list.Add("page_count");
+            if (shortName)
+                list.Add("short_name");
+            if (authorName)
+                list.Add("author_name");
+            if (authorUrl)
+                list.Add("author_url");
+            if (authUrl)
+                list.Add("auth_url");
+            if (pageCount)
+                list.Add("page_count");
         }
 
         Fields = list;

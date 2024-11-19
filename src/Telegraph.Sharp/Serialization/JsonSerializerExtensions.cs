@@ -4,8 +4,8 @@ namespace Telegraph.Sharp.Serialization;
 
 internal static class JsonSerializerDefaultOptions
 {
-   public static readonly JsonSerializerOptions JsonSerializerOpt = new()
-   {
-      PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
-   };
+    public static readonly JsonSerializerOptions JsonSerializerOpt = new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
+    };
 }

@@ -15,7 +15,8 @@ internal static class StreamExtensions
     public static T? DeserializeJsonFromStream<T>(this Stream? stream)
         where T : class
     {
-        if (stream is null || !stream.CanRead) return default;
+        if (stream is null || !stream.CanRead)
+            return default;
         var searchResult = JsonSerializer.Deserialize<T>(stream, JsonSerializerDefaultOptions.JsonSerializerOpt);
         return searchResult;
     }

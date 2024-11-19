@@ -31,7 +31,7 @@ public sealed class TelegraphClient : ITelegraphClient
         AccessToken = !string.IsNullOrEmpty(accessToken)
             ? accessToken
             : throw new ArgumentNullException(nameof(accessToken));
-    
+
     /// <summary>
     ///     Create a new <see cref="TelegraphClient" /> instance.
     /// </summary>
@@ -49,12 +49,15 @@ public sealed class TelegraphClient : ITelegraphClient
         IRequest<TResponse> request,
         CancellationToken cancellationToken = default)
     {
-        if (request == null)
-            throw new ArgumentNullException(nameof(request));
-        if (request is IAccessTokenTarget && AccessToken == null)
-            throw new ArgumentNullException(nameof(AccessToken));
+        switch (request)
+        {
+            case null:
+                throw new ArgumentNullException(nameof(request));
+            case IAccessTokenTarget when AccessToken == null:
+                throw new ArgumentNullException(nameof(AccessToken));
+        }
 
-        using var httpRequest = new HttpRequestMessage(HttpMethod.Post,  $"{Constants.TelegpaphApiUrl}/{request.MethodName}");
+        using var httpRequest = new HttpRequestMessage(HttpMethod.Post, $"{Constants.TelegpaphApiUrl}/{request.MethodName}");
         httpRequest.Content = request.ToHttpContent();
 
         using var httpResponse = await SendRequestAsync(_httpClient, httpRequest, cancellationToken).ConfigureAwait(false);
@@ -82,7 +85,8 @@ public sealed class TelegraphClient : ITelegraphClient
         }
         catch (TaskCanceledException exception)
         {
-            if (cancellationToken.IsCancellationRequested) throw;
+            if (cancellationToken.IsCancellationRequested)
+                throw;
 
             throw new RequestException("Request timed out", exception);
         }

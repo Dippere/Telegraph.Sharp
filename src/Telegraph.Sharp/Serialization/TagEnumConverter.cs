@@ -10,7 +10,8 @@ internal sealed class TagEnumConverter : JsonConverter<TagEnum>
 {
     public override TagEnum Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        if (reader.TokenType != JsonTokenType.String) throw new JsonException("Invalid tag");
+        if (reader.TokenType != JsonTokenType.String)
+            throw new JsonException("Invalid tag");
         var s = reader.GetString()!.CapitalizeFirstLetter();
 #if NET6_0_OR_GREATER
         return Enum.Parse<TagEnum>(s);

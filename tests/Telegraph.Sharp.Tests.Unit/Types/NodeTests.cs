@@ -284,7 +284,8 @@ public class NodeTests
         Assert.Equal(expectedTag, node.Tag);
         Assert.NotNull(node.Children);
         Assert.Equal(expectedTexts.Length, node.Children.Count);
-        for (var i = 0; i < expectedTexts.Length; ++i) Assert.Same(expectedTexts[i], node.Children[i].Value);
+        for (var i = 0; i < expectedTexts.Length; ++i)
+            Assert.Same(expectedTexts[i], node.Children[i].Value);
     }
 
     private static void CheckNodeNullChildren(Node node, TagEnum expectedTag)
