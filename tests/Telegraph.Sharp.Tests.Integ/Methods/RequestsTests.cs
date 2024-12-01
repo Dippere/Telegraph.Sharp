@@ -64,7 +64,6 @@ public class RequestsTests : IClassFixture<RequestsFixture>
         CheckNodesEquality(page.Content, _fixture.ContentForEdit);
     }
 
-
     [Theory(DisplayName = "Get views")]
     [TestPriority(7)]
     [InlineData(null, null, null, null)]
