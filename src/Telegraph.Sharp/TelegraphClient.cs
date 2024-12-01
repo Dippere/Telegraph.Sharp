@@ -60,11 +60,11 @@ public sealed class TelegraphClient : ITelegraphClient
         using var httpRequest = new HttpRequestMessage(HttpMethod.Post, $"{Constants.TelegpaphApiUrl}/{request.MethodName}");
         httpRequest.Content = request.ToHttpContent();
 
-        using var httpResponse = await SendRequestAsync(_httpClient, httpRequest, cancellationToken).ConfigureAwait(false);
+        using HttpResponseMessage httpResponse = await SendRequestAsync(_httpClient, httpRequest, cancellationToken).ConfigureAwait(false);
         if (httpResponse.StatusCode != HttpStatusCode.OK)
             throw new RequestException($"Response with code: {httpResponse.StatusCode}");
 
-        var apiResponse = await httpResponse.DeserializeContentAsync<TelegraphApiResponse<TResponse>>().ConfigureAwait(false);
+        TelegraphApiResponse<TResponse> apiResponse = await httpResponse.DeserializeContentAsync<TelegraphApiResponse<TResponse>>().ConfigureAwait(false);
         if (apiResponse.Ok is false)
             throw new RequestException(apiResponse.Error!);
 

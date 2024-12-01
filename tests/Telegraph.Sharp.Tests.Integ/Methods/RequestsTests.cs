@@ -1,4 +1,4 @@
-using Telegraph.Sharp.Exceptions;
+﻿using Telegraph.Sharp.Exceptions;
 using Telegraph.Sharp.Tests.Integ.Fixture;
 using Telegraph.Sharp.Tests.Integ.Order;
 using Telegraph.Sharp.Types;
@@ -22,7 +22,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
         Assert.NotNull(actual);
         Assert.NotNull(expected);
         Assert.Equal(expected.Count, actual.Count);
-        for (var i = 0; i < actual.Count; i++)
+        for (int i = 0; i < actual.Count; i++)
         {
             Assert.Equal(expected[i].Value, actual[i].Value);
             Assert.Equal(expected[i].Tag, actual[i].Tag);
@@ -45,7 +45,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
     [InlineData("testShortName", "testAuthorName", "https://testAuthorUrl.com/")]
     public async Task CreateAccountTests(string shortName, string? authorName, string? authorUrl)
     {
-        var account = await _fixture.TelegraphClient.CreateAccountAsync(shortName, authorName, authorUrl);
+        Account account = await _fixture.TelegraphClient.CreateAccountAsync(shortName, authorName, authorUrl);
         Assert.NotNull(account);
         Assert.Equal(shortName, account.ShortName);
         Assert.Equal(authorName ?? string.Empty, account.AuthorName);
@@ -57,7 +57,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
     [TestPriority(4)]
     public async Task GetPageTests()
     {
-        var page = await _fixture.TelegraphClient.GetPageAsync(_fixture.PagePath, true);
+        Page page = await _fixture.TelegraphClient.GetPageAsync(_fixture.PagePath, true);
         Assert.NotNull(page);
         Assert.NotNull(page.Content);
         Assert.Equal(_fixture.ContentForEdit.Count, page.Content.Count);
@@ -74,7 +74,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
     [InlineData(2023, 1, 20, 20)]
     public async Task GetViewsTests(int? year, int? month, int? day, int? hour)
     {
-        var pageViews =
+        PageViews pageViews =
             await _fixture.TelegraphClient.GetViewsAsync(RequestsFixture.PageViewsPath, year, month, day, hour);
         Assert.NotNull(pageViews);
         // Sometimes server return 0 as result, idk how to fix it
@@ -103,7 +103,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
     public async Task CreatePageTests()
     {
         const string title = "test-title1";
-        var page = await _fixture.TelegraphClient.CreatePageAsync(title, _fixture.ContentForCreate,
+        Page page = await _fixture.TelegraphClient.CreatePageAsync(title, _fixture.ContentForCreate,
             returnContent: true);
         Assert.NotNull(page);
         Assert.Equal(title, page.Title);
@@ -118,7 +118,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
     public async Task EditPageTests()
     {
         const string title = "test-edited-title";
-        var page = await _fixture.TelegraphClient.EditPageAsync(_fixture.PagePath, title, _fixture.ContentForEdit,
+        Page page = await _fixture.TelegraphClient.EditPageAsync(_fixture.PagePath, title, _fixture.ContentForEdit,
             returnContent: true);
         Assert.NotNull(page);
         Assert.Equal(title, page.Title);
@@ -131,7 +131,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
     [TestPriority(5)]
     public async Task GetPageListTests()
     {
-        var pageList = await _fixture.TelegraphClient.GetPageListAsync();
+        PageList pageList = await _fixture.TelegraphClient.GetPageListAsync();
         Assert.NotNull(pageList);
         Assert.Equal(1, pageList.TotalCount);
         Assert.NotNull(pageList.Pages);
@@ -161,7 +161,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
         int? expectedPageCount
     )
     {
-        var account = await _fixture.TelegraphClient.GetAccountInfoAsync(shortName,
+        Account account = await _fixture.TelegraphClient.GetAccountInfoAsync(shortName,
             authorName,
             authorUrl,
             authUrl,
@@ -178,16 +178,16 @@ public class RequestsTests : IClassFixture<RequestsFixture>
     [TestPriority(9)]
     public async Task EditAccountInfoTests()
     {
-        var editedAccount1 = await _fixture.TelegraphClient.EditAccountInfoAsync(_fixture.AccountShortName);
+        Account editedAccount1 = await _fixture.TelegraphClient.EditAccountInfoAsync(_fixture.AccountShortName);
         Assert.NotNull(editedAccount1);
         Assert.Equal(_fixture.AccountShortName, editedAccount1.ShortName);
         await Task.Delay(3500);
-        var editedAccount2 =
+        Account editedAccount2 =
             await _fixture.TelegraphClient.EditAccountInfoAsync(authorName: _fixture.AccountAuthorName);
         Assert.NotNull(editedAccount2);
         Assert.Equal(_fixture.AccountAuthorName, editedAccount2.AuthorName);
         await Task.Delay(3500);
-        var editedAccount3 = await _fixture.TelegraphClient.EditAccountInfoAsync(authorUrl: _fixture.AccountAuthorUrl);
+        Account editedAccount3 = await _fixture.TelegraphClient.EditAccountInfoAsync(authorUrl: _fixture.AccountAuthorUrl);
         Assert.NotNull(editedAccount3);
         Assert.Equal(_fixture.AccountAuthorUrl, editedAccount3.AuthorUrl);
     }
@@ -196,7 +196,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
     [TestPriority(10)]
     public async Task RevokeAccessTokenTests()
     {
-        var revokedAccessToken = await _fixture.TelegraphClient.RevokeAccessTokenAsync();
+        Account revokedAccessToken = await _fixture.TelegraphClient.RevokeAccessTokenAsync();
         Assert.NotNull(revokedAccessToken);
         Assert.NotNull(revokedAccessToken.AccessToken);
         Assert.NotEqual(_fixture.AccessToken, revokedAccessToken.AccessToken);

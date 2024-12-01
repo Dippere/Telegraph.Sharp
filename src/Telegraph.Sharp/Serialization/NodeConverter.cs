@@ -13,15 +13,15 @@ internal class NodeConverter : JsonConverter<Node>
     public override Node Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         using var document = JsonDocument.ParseValue(ref reader);
-        var rootElement = document.RootElement;
+        JsonElement rootElement = document.RootElement;
         return rootElement.ValueKind switch
         {
             JsonValueKind.String => new Node { Value = rootElement.GetString()! },
             JsonValueKind.Object => new Node
             {
-                Tag = rootElement.TryGetProperty("tag", out var tagElement) ? tagElement.Deserialize<TagEnum>(options) : default,
-                Attributes = rootElement.TryGetProperty("attrs", out var attrsElement) ? attrsElement.Deserialize<TagAttributes>(options) : default,
-                Children = rootElement.TryGetProperty("children", out var childrenElement) ? childrenElement.Deserialize<List<Node>>(options) : default
+                Tag = rootElement.TryGetProperty("tag", out JsonElement tagElement) ? tagElement.Deserialize<TagEnum>(options) : default,
+                Attributes = rootElement.TryGetProperty("attrs", out JsonElement attrsElement) ? attrsElement.Deserialize<TagAttributes>(options) : default,
+                Children = rootElement.TryGetProperty("children", out JsonElement childrenElement) ? childrenElement.Deserialize<List<Node>>(options) : default
             },
             _ => throw new JsonException("Invalid node")
         };

@@ -13,22 +13,22 @@ public class PriorityOrderer : ITestCaseOrderer
     {
         var sortedMethods = new SortedDictionary<int, List<TTestCase>>();
 
-        foreach (var testCase in testCases)
+        foreach (TTestCase testCase in testCases)
         {
-            var priority = 0;
+            int priority = 0;
 
-            foreach (var attr in testCase.TestMethod.Method.GetCustomAttributes(typeof(TestPriorityAttribute)
+            foreach (IAttributeInfo? attr in testCase.TestMethod.Method.GetCustomAttributes(typeof(TestPriorityAttribute)
                          .AssemblyQualifiedName))
                 priority = attr.GetNamedArgument<int>("Priority");
 
             GetOrCreate(sortedMethods, priority).Add(testCase);
         }
 
-        foreach (var list in sortedMethods.Keys.Select(priority => sortedMethods[priority]))
+        foreach (List<TTestCase>? list in sortedMethods.Keys.Select(priority => sortedMethods[priority]))
         {
             list.Sort((x, y) =>
                 StringComparer.OrdinalIgnoreCase.Compare(x.TestMethod.Method.Name, y.TestMethod.Method.Name));
-            foreach (var testCase in list)
+            foreach (TTestCase testCase in list)
                 yield return testCase;
         }
     }
