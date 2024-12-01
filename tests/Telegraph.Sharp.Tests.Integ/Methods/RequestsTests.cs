@@ -1,4 +1,4 @@
-﻿using Telegraph.Sharp.Exceptions;
+using Telegraph.Sharp.Exceptions;
 using Telegraph.Sharp.Tests.Integ.Fixture;
 using Telegraph.Sharp.Tests.Integ.Order;
 using Telegraph.Sharp.Types;
@@ -102,7 +102,7 @@ public class RequestsTests : IClassFixture<RequestsFixture>
     [TestPriority(2)]
     public async Task CreatePageTests()
     {
-        const string title = "test-title";
+        const string title = "test-title1";
         var page = await _fixture.TelegraphClient.CreatePageAsync(title, _fixture.ContentForCreate,
             returnContent: true);
         Assert.NotNull(page);
