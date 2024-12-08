@@ -14,32 +14,34 @@ public class NodeTests
                    a.Attributes == b.Attributes &&
                    a.Tag == b.Tag));
 
-    [Test, DisplayName("Empty")]
+    [Test]
+    [DisplayName("Empty")]
     public async Task Empty_Tests()
     {
-        var node = new Node();
+        Node node = new();
         await Assert.That(node.Children).IsNull();
         await Assert.That(node.Tag).IsEqualTo(TagEnum.P);
         node.Tag = TagEnum.H3;
         await Assert.That(node.Tag).IsEqualTo(TagEnum.H3);
     }
 
-    [Test, DisplayName("A")]
+    [Test]
+    [DisplayName("A")]
     public async Task A_Tests()
     {
-        var node = Node.A();
+        Node node = Node.A();
         await Assert.That(node.Tag).IsEqualTo(TagEnum.A);
         await Assert.That(node.Attributes).IsNotNull();
 
         const string url = "https://example.com/";
-        var node1 = Node.A(url);
+        Node node1 = Node.A(url);
         await Assert.That(node1.Tag).IsEqualTo(TagEnum.A);
         await Assert.That(node1.Children).IsNull();
         await Assert.That(node1.Attributes).IsNotNull();
         await Assert.That(node1.Attributes!.Href).IsEqualTo(url);
 
         const string child = "child";
-        var node2 = Node.A(url, child);
+        Node node2 = Node.A(url, child);
         await Assert.That(node2.Tag).IsEqualTo(TagEnum.A);
         await Assert.That(node2.Children).IsNotNull();
         await Assert.That(node2.Children!.Count).IsEqualTo(1);
@@ -49,7 +51,7 @@ public class NodeTests
 
         const string child1 = "Text 1";
         const string child2 = "Text 2";
-        var node3 = Node.A(url, child1, child2);
+        Node node3 = Node.A(url, child1, child2);
         await Assert.That(node3.Tag).IsEqualTo(TagEnum.A);
         await Assert.That(node3.Children).IsNotNull();
         await Assert.That(node3.Children!.Count).IsEqualTo(2);
@@ -58,44 +60,31 @@ public class NodeTests
         await Assert.That(node3.Attributes).IsNotNull();
         await Assert.That(node3.Attributes!.Href).IsEqualTo(url);
 
-        var node4 = Node.A(url, []);
+        Node node4 = Node.A(url, []);
         await Assert.That(node4.Children).IsNotNull();
         await Assert.That(node4.Children).IsEmpty();
         await Assert.That(node4.Attributes).IsNotNull();
         await Assert.That(node4.Attributes!.Href).IsEqualTo(url);
     }
 
-    [Test, DisplayName("Br")]
-    public async Task Br_Tests()
-    {
-        await CheckNodeNullChildren(Node.Br(), TagEnum.Br);
-    }
+    [Test]
+    [DisplayName("Br")]
+    public async Task Br_Tests() => await CheckNodeNullChildren(Node.Br(), TagEnum.Br);
 
-    [Test, DisplayName("Hr")]
-    public async Task Hr_Tests()
-    {
-        await CheckNodeNullChildren(Node.Hr(), TagEnum.Hr);
-    }
+    [Test]
+    [DisplayName("Hr")]
+    public async Task Hr_Tests() => await CheckNodeNullChildren(Node.Hr(), TagEnum.Hr);
 
-    [Test, DisplayName("Ol child nodes")]
+    [Test]
+    [DisplayName("Ol child nodes")]
     public async Task Ol_Tests()
     {
-        var nodes = new List<List<Node>>
-        {
-            new()
-            {
-                Node.P("1"),
-                Node.P("2"),
-                Node.P("3")
-            },
-            new()
-            {
-                Node.P("4"),
-                Node.P("5"),
-                Node.P("6")
-            }
-        };
-        var node5 = Node.Ol(nodes);
+        List<List<Node>> nodes =
+        [
+            new() { Node.P("1"), Node.P("2"), Node.P("3") },
+            new() { Node.P("4"), Node.P("5"), Node.P("6") }
+        ];
+        Node node5 = Node.Ol(nodes);
         await Assert.That(node5.Tag).IsEqualTo(TagEnum.Ol);
         await Assert.That(node5.Children).IsNotNull();
         await Assert.That(node5.Children!.Count).IsEqualTo(2);
@@ -105,25 +94,16 @@ public class NodeTests
         await Assert.That(node5.Children[1].Tag).IsEqualTo(TagEnum.Li);
     }
 
-    [Test, DisplayName("Ul child nodes")]
+    [Test]
+    [DisplayName("Ul child nodes")]
     public async Task Ul_Tests()
     {
-        var nodes = new List<List<Node>>
-        {
-            new()
-            {
-                Node.P("1"),
-                Node.P("2"),
-                Node.P("3")
-            },
-            new()
-            {
-                Node.P("4"),
-                Node.P("5"),
-                Node.P("6")
-            }
-        };
-        var node5 = Node.Ul(nodes);
+        List<List<Node>> nodes =
+        [
+            new() { Node.P("1"), Node.P("2"), Node.P("3") },
+            new() { Node.P("4"), Node.P("5"), Node.P("6") }
+        ];
+        Node node5 = Node.Ul(nodes);
         await Assert.That(node5.Tag).IsEqualTo(TagEnum.Ul);
         await Assert.That(node5.Children).IsNotNull();
         await Assert.That(node5.Children!.Count).IsEqualTo(2);
@@ -133,17 +113,18 @@ public class NodeTests
         await Assert.That(node5.Children[1].Tag).IsEqualTo(TagEnum.Li);
     }
 
-    [Test, DisplayName("Img")]
+    [Test]
+    [DisplayName("Img")]
     public async Task Img_Tests()
     {
-        var node = Node.Img();
+        Node node = Node.Img();
         await Assert.That(node.Tag).IsEqualTo(TagEnum.Img);
         await Assert.That(node.Attributes).IsNotNull();
         await Assert.That(node.Attributes!.Href).IsNull();
         await Assert.That(node.Attributes!.Src).IsNull();
 
         const string src = "file.jpg";
-        var node1 = Node.Img(src);
+        Node node1 = Node.Img(src);
         await Assert.That(node1.Tag).IsEqualTo(TagEnum.Img);
         await Assert.That(node1.Attributes).IsNotNull();
         await Assert.That(node1.Attributes!.Href).IsNull();
@@ -151,17 +132,18 @@ public class NodeTests
         await Assert.That(node1.Attributes.Src).IsEqualTo(src);
     }
 
-    [Test, DisplayName("Video")]
+    [Test]
+    [DisplayName("Video")]
     public async Task Video_Tests()
     {
-        var node = Node.Video();
+        Node node = Node.Video();
         await Assert.That(node.Tag).IsEqualTo(TagEnum.Video);
         await Assert.That(node.Attributes).IsNotNull();
         await Assert.That(node.Attributes!.Href).IsNull();
         await Assert.That(node.Attributes!.Src).IsNull();
 
         const string src = "file.mp4";
-        var node1 = Node.Video(src);
+        Node node1 = Node.Video(src);
         await Assert.That(node1.Tag).IsEqualTo(TagEnum.Video);
         await Assert.That(node1.Attributes).IsNotNull();
         await Assert.That(node1.Attributes!.Href).IsNull();
@@ -169,21 +151,22 @@ public class NodeTests
         await Assert.That(node1.Attributes.Src).IsEqualTo(src);
     }
 
-    [Test, DisplayName("Iframe")]
+    [Test]
+    [DisplayName("Iframe")]
     public async Task Iframe_Tests()
     {
-        var node = Node.Iframe();
+        Node node = Node.Iframe();
         await Assert.That(node.Tag).IsEqualTo(TagEnum.Iframe);
         await Assert.That(node.Attributes).IsNotNull();
         await Assert.That(node.Attributes!.Href).IsNull();
         await Assert.That(node.Attributes!.Src).IsNull();
 
         const string url1 = "https://www.youtube.com/watch?v=123456";
-        var node1 = Node.Iframe(url1);
+        Node node1 = Node.Iframe(url1);
         await Assert.That(node1.Attributes!.Src).IsEqualTo("/embed/youtube?url=" + url1);
 
         const string url2 = "https://vimeo.com/1234567";
-        var node2 = Node.Iframe(url2);
+        Node node2 = Node.Iframe(url2);
         await Assert.That(node2.Attributes!.Src).IsEqualTo("/embed/vimeo?url=" + url2);
 
         const string url3 = "https://example.link/";
@@ -191,19 +174,20 @@ public class NodeTests
         await Assert.That(exception.Message).StartsWith("Invalid link.");
 
         const string url4 = "https://www.youtu.be/watch?v=123456";
-        var node4 = Node.Iframe(url4);
+        Node node4 = Node.Iframe(url4);
         await Assert.That(node4.Attributes!.Src).IsEqualTo("/embed/youtube?url=" + url4);
     }
 
-    [Test, DisplayName("Figure")]
+    [Test]
+    [DisplayName("Figure")]
     public async Task Figure_Tests()
     {
-        var node = Node.Figure();
+        Node node = Node.Figure();
         await Assert.That(node.Tag).IsEqualTo(TagEnum.Figure);
 
         const string text = "Heading";
         const string caption = "Caption";
-        var node1 = Node.Figure(text, caption);
+        Node node1 = Node.Figure(text, caption);
         await Assert.That(node1.Tag).IsEqualTo(TagEnum.Figure);
         await Assert.That(node1.Children).IsNotNull();
         await Assert.That(node1.Children!.Count).IsEqualTo(2);
@@ -211,13 +195,14 @@ public class NodeTests
         await Assert.That(node1.Children[1]).IsEqualTo(caption, s_nodeComparer);
     }
 
-    [Test, DisplayName("ImageFigure")]
+    [Test]
+    [DisplayName("ImageFigure")]
     public async Task ImageFigure_Tests()
     {
         const string imgSrc = "image.jpg";
         const string caption1 = "caption1";
         const string caption2 = "caption2";
-        var node = Node.ImageFigure(imgSrc, caption1, caption2);
+        Node node = Node.ImageFigure(imgSrc, caption1, caption2);
         await Assert.That(node.Tag).IsEqualTo(TagEnum.Figure);
         await Assert.That(node.Children).IsNotNull();
         await Assert.That(node.Children![0].Tag).IsEqualTo(TagEnum.Img);
@@ -227,13 +212,14 @@ public class NodeTests
         await Assert.That(node.Children[1].Children![1]).IsEqualTo(caption2, s_nodeComparer);
     }
 
-    [Test, DisplayName("VideoFigure")]
+    [Test]
+    [DisplayName("VideoFigure")]
     public async Task VideoFigure_Tests()
     {
         const string videoSrc = "video.mp4";
         const string caption1 = "caption1";
         const string caption2 = "caption2";
-        var node = Node.VideoFigure(videoSrc, caption1, caption2);
+        Node node = Node.VideoFigure(videoSrc, caption1, caption2);
         await Assert.That(node.Tag).IsEqualTo(TagEnum.Figure);
         await Assert.That(node.Children).IsNotNull();
         await Assert.That(node.Children![0].Tag).IsEqualTo(TagEnum.Video);
@@ -243,13 +229,14 @@ public class NodeTests
         await Assert.That(node.Children[1].Children![1]).IsEqualTo(caption2, s_nodeComparer);
     }
 
-    [Test, DisplayName("IframeFigure")]
+    [Test]
+    [DisplayName("IframeFigure")]
     public async Task IframeFigure_Tests()
     {
         const string imgSrc = "https://www.youtube.com/watch?v=123456";
         const string caption1 = "caption1";
         const string caption2 = "caption2";
-        var node = Node.IframeFigure(imgSrc, caption1, caption2);
+        Node node = Node.IframeFigure(imgSrc, caption1, caption2);
         await Assert.That(node.Tag).IsEqualTo(TagEnum.Figure);
         await Assert.That(node.Children).IsNotNull();
         await Assert.That(node.Children![0].Tag).IsEqualTo(TagEnum.Iframe);
@@ -284,13 +271,16 @@ public class NodeTests
         await Assert.That(node.Children[0]).IsEqualTo(expectedText, s_nodeComparer);
     }
 
-    private static async Task CheckMultipleTextContentNode(Node node, TagEnum expectedTag, params string[] expectedTexts)
+    private static async Task CheckMultipleTextContentNode(Node node, TagEnum expectedTag,
+        params string[] expectedTexts)
     {
         await Assert.That(node.Tag).IsEqualTo(expectedTag);
         await Assert.That(node.Children).IsNotNull();
         await Assert.That(node.Children!.Count).IsEqualTo(expectedTexts.Length);
         for (int i = 0; i < expectedTexts.Length; ++i)
+        {
             await Assert.That(node.Children[i].Value).IsEqualTo(expectedTexts[i]);
+        }
     }
 
     private static async Task CheckNodeNullChildren(Node node, TagEnum expectedTag)

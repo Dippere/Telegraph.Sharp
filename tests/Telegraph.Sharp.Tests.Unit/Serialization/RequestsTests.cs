@@ -6,26 +6,20 @@ namespace Telegraph.Sharp.Tests.Unit.Serialization;
 
 public class RequestsTests
 {
-    [Test, DisplayName("Create account")]
+    [Test]
+    [DisplayName("Create account")]
     public async Task CreateAccountSerialization()
     {
-        var request = new CreateAccount("test")
-        {
-            AuthorName = "test1",
-            AuthorUrl = "test2"
-        };
+        CreateAccount request = new("test") { AuthorName = "test1", AuthorUrl = "test2" };
         string json = JsonSerializer.Serialize(request, TelegraphSerializerContext.Default.CreateAccount);
         await Assert.That(json).Contains("\"author_url\": \"test2\"");
     }
 
-    [Test, DisplayName("Create page")]
+    [Test]
+    [DisplayName("Create page")]
     public async Task CreatePageSerialization()
     {
-        var request = new CreatePage("test", "Title", [])
-        {
-            AuthorName = "test1",
-            AuthorUrl = "test2"
-        };
+        CreatePage request = new("test", "Title", []) { AuthorName = "test1", AuthorUrl = "test2" };
         string json = JsonSerializer.Serialize(request, TelegraphSerializerContext.Default.CreatePage);
         await Assert.That(json).Contains("\"author_url\": \"test2\"");
     }

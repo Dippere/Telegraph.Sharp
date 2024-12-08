@@ -1,20 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <LangVersion>13</LangVersion>
-        <IsPackable>false</IsPackable>
-        <PublishAot>true</PublishAot>
-        <TargetFramework>net9.0</TargetFramework>
-    </PropertyGroup>
+  <PropertyGroup>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>13</LangVersion>
+    <IsPackable>false</IsPackable>
+    <PublishAot>true</PublishAot>
+    <TargetFramework>net9.0</TargetFramework>
+  </PropertyGroup>
 
-    <ItemGroup>
-      <PackageReference Include="TUnit" Version="0.4.86" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="TUnit" Version="0.4.86"/>
+  </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\..\src\Telegraph.Sharp\Telegraph.Sharp.csproj" />
-    </ItemGroup>
-    
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Telegraph.Sharp\Telegraph.Sharp.csproj"/>
+  </ItemGroup>
+
 </Project>

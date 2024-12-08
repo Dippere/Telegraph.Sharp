@@ -9,7 +9,7 @@ public class NodeTests
     [Test]
     public async Task SerializeNode_ReturnsCorrectJson()
     {
-        var nodes = new List<Node>
+        List<Node> nodes = new()
         {
             Node.H3("Test header"),
             Node.P("Hello, World!"),
