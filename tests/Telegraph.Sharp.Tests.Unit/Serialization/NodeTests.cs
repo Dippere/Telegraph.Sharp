@@ -1,14 +1,13 @@
 ﻿using System.Text.Json;
-using Telegraph.Sharp.Tests.Unit.Data;
+using Telegraph.Sharp.Serialization;
 using Telegraph.Sharp.Types;
-using Xunit;
 
 namespace Telegraph.Sharp.Tests.Unit.Serialization;
 
 public class NodeTests
 {
-    [Fact]
-    public void SerializeNode_ReturnsCorrectJson()
+    [Test]
+    public async Task SerializeNode_ReturnsCorrectJson()
     {
         var nodes = new List<Node>
         {
@@ -16,12 +15,12 @@ public class NodeTests
             Node.P("Hello, World!"),
             Node.ImageFigure("https://telegra.ph/images/logo.png", "Logo")
         };
-        var json = JsonSerializer.Serialize(nodes, SerialOpt.SerializerOptions);
-        Assert.Contains("\"tag\":\"figcaption\"", json);
+        string json = JsonSerializer.Serialize(nodes, TelegraphSerializerContext.Default.ListNode);
+        await Assert.That(json).Contains("\"tag\": \"figcaption\"");
     }
 
-    [Fact]
-    public void DeserializeNode_ReturnsCorrectNode()
+    [Test]
+    public async Task DeserializeNode_ReturnsCorrectNode()
     {
         const string value = """
                              [
@@ -59,11 +58,11 @@ public class NodeTests
                                  }
                              ]
                              """;
-        var nodes = JsonSerializer.Deserialize<List<Node>>(value, SerialOpt.SerializerOptions);
-        Assert.NotNull(nodes);
-        Assert.Equal(3, nodes.Count);
-        Assert.Equal("Test header", nodes[0].Children![0].Value);
-        Assert.Equal("Hello, World!", nodes[1].Children![0].Value);
-        Assert.Equal("Logo", nodes[2].Children![1].Children![0].Value);
+        List<Node>? nodes = JsonSerializer.Deserialize(value, TelegraphSerializerContext.Default.ListNode);
+        await Assert.That(nodes).IsNotNull();
+        await Assert.That(nodes!.Count).IsEqualTo(3);
+        await Assert.That(nodes[0].Children![0].Value).IsEqualTo("Test header");
+        await Assert.That(nodes[1].Children![0].Value).IsEqualTo("Hello, World!");
+        await Assert.That(nodes[2].Children![1].Children![0].Value).IsEqualTo("Logo");
     }
 }

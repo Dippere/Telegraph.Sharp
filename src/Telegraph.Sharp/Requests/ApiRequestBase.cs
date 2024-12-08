@@ -27,7 +27,7 @@ public abstract class ApiRequestBase<TResponse> : IRequest<TResponse>
     public virtual HttpContent ToHttpContent()
     {
         var content = new StringContent(
-            JsonSerializer.Serialize(this, GetType(), SourceGenerationContext.Default),
+            JsonSerializer.Serialize(this, GetType(), TelegraphSerializerContext.Default),
             Encoding.UTF8,
             "application/json"
         );

@@ -17,7 +17,7 @@ internal static class StreamExtensions
     {
         if (stream is null || !stream.CanRead)
             return default;
-        T? searchResult = JsonSerializer.Deserialize(stream,  typeof(T), SourceGenerationContext.Default) as T;
+        T? searchResult = JsonSerializer.Deserialize(stream,  typeof(T), TelegraphSerializerContext.Default) as T;
         return searchResult;
     }
 }

@@ -17,9 +17,9 @@ internal class NodeConverter : JsonConverter<Node>
             JsonValueKind.String => new Node { Value = rootElement.GetString()! },
             JsonValueKind.Object => new Node
             {
-                Tag = rootElement.TryGetProperty("tag", out JsonElement tagElement) ? JsonSerializer.Deserialize(tagElement, SourceGenerationContext.Default.TagEnum): default,
-                Attributes = rootElement.TryGetProperty("attrs", out JsonElement attrsElement) ? JsonSerializer.Deserialize(attrsElement, SourceGenerationContext.Default.TagAttributes) : default,
-                Children = rootElement.TryGetProperty("children", out JsonElement childrenElement) ? JsonSerializer.Deserialize(childrenElement,SourceGenerationContext.Default.ListNode) : default
+                Tag = rootElement.TryGetProperty("tag", out JsonElement tagElement) ? JsonSerializer.Deserialize(tagElement, TelegraphSerializerContext.Default.TagEnum): default,
+                Attributes = rootElement.TryGetProperty("attrs", out JsonElement attrsElement) ? JsonSerializer.Deserialize(attrsElement, TelegraphSerializerContext.Default.TagAttributes) : default,
+                Children = rootElement.TryGetProperty("children", out JsonElement childrenElement) ? JsonSerializer.Deserialize(childrenElement,TelegraphSerializerContext.Default.ListNode) : default
             },
             _ => throw new JsonException("Invalid node")
         };
@@ -34,16 +34,16 @@ internal class NodeConverter : JsonConverter<Node>
         }
         writer.WriteStartObject();
         writer.WritePropertyName("tag");
-        JsonSerializer.Serialize(writer, value.Tag, SourceGenerationContext.Default.TagEnum);
+        JsonSerializer.Serialize(writer, value.Tag, TelegraphSerializerContext.Default.TagEnum);
         if (value.Attributes is not null)
         {
             writer.WritePropertyName("attrs");
-            JsonSerializer.Serialize(writer, value.Attributes, SourceGenerationContext.Default.TagAttributes);
+            JsonSerializer.Serialize(writer, value.Attributes, TelegraphSerializerContext.Default.TagAttributes);
         }
         if (value.Children is { Count: > 0 })
         {
             writer.WritePropertyName("children");
-            JsonSerializer.Serialize(writer, value.Children, SourceGenerationContext.Default.ListNode);
+            JsonSerializer.Serialize(writer, value.Children, TelegraphSerializerContext.Default.ListNode);
         }
 
         writer.WriteEndObject();

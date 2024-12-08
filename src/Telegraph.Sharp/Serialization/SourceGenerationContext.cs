@@ -4,6 +4,10 @@ using Telegraph.Sharp.Types;
 
 namespace Telegraph.Sharp.Serialization;
 
+
+/// <summary>
+/// <see cref="JsonSerializerContext"/> for Telegraph API.
+/// </summary>
 [JsonSourceGenerationOptions(WriteIndented = true, PropertyNamingPolicy = JsonKnownNamingPolicy.SnakeCaseLower)]
 // Serialization
 [JsonSerializable(typeof(CreateAccount), GenerationMode = JsonSourceGenerationMode.Serialization)]
@@ -22,4 +26,4 @@ namespace Telegraph.Sharp.Serialization;
 [JsonSerializable(typeof(TelegraphApiResponse<PageList>))]
 [JsonSerializable(typeof(TelegraphApiResponse<Page>))]
 [JsonSerializable(typeof(TelegraphApiResponse<PageViews>))]
-internal partial class SourceGenerationContext : JsonSerializerContext;
+public partial class TelegraphSerializerContext : JsonSerializerContext;

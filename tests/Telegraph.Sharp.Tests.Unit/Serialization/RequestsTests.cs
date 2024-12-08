@@ -1,34 +1,32 @@
 ﻿using System.Text.Json;
 using Telegraph.Sharp.Requests;
-using Telegraph.Sharp.Tests.Unit.Data;
-using Telegraph.Sharp.Types;
-using Xunit;
+using Telegraph.Sharp.Serialization;
 
 namespace Telegraph.Sharp.Tests.Unit.Serialization;
 
 public class RequestsTests
 {
-    [Fact(DisplayName = "Create Account")]
-    public void CreateAccountSerialization()
+    [Test, DisplayName("Create account")]
+    public async Task CreateAccountSerialization()
     {
         var request = new CreateAccount("test")
         {
             AuthorName = "test1",
             AuthorUrl = "test2"
         };
-        var json = JsonSerializer.Serialize(request, SerialOpt.SerializerOptions);
-        Assert.Contains("\"author_url\":\"test2\"", json);
+        string json = JsonSerializer.Serialize(request, TelegraphSerializerContext.Default.CreateAccount);
+        await Assert.That(json).Contains("\"author_url\": \"test2\"");
     }
 
-    [Fact(DisplayName = "Create Page")]
-    public void CreatePageSerialization()
+    [Test, DisplayName("Create page")]
+    public async Task CreatePageSerialization()
     {
-        var request = new CreatePage("test", "Title", new List<Node>())
+        var request = new CreatePage("test", "Title", [])
         {
             AuthorName = "test1",
             AuthorUrl = "test2"
         };
-        var json = JsonSerializer.Serialize(request, SerialOpt.SerializerOptions);
-        Assert.Contains("\"author_url\":\"test2\"", json);
+        string json = JsonSerializer.Serialize(request, TelegraphSerializerContext.Default.CreatePage);
+        await Assert.That(json).Contains("\"author_url\": \"test2\"");
     }
 }

@@ -6,10 +6,10 @@ public sealed class RequestsFixture : IDisposable
 {
     public const string PageViewsPath = "Telegraph-manual-08-14";
 
-    public readonly string AccountAuthorName = "testAuthorName2";
-    public readonly string AccountAuthorUrl = "https://testAuthorUrl2.com/";
+    public const string AccountAuthorName = "testAuthorName2";
+    public const string AccountAuthorUrl = "https://testAuthorUrl2.com/";
 
-    public readonly string AccountShortName = "testShortName2";
+    public const string AccountShortName = "testShortName2";
 
     public readonly List<Node> ContentForCreate =
     [
