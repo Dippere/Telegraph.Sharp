@@ -56,8 +56,6 @@ internal static class HttpResponseMessageExtensions
                     httpResponse,
                     "Required properties not found in response"
                 );
-
-
             return deserializedObject;
         }
         finally
@@ -65,7 +63,7 @@ internal static class HttpResponseMessageExtensions
             if (contentStream is not null)
             {
 #if NET6_0_OR_GREATER
-            await contentStream.DisposeAsync().ConfigureAwait(false);
+                await contentStream.DisposeAsync().ConfigureAwait(false);
 #else
                 contentStream.Dispose();
 #endif
