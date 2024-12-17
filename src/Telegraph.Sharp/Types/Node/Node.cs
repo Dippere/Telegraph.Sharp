@@ -10,7 +10,7 @@ public partial class Node
     {
         var node = new Node { Tag = tag };
         if (children is not null)
-            node.Children = children.ToList();
+            node.Children = [.. children];
         if (attributes is not null)
             node.Attributes = attributes;
         return node;
@@ -514,8 +514,8 @@ public partial class Node
             throw new TelegraphException("Invalid URL format.");
         }
 
-        var host = uri.Host;
-        foreach (var resource in resources)
+        string host = uri.Host;
+        foreach (KeyValuePair<string, string> resource in resources)
         {
             if (host.EndsWith(resource.Key, System.StringComparison.OrdinalIgnoreCase))
             {
