@@ -6,10 +6,10 @@ namespace Telegraph.Sharp.Tests.Integ.Methods;
 
 public class RequestsTests
 {
-    private static readonly RequestsFixture _fixture = new();
+    private static readonly RequestsFixture s_fixture = new();
 
     [After(Class)]
-    public static void CleanUp() => _fixture.Dispose();
+    public static void CleanUp() => s_fixture.Dispose();
 
     #region Node equals checker
 
@@ -44,12 +44,12 @@ public class RequestsTests
     [Arguments("testShortName", "testAuthorName", "https://testAuthorUrl.com/")]
     public async Task CreateAccountTests(string shortName, string? authorName, string? authorUrl)
     {
-        Account account = await _fixture.TelegraphClient.CreateAccountAsync(shortName, authorName, authorUrl);
+        Account account = await s_fixture.TelegraphClient.CreateAccountAsync(shortName, authorName, authorUrl);
         await Assert.That(account).IsNotNull();
         await Assert.That(account.ShortName).IsEqualTo(shortName);
         await Assert.That(account.AuthorName).IsEqualTo(authorName ?? string.Empty);
         await Assert.That(account.AuthorUrl).IsEqualTo(authorUrl ?? string.Empty);
-        _fixture.TelegraphClient = new TelegraphClient(account.AccessToken!, _fixture.HttpClient);
+        s_fixture.TelegraphClient = new TelegraphClient(account.AccessToken!, s_fixture.HttpClient);
     }
 
     [Test]
@@ -57,11 +57,11 @@ public class RequestsTests
     [DependsOn(nameof(EditPageTests))]
     public async Task GetPageTests()
     {
-        Page page = await _fixture.TelegraphClient.GetPageAsync(_fixture.PagePath, true);
+        Page page = await s_fixture.TelegraphClient.GetPageAsync(s_fixture.PagePath, true);
         await Assert.That(page).IsNotNull();
         await Assert.That(page.Content).IsNotNull();
-        await Assert.That(page.Content!.Count).IsEqualTo(_fixture.ContentForEdit.Count);
-        await CheckNodesEquality(page.Content, _fixture.ContentForEdit);
+        await Assert.That(page.Content!.Count).IsEqualTo(s_fixture.ContentForEdit.Count);
+        await CheckNodesEquality(page.Content, s_fixture.ContentForEdit);
     }
 
     [Test]
@@ -74,9 +74,9 @@ public class RequestsTests
     [Arguments(2023, 1, 20, 20)]
     public async Task GetViewsTests(int? year, int? month, int? day, int? hour)
     {
-        PageViews pageViews = await _fixture.TelegraphClient.GetViewsAsync(RequestsFixture.PageViewsPath, year, month, day, hour);
+        PageViews pageViews = await s_fixture.TelegraphClient.GetViewsAsync(RequestsFixture.PageViewsPath, year, month, day, hour);
         await Assert.That(pageViews).IsNotNull();
-        // Sometimes server return 0 as result, idk how to fix it
+        // Sometimes server return 0 as a result, idk how to fix it
         await Assert.That(pageViews.Views >= 0).IsTrue();
     }
 
@@ -89,7 +89,7 @@ public class RequestsTests
     [Arguments(null, 1, 20, null)]
     public async Task GetViewsShouldThrowRequestExceptionTests(int? year, int? month, int? day, int? hour) =>
         await Assert.ThrowsAsync<RequestException>(async () =>
-            await _fixture.TelegraphClient.GetViewsAsync(RequestsFixture.PageViewsPath, year, month, day, hour));
+            await s_fixture.TelegraphClient.GetViewsAsync(RequestsFixture.PageViewsPath, year, month, day, hour));
 
     #endregion
 
@@ -101,14 +101,14 @@ public class RequestsTests
     public async Task CreatePageTests()
     {
         const string title = "test-title1";
-        Page page = await _fixture.TelegraphClient.CreatePageAsync(title, _fixture.ContentForCreate,
+        Page page = await s_fixture.TelegraphClient.CreatePageAsync(title, s_fixture.ContentForCreate,
             returnContent: true);
         await Assert.That(page).IsNotNull();
         await Assert.That(page.Title).IsEqualTo(title);
         await Assert.That(page.Content).IsNotNull();
-        await Assert.That(page.Content!.Count).IsEqualTo(_fixture.ContentForCreate.Count);
-        await CheckNodesEquality(page.Content, _fixture.ContentForCreate);
-        _fixture.PagePath = page.Path;
+        await Assert.That(page.Content!.Count).IsEqualTo(s_fixture.ContentForCreate.Count);
+        await CheckNodesEquality(page.Content, s_fixture.ContentForCreate);
+        s_fixture.PagePath = page.Path;
     }
 
     [Test]
@@ -117,13 +117,13 @@ public class RequestsTests
     public async Task EditPageTests()
     {
         const string title = "test-edited-title";
-        Page page = await _fixture.TelegraphClient.EditPageAsync(_fixture.PagePath, title, _fixture.ContentForEdit,
+        Page page = await s_fixture.TelegraphClient.EditPageAsync(s_fixture.PagePath, title, s_fixture.ContentForEdit,
             returnContent: true);
         await Assert.That(page).IsNotNull();
         await Assert.That(page.Title).IsEqualTo(title);
         await Assert.That(page.Content).IsNotNull();
-        await Assert.That(page.Content!.Count).IsEqualTo(_fixture.ContentForEdit.Count);
-        await CheckNodesEquality(page.Content, _fixture.ContentForEdit);
+        await Assert.That(page.Content!.Count).IsEqualTo(s_fixture.ContentForEdit.Count);
+        await CheckNodesEquality(page.Content, s_fixture.ContentForEdit);
     }
 
     [Test]
@@ -131,11 +131,11 @@ public class RequestsTests
     [DependsOn(nameof(GetPageTests))]
     public async Task GetPageListTests()
     {
-        PageList pageList = await _fixture.TelegraphClient.GetPageListAsync();
+        PageList pageList = await s_fixture.TelegraphClient.GetPageListAsync();
         await Assert.That(pageList).IsNotNull();
         await Assert.That(pageList.TotalCount).IsEqualTo(1);
         await Assert.That(pageList.Pages).IsNotNull().And.HasSingleItem();
-        await Assert.That(pageList.Pages[0].Path).IsEqualTo(_fixture.PagePath);
+        await Assert.That(pageList.Pages[0].Path).IsEqualTo(s_fixture.PagePath);
     }
 
 
@@ -161,7 +161,7 @@ public class RequestsTests
         int? expectedPageCount
     )
     {
-        Account account = await _fixture.TelegraphClient.GetAccountInfoAsync(shortName,
+        Account account = await s_fixture.TelegraphClient.GetAccountInfoAsync(shortName,
             authorName,
             authorUrl,
             authUrl,
@@ -179,17 +179,17 @@ public class RequestsTests
     [DependsOn(nameof(GetAccountInfoTests))]
     public async Task EditAccountInfoTests()
     {
-        Account editedAccount1 = await _fixture.TelegraphClient.EditAccountInfoAsync(RequestsFixture.AccountShortName);
+        Account editedAccount1 = await s_fixture.TelegraphClient.EditAccountInfoAsync(RequestsFixture.AccountShortName);
         await Assert.That(editedAccount1).IsNotNull();
         await Assert.That(editedAccount1.ShortName).IsEqualTo(RequestsFixture.AccountShortName);
         await Task.Delay(3500);
         Account editedAccount2 =
-            await _fixture.TelegraphClient.EditAccountInfoAsync(authorName: RequestsFixture.AccountAuthorName);
+            await s_fixture.TelegraphClient.EditAccountInfoAsync(authorName: RequestsFixture.AccountAuthorName);
         await Assert.That(editedAccount2).IsNotNull();
         await Assert.That(editedAccount2.AuthorName).IsEqualTo(RequestsFixture.AccountAuthorName);
         await Task.Delay(3500);
         Account editedAccount3 =
-            await _fixture.TelegraphClient.EditAccountInfoAsync(authorUrl: RequestsFixture.AccountAuthorUrl);
+            await s_fixture.TelegraphClient.EditAccountInfoAsync(authorUrl: RequestsFixture.AccountAuthorUrl);
         await Assert.That(editedAccount3).IsNotNull();
         await Assert.That(editedAccount3.AuthorUrl).IsEqualTo(RequestsFixture.AccountAuthorUrl);
     }
@@ -199,10 +199,9 @@ public class RequestsTests
     [DependsOn(nameof(EditAccountInfoTests))]
     public async Task RevokeAccessTokenTests()
     {
-        Account revokedAccessToken = await _fixture.TelegraphClient.RevokeAccessTokenAsync();
+        Account revokedAccessToken = await s_fixture.TelegraphClient.RevokeAccessTokenAsync();
         await Assert.That(revokedAccessToken).IsNotNull();
-        await Assert.That(revokedAccessToken.AccessToken).IsNotNull();
-        await Assert.That(revokedAccessToken.AccessToken).IsNotEqualTo(_fixture.AccessToken);
+        await Assert.That(revokedAccessToken.AccessToken).IsNotNull().And.IsNotEqualTo(s_fixture.AccessToken);
         await Assert.That(revokedAccessToken.AuthUrl).IsNotNull();
     }
 

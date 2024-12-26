@@ -74,7 +74,7 @@ internal static class HttpResponseMessageExtensions
     private static RequestException CreateRequestException(
         HttpResponseMessage httpResponse,
         string message,
-        Exception? exception = default
+        Exception? exception = null
     ) =>
         exception is null
             ? new RequestException(

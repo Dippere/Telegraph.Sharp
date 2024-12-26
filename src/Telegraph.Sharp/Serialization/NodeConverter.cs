@@ -16,9 +16,9 @@ internal class NodeConverter : JsonConverter<Node>
             JsonValueKind.String => new Node { Value = rootElement.GetString()! },
             JsonValueKind.Object => new Node
             {
-                Tag = rootElement.TryGetProperty("tag", out JsonElement tagElement) ? JsonSerializer.Deserialize(tagElement, TelegraphSerializerContext.Default.TagEnum): default,
-                Attributes = rootElement.TryGetProperty("attrs", out JsonElement attrsElement) ? JsonSerializer.Deserialize(attrsElement, TelegraphSerializerContext.Default.TagAttributes) : default,
-                Children = rootElement.TryGetProperty("children", out JsonElement childrenElement) ? JsonSerializer.Deserialize(childrenElement,TelegraphSerializerContext.Default.ListNode) : default
+                Tag = rootElement.TryGetProperty("tag", out JsonElement tagElement) ? tagElement.Deserialize(TelegraphSerializerContext.Default.TagEnum): default,
+                Attributes = rootElement.TryGetProperty("attrs", out JsonElement attrsElement) ? attrsElement.Deserialize(TelegraphSerializerContext.Default.TagAttributes) : null,
+                Children = rootElement.TryGetProperty("children", out JsonElement childrenElement) ? childrenElement.Deserialize(TelegraphSerializerContext.Default.ListNode) : null
             },
             _ => throw new JsonException("Invalid node")
         };
