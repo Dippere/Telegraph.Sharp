@@ -31,8 +31,8 @@ public static class TelegraphClientExtension
     public static async Task<Account> CreateAccountAsync(
         this ITelegraphClient telegraphClient,
         string shortName,
-        string? authorName = default,
-        string? authorUrl = default,
+        string? authorName = null,
+        string? authorUrl = null,
         CancellationToken cancellationToken = default
     ) =>
         await telegraphClient.MakeRequestAsync(
@@ -65,9 +65,9 @@ public static class TelegraphClientExtension
         this ITelegraphClient telegraphClient,
         string title,
         List<Node> content,
-        string? authorName = default,
-        string? authorUrl = default,
-        bool returnContent = default,
+        string? authorName = null,
+        string? authorUrl = null,
+        bool returnContent = false,
         CancellationToken cancellationToken = default
     ) =>
         await telegraphClient.MakeRequestAsync(
@@ -101,9 +101,9 @@ public static class TelegraphClientExtension
         string path,
         string title,
         List<Node> content,
-        string? authorName = default,
-        string? authorUrl = default,
-        bool returnContent = default,
+        string? authorName = null,
+        string? authorUrl = null,
+        bool returnContent = false,
         CancellationToken cancellationToken = default
     ) =>
         await telegraphClient.MakeRequestAsync(
@@ -129,13 +129,13 @@ public static class TelegraphClientExtension
     public static async Task<Page> GetPageAsync(
         this ITelegraphClient telegraphClient,
         string path,
-        bool returnContent = default,
+        bool returnContent = false,
         CancellationToken cancellationToken = default
     ) =>
         await telegraphClient.MakeRequestAsync(
             new GetPage(path)
             {
-                ReturnContent = returnContent,
+                ReturnContent = returnContent
             }, cancellationToken
         ).ConfigureAwait(false);
 
@@ -151,7 +151,7 @@ public static class TelegraphClientExtension
     /// <returns>Returns a <see cref="PageList"/> object, sorted by most recently created pages first.</returns>
     public static async Task<PageList> GetPageListAsync(
         this ITelegraphClient telegraphClient,
-        int offset = default,
+        int offset = 0,
         int limit = 50,
         CancellationToken cancellationToken = default
     ) =>
@@ -164,7 +164,7 @@ public static class TelegraphClientExtension
         ).ConfigureAwait(false);
 
     /// <summary>
-    /// Use this method to get the number of views for article. 
+    /// Use this method to get the number of views for article.
     /// </summary>
     /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient"/>.</param>
     /// <param name="path">
@@ -189,10 +189,10 @@ public static class TelegraphClientExtension
     public static async Task<PageViews> GetViewsAsync(
         this ITelegraphClient telegraphClient,
         string path,
-        int? year = default,
-        int? month = default,
-        int? day = default,
-        int? hour = default,
+        int? year = null,
+        int? month = null,
+        int? day = null,
+        int? hour = null,
         CancellationToken cancellationToken = default
     ) =>
         await telegraphClient.MakeRequestAsync(
@@ -218,9 +218,9 @@ public static class TelegraphClientExtension
     /// <returns>Returns an <see cref="Account"/> object with the default fields.</returns>
     public static async Task<Account> EditAccountInfoAsync(
         this ITelegraphClient telegraphClient,
-        string? shortName = default,
-        string? authorName = default,
-        string? authorUrl = default,
+        string? shortName = null,
+        string? authorName = null,
+        string? authorUrl = null,
         CancellationToken cancellationToken = default
     ) =>
         await telegraphClient.MakeRequestAsync(
@@ -248,11 +248,11 @@ public static class TelegraphClientExtension
     /// <returns>Returns an <see cref="Account"/> object.</returns>
     public static async Task<Account> GetAccountInfoAsync(
         this ITelegraphClient telegraphClient,
-        bool shortName = default,
-        bool authorName = default,
-        bool authorUrl = default,
-        bool authUrl = default,
-        bool pageCount = default,
+        bool shortName = false,
+        bool authorName = false,
+        bool authorUrl = false,
+        bool authUrl = false,
+        bool pageCount = false,
         CancellationToken cancellationToken = default
     )
     {
