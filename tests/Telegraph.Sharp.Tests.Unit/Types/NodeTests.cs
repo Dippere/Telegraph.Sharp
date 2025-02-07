@@ -45,7 +45,7 @@ public class NodeTests
         await Assert.That(node2.Tag).IsEqualTo(TagEnum.A);
         await Assert.That(node2.Children).IsNotNull();
         await Assert.That(node2.Children!.Count).IsEqualTo(1);
-        await Assert.That(node2.Children[0]).IsEqualTo(child, s_nodeComparer);
+        await Assert.That(node2.Children[0]).IsEqualTo<Node>(child, s_nodeComparer);
         await Assert.That(node2.Attributes).IsNotNull();
         await Assert.That(node2.Attributes!.Href).IsEqualTo(url);
 
@@ -55,8 +55,8 @@ public class NodeTests
         await Assert.That(node3.Tag).IsEqualTo(TagEnum.A);
         await Assert.That(node3.Children).IsNotNull();
         await Assert.That(node3.Children!.Count).IsEqualTo(2);
-        await Assert.That(node3.Children[0]).IsEqualTo(child1, s_nodeComparer);
-        await Assert.That(node3.Children[1]).IsEqualTo(child2, s_nodeComparer);
+        await Assert.That(node3.Children[0]).IsEqualTo<Node>(child1, s_nodeComparer);
+        await Assert.That(node3.Children[1]).IsEqualTo<Node>(child2, s_nodeComparer);
         await Assert.That(node3.Attributes).IsNotNull();
         await Assert.That(node3.Attributes!.Href).IsEqualTo(url);
 
@@ -191,8 +191,8 @@ public class NodeTests
         await Assert.That(node1.Tag).IsEqualTo(TagEnum.Figure);
         await Assert.That(node1.Children).IsNotNull();
         await Assert.That(node1.Children!.Count).IsEqualTo(2);
-        await Assert.That(node1.Children[0]).IsEqualTo(text, s_nodeComparer);
-        await Assert.That(node1.Children[1]).IsEqualTo(caption, s_nodeComparer);
+        await Assert.That(node1.Children[0]).IsEqualTo<Node>(text, s_nodeComparer);
+        await Assert.That(node1.Children[1]).IsEqualTo<Node>(caption, s_nodeComparer);
     }
 
     [Test]
@@ -208,8 +208,8 @@ public class NodeTests
         await Assert.That(node.Children![0].Tag).IsEqualTo(TagEnum.Img);
         await Assert.That(node.Children[1].Tag).IsEqualTo(TagEnum.Figcaption);
         await Assert.That(node.Children[0].Attributes!.Src).IsEqualTo(imgSrc);
-        await Assert.That(node.Children[1].Children![0]).IsEqualTo(caption1, s_nodeComparer);
-        await Assert.That(node.Children[1].Children![1]).IsEqualTo(caption2, s_nodeComparer);
+        await Assert.That(node.Children[1].Children![0]).IsEqualTo<Node>(caption1, s_nodeComparer);
+        await Assert.That(node.Children[1].Children![1]).IsEqualTo<Node>(caption2, s_nodeComparer);
     }
 
     [Test]
@@ -225,8 +225,8 @@ public class NodeTests
         await Assert.That(node.Children![0].Tag).IsEqualTo(TagEnum.Video);
         await Assert.That(node.Children[1].Tag).IsEqualTo(TagEnum.Figcaption);
         await Assert.That(node.Children[0].Attributes!.Src).IsEqualTo(videoSrc);
-        await Assert.That(node.Children[1].Children![0]).IsEqualTo(caption1, s_nodeComparer);
-        await Assert.That(node.Children[1].Children![1]).IsEqualTo(caption2, s_nodeComparer);
+        await Assert.That(node.Children[1].Children![0]).IsEqualTo<Node>(caption1, s_nodeComparer);
+        await Assert.That(node.Children[1].Children![1]).IsEqualTo<Node>(caption2, s_nodeComparer);
     }
 
     [Test]
@@ -242,8 +242,8 @@ public class NodeTests
         await Assert.That(node.Children![0].Tag).IsEqualTo(TagEnum.Iframe);
         await Assert.That(node.Children[1].Tag).IsEqualTo(TagEnum.Figcaption);
         await Assert.That(node.Children[0].Attributes!.Src).IsEqualTo("/embed/youtube?url=" + imgSrc);
-        await Assert.That(node.Children[1].Children![0]).IsEqualTo(caption1, s_nodeComparer);
-        await Assert.That(node.Children[1].Children![1]).IsEqualTo(caption2, s_nodeComparer);
+        await Assert.That(node.Children[1].Children![0]).IsEqualTo<Node>(caption1, s_nodeComparer);
+        await Assert.That(node.Children[1].Children![1]).IsEqualTo<Node>(caption2, s_nodeComparer);
     }
 
     #region Structured Nodes
@@ -268,7 +268,7 @@ public class NodeTests
         await Assert.That(node.Tag).IsEqualTo(expectedTag);
         await Assert.That(node.Children).IsNotNull();
         await Assert.That(node.Children!.Count).IsEqualTo(1);
-        await Assert.That(node.Children[0]).IsEqualTo(expectedText, s_nodeComparer);
+        await Assert.That(node.Children[0]).IsEqualTo<Node>(expectedText, s_nodeComparer);
     }
 
     private static async Task CheckMultipleTextContentNode(Node node, TagEnum expectedTag,

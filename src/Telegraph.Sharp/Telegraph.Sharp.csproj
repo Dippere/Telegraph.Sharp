@@ -8,18 +8,18 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
+<!--        <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>-->
         <JsonSerializerIsReflectionEnabledByDefault>false</JsonSerializerIsReflectionEnabledByDefault>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <PackageVersion>2.3.4</PackageVersion>
+        <PackageVersion>2.4.0</PackageVersion>
         <Title>Telegraph.Sharp</Title>
         <Description>Simple to use api-client for Telegra.ph API.</Description>
         <PackageId>Telegraph.Sharp</PackageId>
         <Authors>Dippere</Authors>
-        <Copyright>Copyright © Dippere 2023-2024</Copyright>
+        <Copyright>Copyright © Dippere 2023-2025</Copyright>
         <PackageIcon>package-icon.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageProjectUrl>https://github.com/Dippere/Telegraph.Sharp</PackageProjectUrl>
@@ -30,14 +30,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="System.Text.Json" Version="9.0.0" />
+        <PackageReference Include="System.Text.Json" Version="9.0.1" />
     </ItemGroup>
-    
+
     <ItemGroup>
         <None Include="../../package-icon.png"  Pack="true" PackagePath="/"/>
         <None Include="../../README.md" Pack="true" PackagePath="/" />
     </ItemGroup>
-    
+
     <ItemGroup Label="Dev">
         <PackageReference Include="IsExternalInit" Version="1.0.3" PrivateAssets="all" />
     </ItemGroup>

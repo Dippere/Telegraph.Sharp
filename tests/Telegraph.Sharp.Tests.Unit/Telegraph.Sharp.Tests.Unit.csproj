@@ -5,16 +5,15 @@
     <Nullable>enable</Nullable>
     <LangVersion>13</LangVersion>
     <IsPackable>false</IsPackable>
-    <PublishAot>true</PublishAot>
     <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="TUnit" Version="0.6.15" />
+    <PackageReference Include="TUnit" Version="0.10.28" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Telegraph.Sharp\Telegraph.Sharp.csproj"/>
+    <ProjectReference Include="..\..\src\Telegraph.Sharp\Telegraph.Sharp.csproj" />
   </ItemGroup>
 
 </Project>
