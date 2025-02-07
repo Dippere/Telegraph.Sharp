@@ -34,7 +34,7 @@ public class Account
     public string? AuthUrl { get; set; }
 
     /// <summary>
-    ///    Number of pages belonging to the Telegraph account.
+    ///     Number of pages belonging to the Telegraph account.
     /// </summary>
     public int? PageCount { get; set; }
 }

@@ -40,14 +40,14 @@ public partial class Node
     #region Constructors
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Node"/>.
+    ///     Initializes a new instance of the <see cref="Node" />.
     /// </summary>
     public Node()
     {
     }
 
     /// <summary>
-    ///    Initializes a new instance of the <see cref="Node"/> with value.
+    ///     Initializes a new instance of the <see cref="Node" /> with value.
     /// </summary>
     public Node(string value) => Value = value;
 
@@ -55,18 +55,18 @@ public partial class Node
 
     #region Conversion Operators
 
-    ///<summary>
-    /// Defines an implicit conversion of a <see cref="Node"/> object to a string data type.
-    ///</summary>
-    ///<param name="node">A Node object.</param>
-    ///<returns>A string that represents the value of the node.</returns>
+    /// <summary>
+    ///     Defines an implicit conversion of a <see cref="Node" /> object to a string data type.
+    /// </summary>
+    /// <param name="node">A Node object.</param>
+    /// <returns>A string that represents the value of the node.</returns>
     public static implicit operator string(Node node) => node.Value;
 
-    ///<summary>
-    /// Defines an implicit conversion of a string data type to a <see cref="Node"/> object.
-    ///</summary>
-    ///<param name="value">A string value.</param>
-    ///<returns>A new instance of a Node object with the value set to the provided string.</returns>
+    /// <summary>
+    ///     Defines an implicit conversion of a string data type to a <see cref="Node" /> object.
+    /// </summary>
+    /// <param name="value">A string value.</param>
+    /// <returns>A new instance of a Node object with the value set to the provided string.</returns>
     public static implicit operator Node(string value) => new(value);
 
     #endregion

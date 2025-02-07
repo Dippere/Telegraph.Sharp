@@ -4,9 +4,8 @@ using Telegraph.Sharp.Types;
 
 namespace Telegraph.Sharp.Serialization;
 
-
 /// <summary>
-/// <see cref="JsonSerializerContext"/> for Telegraph API.
+///     <see cref="JsonSerializerContext" /> for Telegraph API.
 /// </summary>
 [JsonSourceGenerationOptions(WriteIndented = true, PropertyNamingPolicy = JsonKnownNamingPolicy.SnakeCaseLower)]
 // Serialization

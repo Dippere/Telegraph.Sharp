@@ -10,13 +10,13 @@ public class TagAttributes
     private readonly string? _src;
 
     /// <summary>
-    /// Link value.
+    ///     Link value.
     /// </summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public string? Href { get; init; }
 
     /// <summary>
-    /// Source value.
+    ///     Source value.
     /// </summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public string? Src

@@ -56,7 +56,7 @@ public class CreatePage : ApiRequestBase<Page>, IAccessTokenTarget
     public List<Node> Content { get; init; }
 
     /// <summary>
-    ///     If <see langword= "true"/>, a content field will be returned in the Page object.
+    ///     If <see langword="true" />, a content field will be returned in the Page object.
     /// </summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool ReturnContent { get; set; }

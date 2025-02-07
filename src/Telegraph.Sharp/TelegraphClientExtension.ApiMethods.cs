@@ -12,12 +12,12 @@ namespace Telegraph.Sharp;
 public static class TelegraphClientExtension
 {
     /// <summary>
-    /// Use this method to create a new account.
+    ///     Use this method to create a new account.
     /// </summary>
-    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient"/>.</param>
+    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient" />.</param>
     /// <param name="shortName">
-    /// Required. Account name, helps users with several accounts remember which they are currently using.
-    /// <para>Displayed to the user above the "Edit/Publish" button on Telegra.ph, other users don't see this name.</para>
+    ///     Required. Account name, helps users with several accounts remember which they are currently using.
+    ///     <para>Displayed to the user above the "Edit/Publish" button on Telegra.ph, other users don't see this name.</para>
     /// </param>
     /// <param name="authorName">Default author name used when creating new articles.</param>
     /// <param name="authorUrl">
@@ -25,7 +25,7 @@ public static class TelegraphClientExtension
     ///     Can be any link, not necessarily to a Telegram profile or channel.
     /// </param>
     /// <param name="cancellationToken">
-    /// A cancellation token that can be used by other objects or threads to receive notice of cancellation.
+    ///     A cancellation token that can be used by other objects or threads to receive notice of cancellation.
     /// </param>
     /// <returns>Returns an <see cref="Account" /> object.</returns>
     public static async Task<Account> CreateAccountAsync(
@@ -38,15 +38,14 @@ public static class TelegraphClientExtension
         await telegraphClient.MakeRequestAsync(
             new CreateAccount(shortName)
             {
-                AuthorName = authorName,
-                AuthorUrl = authorUrl
+                AuthorName = authorName, AuthorUrl = authorUrl
             }, cancellationToken
         ).ConfigureAwait(false);
 
     /// <summary>
-    ///  Use this method to create a new page.
+    ///     Use this method to create a new page.
     /// </summary>
-    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient"/>.</param>
+    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient" />.</param>
     /// <param name="title">Required. Page title.</param>
     /// <param name="content">Required. Content of the page.</param>
     /// <param name="authorName">Author name, displayed below the article's title.</param>
@@ -55,10 +54,10 @@ public static class TelegraphClientExtension
     ///     Can be any link, not necessarily to a Telegram profile or channel.
     /// </param>
     /// <param name="returnContent">
-    ///     If <see langword= "true"/>, a content will be returned as list of <see cref="Node"/> objects.
+    ///     If <see langword="true" />, a content will be returned as list of <see cref="Node" /> objects.
     /// </param>
     /// <param name="cancellationToken">
-    /// A cancellation token that can be used by other objects or threads to receive notice of cancellation.
+    ///     A cancellation token that can be used by other objects or threads to receive notice of cancellation.
     /// </param>
     /// <returns>Returns an <see cref="Page" /> object.</returns>
     public static async Task<Page> CreatePageAsync(
@@ -73,27 +72,28 @@ public static class TelegraphClientExtension
         await telegraphClient.MakeRequestAsync(
             new CreatePage(telegraphClient.AccessToken!, title, content)
             {
-                AuthorName = authorName,
-                AuthorUrl = authorUrl,
-                ReturnContent = returnContent
+                AuthorName = authorName, AuthorUrl = authorUrl, ReturnContent = returnContent
             }, cancellationToken
         ).ConfigureAwait(false);
 
     /// <summary>
-    ///  Use this method to edit <see cref="Page"/>.
+    ///     Use this method to edit <see cref="Page" />.
     /// </summary>
-    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient"/>.</param>
+    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient" />.</param>
     /// <param name="path">Required. Path to the page.</param>
     /// <param name="title">Required. Page title.</param>
     /// <param name="content">Required. Content of the page.</param>
     /// <param name="authorName">Author name, displayed below the article's title.</param>
     /// <param name="authorUrl">
-    /// Profile link, opened when users click on the author's name below the title.
-    /// Can be any link, not necessarily to a Telegram profile or channel.
+    ///     Profile link, opened when users click on the author's name below the title.
+    ///     Can be any link, not necessarily to a Telegram profile or channel.
     /// </param>
-    /// <param name="returnContent"> If <see langword= "true"/>, a content will be returned as list of <see cref="Node"/> objects.</param>
+    /// <param name="returnContent">
+    ///     If <see langword="true" />, a content will be returned as list of <see cref="Node" />
+    ///     objects.
+    /// </param>
     /// <param name="cancellationToken">
-    /// A cancellation token that can be used by other objects or threads to receive notice of cancellation.
+    ///     A cancellation token that can be used by other objects or threads to receive notice of cancellation.
     /// </param>
     /// <returns>Returns an edited <see cref="Page" /> object.</returns>
     public static async Task<Page> EditPageAsync(
@@ -109,21 +109,25 @@ public static class TelegraphClientExtension
         await telegraphClient.MakeRequestAsync(
             new EditPage(telegraphClient.AccessToken!, path, title, content)
             {
-                AuthorName = authorName,
-                AuthorUrl = authorUrl,
-                ReturnContent = returnContent
+                AuthorName = authorName, AuthorUrl = authorUrl, ReturnContent = returnContent
             }, cancellationToken
         ).ConfigureAwait(false);
 
 
     /// <summary>
-    /// Use this method to get a page.
+    ///     Use this method to get a page.
     /// </summary>
-    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient"/>.</param>
-    /// <param name="path">Required. Path to the Telegraph page (in the format Title-12-31, i.e. everything that comes after http://telegra.ph/).</param>
-    /// <param name="returnContent">If <see langword= "true"/>, a content will be returned as list of <see cref="Node"/> objects.</param>
+    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient" />.</param>
+    /// <param name="path">
+    ///     Required. Path to the Telegraph page (in the format Title-12-31, i.e. everything that comes after
+    ///     http://telegra.ph/).
+    /// </param>
+    /// <param name="returnContent">
+    ///     If <see langword="true" />, a content will be returned as list of <see cref="Node" />
+    ///     objects.
+    /// </param>
     /// <param name="cancellationToken">
-    /// A cancellation token that can be used by other objects or threads to receive notice of cancellation.
+    ///     A cancellation token that can be used by other objects or threads to receive notice of cancellation.
     /// </param>
     /// <returns>Returns an <see cref="Page" /> object.</returns>
     public static async Task<Page> GetPageAsync(
@@ -140,15 +144,15 @@ public static class TelegraphClientExtension
         ).ConfigureAwait(false);
 
     /// <summary>
-    /// Use this method to get a list of pages belonging to account.
+    ///     Use this method to get a list of pages belonging to account.
     /// </summary>
-    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient"/>.</param>
+    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient" />.</param>
     /// <param name="offset">Sequential number of the first page to be returned.</param>
     /// <param name="limit">Limits the number of pages to be retrieved.</param>
     /// <param name="cancellationToken">
-    /// A cancellation token that can be used by other objects or threads to receive notice of cancellation.
+    ///     A cancellation token that can be used by other objects or threads to receive notice of cancellation.
     /// </param>
-    /// <returns>Returns a <see cref="PageList"/> object, sorted by most recently created pages first.</returns>
+    /// <returns>Returns a <see cref="PageList" /> object, sorted by most recently created pages first.</returns>
     public static async Task<PageList> GetPageListAsync(
         this ITelegraphClient telegraphClient,
         int offset = 0,
@@ -158,34 +162,34 @@ public static class TelegraphClientExtension
         await telegraphClient.MakeRequestAsync(
             new GetPageList(telegraphClient.AccessToken!)
             {
-                Limit = limit,
-                Offset = offset
+                Limit = limit, Offset = offset
             }, cancellationToken
         ).ConfigureAwait(false);
 
     /// <summary>
-    /// Use this method to get the number of views for article.
+    ///     Use this method to get the number of views for article.
     /// </summary>
-    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient"/>.</param>
+    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient" />.</param>
     /// <param name="path">
-    /// Required. Path to the Telegraph page (in the format Title-12-31, where 12 is the month and 31 the day the article was first published).
+    ///     Required. Path to the Telegraph page (in the format Title-12-31, where 12 is the month and 31 the day the article
+    ///     was first published).
     /// </param>
     /// <param name="year">
-    /// Required if month is passed. If passed, the number of page views for the requested year will be returned.
+    ///     Required if month is passed. If passed, the number of page views for the requested year will be returned.
     /// </param>
     /// <param name="month">
-    /// Required if day is passed. If passed, the number of page views for the requested month will be returned.
+    ///     Required if day is passed. If passed, the number of page views for the requested month will be returned.
     /// </param>
     /// <param name="day">
-    /// Required if hour is passed. If passed, the number of page views for the requested day will be returned.
+    ///     Required if hour is passed. If passed, the number of page views for the requested day will be returned.
     /// </param>
     /// <param name="hour">
-    /// If passed, the number of page views for the requested hour will be returned.
+    ///     If passed, the number of page views for the requested hour will be returned.
     /// </param>
     /// <param name="cancellationToken">
-    /// A cancellation token that can be used by other objects or threads to receive notice of cancellation.
+    ///     A cancellation token that can be used by other objects or threads to receive notice of cancellation.
     /// </param>
-    /// <returns>Returns a <see cref="PageViews"/> object on success.</returns>
+    /// <returns>Returns a <see cref="PageViews" /> object on success.</returns>
     public static async Task<PageViews> GetViewsAsync(
         this ITelegraphClient telegraphClient,
         string path,
@@ -198,24 +202,24 @@ public static class TelegraphClientExtension
         await telegraphClient.MakeRequestAsync(
             new GetViews(path)
             {
-                Year = year,
-                Month = month,
-                Day = day,
-                Hour = hour
+                Year = year, Month = month, Day = day, Hour = hour
             }, cancellationToken).ConfigureAwait(false);
 
 
     /// <summary>
-    /// Use this method to update information about account. Pass only the parameters that you want to edit.
+    ///     Use this method to update information about account. Pass only the parameters that you want to edit.
     /// </summary>
-    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient"/>.</param>
+    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient" />.</param>
     /// <param name="shortName">New account name.</param>
     /// <param name="authorName">New default author name used when creating new articles.</param>
-    /// <param name="authorUrl">New default profile link, opened when users click on the author's name below the title. Can be any link, not necessarily to a Telegram profile or channel.</param>
-    /// <param name="cancellationToken">
-    /// A cancellation token that can be used by other objects or threads to receive notice of cancellation.
+    /// <param name="authorUrl">
+    ///     New default profile link, opened when users click on the author's name below the title. Can be
+    ///     any link, not necessarily to a Telegram profile or channel.
     /// </param>
-    /// <returns>Returns an <see cref="Account"/> object with the default fields.</returns>
+    /// <param name="cancellationToken">
+    ///     A cancellation token that can be used by other objects or threads to receive notice of cancellation.
+    /// </param>
+    /// <returns>Returns an <see cref="Account" /> object with the default fields.</returns>
     public static async Task<Account> EditAccountInfoAsync(
         this ITelegraphClient telegraphClient,
         string? shortName = null,
@@ -226,26 +230,24 @@ public static class TelegraphClientExtension
         await telegraphClient.MakeRequestAsync(
             new EditAccountInfo(telegraphClient.AccessToken!)
             {
-                ShortName = shortName,
-                AuthorName = authorName,
-                AuthorUrl = authorUrl
+                ShortName = shortName, AuthorName = authorName, AuthorUrl = authorUrl
             }, cancellationToken
         ).ConfigureAwait(false);
 
 
     /// <summary>
-    /// Use this method to get information about account.
+    ///     Use this method to get information about account.
     /// </summary>
-    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient"/>.</param>
-    /// <param name="shortName">If <see langword= "true"/>, <see cref="Account.ShortName"/> will be returned.</param>
-    /// <param name="authorName">If <see langword= "true"/>, <see cref="Account.AuthorName"/> will be returned.</param>
-    /// <param name="authorUrl">If <see langword= "true"/>, <see cref="Account.AuthorUrl"/> will be returned.</param>
-    /// <param name="authUrl">If <see langword= "true"/>, <see cref="Account.AuthUrl"/> will be returned.</param>
-    /// <param name="pageCount">If <see langword= "true"/>, <see cref="Account.PageCount"/> will be returned.</param>
+    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient" />.</param>
+    /// <param name="shortName">If <see langword="true" />, <see cref="Account.ShortName" /> will be returned.</param>
+    /// <param name="authorName">If <see langword="true" />, <see cref="Account.AuthorName" /> will be returned.</param>
+    /// <param name="authorUrl">If <see langword="true" />, <see cref="Account.AuthorUrl" /> will be returned.</param>
+    /// <param name="authUrl">If <see langword="true" />, <see cref="Account.AuthUrl" /> will be returned.</param>
+    /// <param name="pageCount">If <see langword="true" />, <see cref="Account.PageCount" /> will be returned.</param>
     /// <param name="cancellationToken">
-    /// A cancellation token that can be used by other objects or threads to receive notice of cancellation.
+    ///     A cancellation token that can be used by other objects or threads to receive notice of cancellation.
     /// </param>
-    /// <returns>Returns an <see cref="Account"/> object.</returns>
+    /// <returns>Returns an <see cref="Account" /> object.</returns>
     public static async Task<Account> GetAccountInfoAsync(
         this ITelegraphClient telegraphClient,
         bool shortName = false,
@@ -256,27 +258,28 @@ public static class TelegraphClientExtension
         CancellationToken cancellationToken = default
     )
     {
-        var request = new GetAccountInfo(telegraphClient.AccessToken!);
+        GetAccountInfo request = new(telegraphClient.AccessToken!);
         request.SetFields(shortName, authorName, authorUrl, authUrl, pageCount);
         return await telegraphClient.MakeRequestAsync(request, cancellationToken
         ).ConfigureAwait(false);
     }
 
     /// <summary>
-    /// Use this method to revoke account <see cref="Account.AccessToken"/> and generate a new one.
+    ///     Use this method to revoke account <see cref="Account.AccessToken" /> and generate a new one.
     /// </summary>
-    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient"/>.</param>
+    /// <param name="telegraphClient">An instance of <see cref="ITelegraphClient" />.</param>
     /// <param name="cancellationToken">
-    /// A cancellation token that can be used by other objects or threads to receive notice of cancellation.
+    ///     A cancellation token that can be used by other objects or threads to receive notice of cancellation.
     /// </param>
-    /// <returns>Returns an <see cref="Account"/> object with new <see cref="Account.AccessToken"/> and <see cref="Account.AuthUrl"/> fields.</returns>
+    /// <returns>
+    ///     Returns an <see cref="Account" /> object with new <see cref="Account.AccessToken" /> and
+    ///     <see cref="Account.AuthUrl" /> fields.
+    /// </returns>
     public static async Task<Account> RevokeAccessTokenAsync(
         this ITelegraphClient telegraphClient,
         CancellationToken cancellationToken = default
-    )
-    {
-        return await telegraphClient.MakeRequestAsync(
+    ) =>
+        await telegraphClient.MakeRequestAsync(
             new RevokeAccessToken(telegraphClient.AccessToken!), cancellationToken
         ).ConfigureAwait(false);
-    }
 }

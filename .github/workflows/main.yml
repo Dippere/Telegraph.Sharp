@@ -6,34 +6,34 @@ on:
       - main
   push:
     branches:
-      - main 
+      - main
     tags:
-      - 'v*' 
+      - 'v*'
 
 jobs:
   build:
     name: Build and Test
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '9.0'
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Restore dependencies
-      run: dotnet restore ./Telegraph.Sharp.sln
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0'
 
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
+      - name: Restore dependencies
+        run: dotnet restore ./Telegraph.Sharp.sln
 
-    - name: Unit Tests
-      run: dotnet test --no-restore --verbosity normal  ./tests/Telegraph.Sharp.Tests.Unit/Telegraph.Sharp.Tests.Unit.csproj
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
 
-    - name: Integration Tests
-      run: dotnet test --no-restore --verbosity normal  ./tests/Telegraph.Sharp.Tests.Integ/Telegraph.Sharp.Tests.Integ.csproj
+      - name: Unit Tests
+        run: dotnet test --no-restore --verbosity normal  ./tests/Telegraph.Sharp.Tests.Unit/Telegraph.Sharp.Tests.Unit.csproj
+
+      - name: Integration Tests
+        run: dotnet test --no-restore --verbosity normal  ./tests/Telegraph.Sharp.Tests.Integ/Telegraph.Sharp.Tests.Integ.csproj
 
   publish:
     name: Publish on New Release
@@ -41,21 +41,21 @@ jobs:
     needs: build
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '9.0.x'
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Restore dependencies
-      run: dotnet restore ./src/Telegraph.Sharp/Telegraph.Sharp.csproj
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
 
-    - name: Build
-      run: dotnet build --configuration Release --no-restore ./src/Telegraph.Sharp/Telegraph.Sharp.csproj
-      
-    - name: Publish
-      run: |
-        dotnet pack -c Release --no-build ./src/Telegraph.Sharp/Telegraph.Sharp.csproj
-        dotnet nuget push **/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+      - name: Restore dependencies
+        run: dotnet restore ./src/Telegraph.Sharp/Telegraph.Sharp.csproj
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore ./src/Telegraph.Sharp/Telegraph.Sharp.csproj
+
+      - name: Publish
+        run: |
+          dotnet pack -c Release --no-build ./src/Telegraph.Sharp/Telegraph.Sharp.csproj
+          dotnet nuget push **/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}

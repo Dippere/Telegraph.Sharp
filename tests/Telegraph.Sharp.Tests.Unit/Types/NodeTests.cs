@@ -8,11 +8,11 @@ namespace Telegraph.Sharp.Tests.Unit.Types;
 public class NodeTests
 {
     private static readonly IEqualityComparer<Node> s_nodeComparer = EqualityComparer<Node>.Create(
-        (a, b) => (a == b && a == null) ||
-                  (a!.Value == b!.Value &&
-                   ((a.Children == null && b.Children == null) || a.Children!.SequenceEqual(b.Children!)) &&
-                   a.Attributes == b.Attributes &&
-                   a.Tag == b.Tag));
+        (a, b) => a == b && a == null ||
+                  a!.Value == b!.Value &&
+                  (a.Children == null && b.Children == null || a.Children!.SequenceEqual(b.Children!)) &&
+                  a.Attributes == b.Attributes &&
+                  a.Tag == b.Tag);
 
     [Test]
     [DisplayName("Empty")]
@@ -81,8 +81,14 @@ public class NodeTests
     {
         List<List<Node>> nodes =
         [
-            new() { Node.P("1"), Node.P("2"), Node.P("3") },
-            new() { Node.P("4"), Node.P("5"), Node.P("6") }
+            new()
+            {
+                Node.P("1"), Node.P("2"), Node.P("3")
+            },
+            new()
+            {
+                Node.P("4"), Node.P("5"), Node.P("6")
+            }
         ];
         Node node5 = Node.Ol(nodes);
         await Assert.That(node5.Tag).IsEqualTo(TagEnum.Ol);
@@ -100,8 +106,14 @@ public class NodeTests
     {
         List<List<Node>> nodes =
         [
-            new() { Node.P("1"), Node.P("2"), Node.P("3") },
-            new() { Node.P("4"), Node.P("5"), Node.P("6") }
+            new()
+            {
+                Node.P("1"), Node.P("2"), Node.P("3")
+            },
+            new()
+            {
+                Node.P("4"), Node.P("5"), Node.P("6")
+            }
         ];
         Node node5 = Node.Ul(nodes);
         await Assert.That(node5.Tag).IsEqualTo(TagEnum.Ul);

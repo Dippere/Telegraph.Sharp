@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using Telegraph.Sharp.Serialization;
 
 namespace Telegraph.Sharp.Types;
@@ -11,122 +10,122 @@ namespace Telegraph.Sharp.Types;
 public enum TagEnum
 {
     /// <summary>
-    /// Paragraph.
+    ///     Paragraph.
     /// </summary>
     P,
 
     /// <summary>
-    /// Hyperlink.
+    ///     Hyperlink.
     /// </summary>
     A,
 
     /// <summary>
-    /// Aside content.
+    ///     Aside content.
     /// </summary>
     Aside,
 
     /// <summary>
-    /// <b>Bold</b> text.
+    ///     <b>Bold</b> text.
     /// </summary>
     B,
 
     /// <summary>
-    /// Quoted block.
+    ///     Quoted block.
     /// </summary>
     Blockquote,
 
     /// <summary>
-    /// Single line break.
+    ///     Single line break.
     /// </summary>
     Br,
 
     /// <summary>
-    /// <c>Code</c> block.
+    ///     <c>Code</c> block.
     /// </summary>
     Code,
 
     /// <summary>
-    /// <i>Italic</i> text.
+    ///     <i>Italic</i> text.
     /// </summary>
     Em,
 
     /// <summary>
-    /// Caption for a <see cref="Figure"/> element.
+    ///     Caption for a <see cref="Figure" /> element.
     /// </summary>
     Figcaption,
 
     /// <summary>
-    /// Self-contained content like image, illustration, diagram, code snippet, etc.
+    ///     Self-contained content like image, illustration, diagram, code snippet, etc.
     /// </summary>
     Figure,
 
     /// <summary>
-    /// Heading 3.
+    ///     Heading 3.
     /// </summary>
     H3,
 
     /// <summary>
-    /// Heading 4.
+    ///     Heading 4.
     /// </summary>
     H4,
 
     /// <summary>
-    /// Horizontal line.
+    ///     Horizontal line.
     /// </summary>
     Hr,
 
     /// <summary>
-    /// Italic text.
+    ///     Italic text.
     /// </summary>
     I,
 
     /// <summary>
-    /// Embedded iframe.
+    ///     Embedded iframe.
     /// </summary>
     Iframe,
 
     /// <summary>
-    /// Image.
+    ///     Image.
     /// </summary>
     Img,
 
     /// <summary>
-    /// List item.
+    ///     List item.
     /// </summary>
     Li,
 
     /// <summary>
-    /// Ordered list.
+    ///     Ordered list.
     /// </summary>
     Ol,
 
     /// <summary>
-    /// Preformatted text.
+    ///     Preformatted text.
     /// </summary>
     Pre,
 
     /// <summary>
-    /// Strikethrough text.
+    ///     Strikethrough text.
     /// </summary>
     S,
 
     /// <summary>
-    /// Strongly emphasized text.
+    ///     Strongly emphasized text.
     /// </summary>
     Strong,
 
     /// <summary>
-    /// Underlined text.
+    ///     Underlined text.
     /// </summary>
     U,
 
     /// <summary>
-    /// Unordered list.
+    ///     Unordered list.
     /// </summary>
     Ul,
 
     /// <summary>
-    /// Embedded video.
+    ///     Embedded video.
     /// </summary>
     Video
 }

@@ -9,13 +9,13 @@ namespace Telegraph.Sharp.Extensions;
 internal static class HttpResponseMessageExtensions
 {
     /// <summary>
-    ///     Deserialize body from HttpContent into <typeparamref name="T"/>.
+    ///     Deserialize body from HttpContent into <typeparamref name="T" />.
     /// </summary>
     /// <param name="httpResponse"><see cref="HttpResponseMessage" /> instance.</param>
     /// <typeparam name="T">Type of the resulting object.</typeparam>
     /// <returns></returns>
     /// <exception cref="RequestException">
-    ///     Thrown when body in the response can not be deserialized into <typeparamref name="T"/>.
+    ///     Thrown when body in the response can not be deserialized into <typeparamref name="T" />.
     /// </exception>
     internal static async Task<T> DeserializeContentAsync<T>(
         this HttpResponseMessage httpResponse)
@@ -24,10 +24,12 @@ internal static class HttpResponseMessageExtensions
         Stream? contentStream = null;
 
         if (httpResponse.Content is null)
+        {
             throw new RequestException(
                 "Response doesn't contain any content",
                 httpResponse.StatusCode
             );
+        }
 
         try
         {
@@ -52,10 +54,12 @@ internal static class HttpResponseMessageExtensions
             }
 
             if (deserializedObject is null)
+            {
                 throw CreateRequestException(
                     httpResponse,
                     "Required properties not found in response"
                 );
+            }
             return deserializedObject;
         }
         finally

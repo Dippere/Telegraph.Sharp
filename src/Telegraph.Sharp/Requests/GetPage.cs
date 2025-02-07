@@ -25,7 +25,7 @@ public class GetPage : ApiRequestBase<Page>
     public string Path { get; init; }
 
     /// <summary>
-    ///     If <see langword ="true"/>, content field will be returned in Page object.
+    ///     If <see langword="true" />, content field will be returned in Page object.
     /// </summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool ReturnContent { get; set; }

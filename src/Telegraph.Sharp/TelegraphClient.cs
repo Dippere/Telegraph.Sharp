@@ -15,15 +15,13 @@ namespace Telegraph.Sharp;
 /// </summary>
 public sealed class TelegraphClient : ITelegraphClient
 {
-    /// <inheritdoc/>
-    public string? AccessToken { get; init; }
     private readonly HttpClient _httpClient;
 
     /// <summary>
     ///     Create a new <see cref="TelegraphClient" /> instance.
     /// </summary>
     /// <param name="accessToken"></param>
-    /// <param name="httpClient">A custom <see cref="HttpClient"/>.</param>
+    /// <param name="httpClient">A custom <see cref="HttpClient" />.</param>
     /// <exception cref="ArgumentException">
     ///     Thrown if <paramref name="accessToken" /> format is invalid.
     /// </exception>
@@ -38,9 +36,12 @@ public sealed class TelegraphClient : ITelegraphClient
     /// <param name="httpClient">A custom <see cref="HttpClient" />.</param>
     public TelegraphClient(HttpClient? httpClient = null) => _httpClient = httpClient ?? new HttpClient();
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
+    public string? AccessToken { get; init; }
+
+    /// <inheritdoc />
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="request"/> is null.
+    ///     <paramref name="request" /> is null.
     /// </exception>
     /// <exception cref="RequestException">
     ///     Request failed.
@@ -57,16 +58,20 @@ public sealed class TelegraphClient : ITelegraphClient
                 throw new ArgumentNullException(nameof(AccessToken));
         }
 
-        using var httpRequest = new HttpRequestMessage(HttpMethod.Post, $"{Constants.TelegpaphApiUrl}/{request.MethodName}");
+        using HttpRequestMessage? httpRequest = new(HttpMethod.Post, $"{Constants.TelegpaphApiUrl}/{request.MethodName}");
         httpRequest.Content = request.ToHttpContent();
 
         using HttpResponseMessage httpResponse = await SendRequestAsync(_httpClient, httpRequest, cancellationToken).ConfigureAwait(false);
         if (httpResponse.StatusCode != HttpStatusCode.OK)
+        {
             throw new RequestException($"Response with code: {httpResponse.StatusCode}");
+        }
 
         TelegraphApiResponse<TResponse> apiResponse = await httpResponse.DeserializeContentAsync<TelegraphApiResponse<TResponse>>().ConfigureAwait(false);
         if (apiResponse.Ok is false)
+        {
             throw new RequestException(apiResponse.Error!);
+        }
 
         return apiResponse.Result!;
     }
@@ -86,7 +91,9 @@ public sealed class TelegraphClient : ITelegraphClient
         catch (TaskCanceledException exception)
         {
             if (cancellationToken.IsCancellationRequested)
+            {
                 throw;
+            }
 
             throw new RequestException("Request timed out", exception);
         }

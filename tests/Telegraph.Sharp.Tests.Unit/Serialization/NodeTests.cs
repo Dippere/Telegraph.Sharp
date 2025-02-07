@@ -11,9 +11,7 @@ public class NodeTests
     {
         List<Node> nodes = new()
         {
-            Node.H3("Test header"),
-            Node.P("Hello, World!"),
-            Node.ImageFigure("https://telegra.ph/images/logo.png", "Logo")
+            Node.H3("Test header"), Node.P("Hello, World!"), Node.ImageFigure("https://telegra.ph/images/logo.png", "Logo")
         };
         string json = JsonSerializer.Serialize(nodes, TelegraphSerializerContext.Default.ListNode);
         await Assert.That(json).Contains("\"tag\": \"figcaption\"");

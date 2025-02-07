@@ -10,7 +10,10 @@ public class RequestsTests
     [DisplayName("Create account")]
     public async Task CreateAccountSerialization()
     {
-        CreateAccount request = new("test") { AuthorName = "test1", AuthorUrl = "test2" };
+        CreateAccount request = new("test")
+        {
+            AuthorName = "test1", AuthorUrl = "test2"
+        };
         string json = JsonSerializer.Serialize(request, TelegraphSerializerContext.Default.CreateAccount);
         await Assert.That(json).Contains("\"author_url\": \"test2\"");
     }
@@ -19,7 +22,10 @@ public class RequestsTests
     [DisplayName("Create page")]
     public async Task CreatePageSerialization()
     {
-        CreatePage request = new("test", "Title", []) { AuthorName = "test1", AuthorUrl = "test2" };
+        CreatePage request = new("test", "Title", [])
+        {
+            AuthorName = "test1", AuthorUrl = "test2"
+        };
         string json = JsonSerializer.Serialize(request, TelegraphSerializerContext.Default.CreatePage);
         await Assert.That(json).Contains("\"author_url\": \"test2\"");
     }

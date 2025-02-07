@@ -9,14 +9,17 @@ internal class NodeConverter : JsonConverter<Node>
 {
     public override Node Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        using var document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
         JsonElement rootElement = document.RootElement;
         return rootElement.ValueKind switch
         {
-            JsonValueKind.String => new Node { Value = rootElement.GetString()! },
+            JsonValueKind.String => new Node
+            {
+                Value = rootElement.GetString()!
+            },
             JsonValueKind.Object => new Node
             {
-                Tag = rootElement.TryGetProperty("tag", out JsonElement tagElement) ? tagElement.Deserialize(TelegraphSerializerContext.Default.TagEnum): default,
+                Tag = rootElement.TryGetProperty("tag", out JsonElement tagElement) ? tagElement.Deserialize(TelegraphSerializerContext.Default.TagEnum) : default,
                 Attributes = rootElement.TryGetProperty("attrs", out JsonElement attrsElement) ? attrsElement.Deserialize(TelegraphSerializerContext.Default.TagAttributes) : null,
                 Children = rootElement.TryGetProperty("children", out JsonElement childrenElement) ? childrenElement.Deserialize(TelegraphSerializerContext.Default.ListNode) : null
             },
