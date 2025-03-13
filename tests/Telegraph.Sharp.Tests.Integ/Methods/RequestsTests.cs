@@ -1,4 +1,4 @@
-﻿using Telegraph.Sharp.Exceptions;
+using Telegraph.Sharp.Exceptions;
 using Telegraph.Sharp.Tests.Integ.Fixture;
 using Telegraph.Sharp.Types;
 
@@ -40,8 +40,20 @@ public class RequestsTests
     [Arguments("testShortName", null, null)]
     [Arguments("testShortName", null, "https://testAuthorUrl.com/")]
     [Arguments("testShortName", "testAuthorName", null)]
-    [Arguments("testShortName", "testAuthorName", "https://testAuthorUrl.com/")]
     public async Task CreateAccountTests(string shortName, string? authorName, string? authorUrl)
+    {
+        Account account = await s_fixture.TelegraphClient.CreateAccountAsync(shortName, authorName, authorUrl);
+        await Assert.That(account).IsNotNull();
+        await Assert.That(account.ShortName).IsEqualTo(shortName);
+        await Assert.That(account.AuthorName).IsEqualTo(authorName ?? string.Empty);
+        await Assert.That(account.AuthorUrl).IsEqualTo(authorUrl ?? string.Empty);
+    }
+
+    [Test]
+    [DisplayName("Create single account")]
+    [DependsOn(nameof(CreateAccountTests))]
+    [Arguments("testShortName", "testAuthorName", "https://testAuthorUrl.com/")]
+    public async Task CreateSingleAccountTest(string shortName, string? authorName, string? authorUrl)
     {
         Account account = await s_fixture.TelegraphClient.CreateAccountAsync(shortName, authorName, authorUrl);
         await Assert.That(account).IsNotNull();
@@ -96,7 +108,7 @@ public class RequestsTests
 
     [Test]
     [DisplayName("Create page")]
-    [DependsOn(nameof(CreateAccountTests))]
+    [DependsOn(nameof(CreateSingleAccountTest))]
     public async Task CreatePageTests()
     {
         const string title = "test-title1";
