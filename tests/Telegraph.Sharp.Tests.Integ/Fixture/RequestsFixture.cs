@@ -29,9 +29,10 @@ public sealed class RequestsFixture : IDisposable
 
     public RequestsFixture() => TelegraphClient = new TelegraphClient(HttpClient);
 
-    public TelegraphClient TelegraphClient { get; set; }
 
-    public string? AccessToken => TelegraphClient.AccessToken;
+    public TelegraphClient TelegraphClient { get; private set; }
+
+    public string? AccessToken { get => TelegraphClient.AccessToken; set => TelegraphClient = new TelegraphClient(value!, HttpClient); }
 
     public string PagePath { get; set; } = null!;
 

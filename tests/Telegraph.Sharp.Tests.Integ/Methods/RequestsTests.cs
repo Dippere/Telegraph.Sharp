@@ -37,7 +37,6 @@ public class RequestsTests
 
     [Test]
     [DisplayName("Create account")]
-    [NotInParallel]
     [Arguments("testShortName", null, null)]
     [Arguments("testShortName", null, "https://testAuthorUrl.com/")]
     [Arguments("testShortName", "testAuthorName", null)]
@@ -49,7 +48,7 @@ public class RequestsTests
         await Assert.That(account.ShortName).IsEqualTo(shortName);
         await Assert.That(account.AuthorName).IsEqualTo(authorName ?? string.Empty);
         await Assert.That(account.AuthorUrl).IsEqualTo(authorUrl ?? string.Empty);
-        s_fixture.TelegraphClient = new TelegraphClient(account.AccessToken!, s_fixture.HttpClient);
+        s_fixture.AccessToken = account.AccessToken;
     }
 
     [Test]
