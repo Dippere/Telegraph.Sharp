@@ -81,14 +81,12 @@ public class NodeTests
     {
         List<List<Node>> nodes =
         [
-            new()
-            {
+            [
                 Node.P("1"), Node.P("2"), Node.P("3")
-            },
-            new()
-            {
+            ],
+            [
                 Node.P("4"), Node.P("5"), Node.P("6")
-            }
+            ]
         ];
         Node node5 = Node.Ol(nodes);
         await Assert.That(node5.Tag).IsEqualTo(TagEnum.Ol);

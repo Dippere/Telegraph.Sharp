@@ -9,10 +9,10 @@ public class NodeTests
     [Test]
     public async Task SerializeNode_ReturnsCorrectJson()
     {
-        List<Node> nodes = new()
-        {
+        List<Node> nodes =
+        [
             Node.H3("Test header"), Node.P("Hello, World!"), Node.ImageFigure("https://telegra.ph/images/logo.png", "Logo")
-        };
+        ];
         string json = JsonSerializer.Serialize(nodes, TelegraphSerializerContext.Default.ListNode);
         await Assert.That(json).Contains("\"tag\": \"figcaption\"");
     }
