@@ -13,7 +13,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <PackageVersion>2.4.3</PackageVersion>
+    <PackageVersion>2.4.4</PackageVersion>
     <Title>Telegraph.Sharp</Title>
     <Description>Simple to use api-client for Telegra.ph API.</Description>
     <PackageId>Telegraph.Sharp</PackageId>
@@ -29,7 +29,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="9.0.4" />
+    <PackageReference Include="System.Text.Json" Version="9.0.5" />
   </ItemGroup>
 
   <ItemGroup>
