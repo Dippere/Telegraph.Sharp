@@ -9,11 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="TUnit" Version="0.25.21"/>
+    <PackageReference Include="TUnit" Version="0.56.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Telegraph.Sharp\Telegraph.Sharp.csproj"/>
+    <ProjectReference Include="..\..\src\Telegraph.Sharp\Telegraph.Sharp.csproj" />
   </ItemGroup>
 
 </Project>
