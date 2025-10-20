@@ -8,7 +8,7 @@ public class DisplayNodesTestCaseFormatter : ArgumentDisplayFormatter
 
     public override string FormatValue(object? value)
     {
-        NodesTestCase? fixture = value as NodesTestCase;
+        var fixture = value as NodesTestCase;
         return fixture?.TagEnum.ToString() ?? string.Empty;
     }
 }
