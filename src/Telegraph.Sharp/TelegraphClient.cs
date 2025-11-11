@@ -58,7 +58,7 @@ public sealed class TelegraphClient : ITelegraphClient
                 throw new ArgumentNullException(nameof(AccessToken));
         }
 
-        using HttpRequestMessage? httpRequest = new(HttpMethod.Post, $"{Constants.TelegpaphApiUrl}/{request.MethodName}");
+        using HttpRequestMessage httpRequest = new(HttpMethod.Post, $"https://api.telegra.ph/{request.MethodName}");
         httpRequest.Content = request.ToHttpContent();
 
         using HttpResponseMessage httpResponse = await SendRequestAsync(_httpClient, httpRequest, cancellationToken).ConfigureAwait(false);
@@ -68,12 +68,7 @@ public sealed class TelegraphClient : ITelegraphClient
         }
 
         TelegraphApiResponse<TResponse> apiResponse = await httpResponse.DeserializeContentAsync<TelegraphApiResponse<TResponse>>().ConfigureAwait(false);
-        if (apiResponse.Ok is false)
-        {
-            throw new RequestException(apiResponse.Error!);
-        }
-
-        return apiResponse.Result!;
+        return apiResponse.Ok ?  apiResponse.Result! : throw new RequestException(apiResponse.Error!);
     }
 
     private static async Task<HttpResponseMessage> SendRequestAsync(

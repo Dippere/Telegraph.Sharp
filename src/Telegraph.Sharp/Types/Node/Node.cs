@@ -9,7 +9,7 @@ public partial class Node
 {
     private static Node CreateNode(TagEnum tag, IEnumerable<Node>? children = null, TagAttributes? attributes = null)
     {
-        Node? node = new()
+        Node node = new()
         {
             Tag = tag
         };
@@ -574,7 +574,7 @@ public partial class Node
     /// <param name="src">Youtube, Vimeo or Twitter link.</param>
     public static Node Iframe(string src)
     {
-        Dictionary<string, string>? resources = new()
+        Dictionary<string, string> resources = new()
         {
             {
                 "youtube.com", "youtube"
@@ -595,19 +595,11 @@ public partial class Node
             throw new TelegraphException("Invalid URL format.");
         }
 
-        string host = uri.Host;
-        foreach (KeyValuePair<string, string> resource in resources)
+        KeyValuePair<string, string> resource = resources.FirstOrDefault(r => uri.Host.EndsWith(r.Key, StringComparison.OrdinalIgnoreCase));
+        return resource.Key == null ? throw new TelegraphException("Invalid link.") : CreateNode(TagEnum.Iframe, attributes: new TagAttributes
         {
-            if (host.EndsWith(resource.Key, StringComparison.OrdinalIgnoreCase))
-            {
-                return CreateNode(TagEnum.Iframe, attributes: new TagAttributes
-                {
-                    Src = $"/embed/{resource.Value}?url={src}"
-                });
-            }
-        }
-
-        throw new TelegraphException("Invalid link.");
+            Src = $"/embed/{resource.Value}?url={src}"
+        });
     }
 
     #endregion

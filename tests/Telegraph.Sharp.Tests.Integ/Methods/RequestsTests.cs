@@ -212,7 +212,7 @@ public class RequestsTests
     {
         Account revokedAccessToken = await SFixture.TelegraphClient.RevokeAccessTokenAsync();
         await Assert.That(revokedAccessToken).IsNotNull();
-        await Assert.That(revokedAccessToken.AccessToken).IsNotNull().And.IsNotEqualTo(SFixture.AccessToken);
+        await Assert.That(revokedAccessToken.AccessToken).IsNotNull().And.IsNotEqualTo(SFixture.AccessToken!);
         await Assert.That(revokedAccessToken.AuthUrl).IsNotNull();
     }
 

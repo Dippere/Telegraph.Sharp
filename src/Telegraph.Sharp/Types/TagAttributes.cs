@@ -22,7 +22,11 @@ public class TagAttributes
     public string? Src
     {
         get => _src;
-        init => _src = value is null ? null :
-            value.StartsWith(Constants.TelegpaphUrl) ? value.Substring(Constants.TelegpaphUrl.Length) : value;
+        init
+        {
+            const string telegraphUrl = "https://telegra.ph";
+            _src = value is null ? null :
+                value.StartsWith(telegraphUrl) ? value.Substring(telegraphUrl.Length) : value;
+        }
     }
 }
