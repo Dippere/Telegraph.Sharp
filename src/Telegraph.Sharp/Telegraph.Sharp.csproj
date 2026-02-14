@@ -18,7 +18,7 @@
     <Description>Simple to use api-client for Telegra.ph API.</Description>
     <PackageId>Telegraph.Sharp</PackageId>
     <Authors>Dippere</Authors>
-    <Copyright>Copyright © Dippere 2023-2025</Copyright>
+    <Copyright>Copyright © Dippere 2023-2026</Copyright>
     <PackageIcon>package-icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/Dippere/Telegraph.Sharp</PackageProjectUrl>
