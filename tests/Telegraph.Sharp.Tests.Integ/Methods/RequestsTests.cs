@@ -99,7 +99,7 @@ public class RequestsTests
     [Arguments(null, 1, null, null)]
     [Arguments(null, 1, 20, null)]
     public async Task GetViewsShouldThrowRequestExceptionTests(int? year, int? month, int? day, int? hour) =>
-        await Assert.ThrowsAsync<RequestException>(async () =>
+        await Assert.ThrowsAsync<TelegraphRequestException>(async () =>
             await SFixture.TelegraphClient.GetViewsAsync(RequestsFixture.PageViewsPath, year, month, day, hour));
 
     #endregion

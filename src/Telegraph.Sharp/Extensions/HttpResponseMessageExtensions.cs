@@ -14,7 +14,7 @@ internal static class HttpResponseMessageExtensions
     /// <param name="httpResponse"><see cref="HttpResponseMessage" /> instance.</param>
     /// <typeparam name="T">Type of the resulting object.</typeparam>
     /// <returns></returns>
-    /// <exception cref="RequestException">
+    /// <exception cref="TelegraphRequestException">
     ///     Thrown when body in the response can not be deserialized into <typeparamref name="T" />.
     /// </exception>
     internal static async Task<T> DeserializeContentAsync<T>(
@@ -25,7 +25,7 @@ internal static class HttpResponseMessageExtensions
 
         if (httpResponse.Content is null)
         {
-            throw new RequestException(
+            throw new TelegraphRequestException(
                 "Response doesn't contain any content",
                 httpResponse.StatusCode
             );
@@ -75,17 +75,17 @@ internal static class HttpResponseMessageExtensions
         }
     }
 
-    private static RequestException CreateRequestException(
+    private static TelegraphRequestException CreateRequestException(
         HttpResponseMessage httpResponse,
         string message,
         Exception? exception = null
     ) =>
         exception is null
-            ? new RequestException(
+            ? new TelegraphRequestException(
                 message,
                 httpResponse.StatusCode
             )
-            : new RequestException(
+            : new TelegraphRequestException(
                 message,
                 httpResponse.StatusCode,
                 exception

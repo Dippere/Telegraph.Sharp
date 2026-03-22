@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Security.AccessControl;
 using System.Threading;
 using System.Threading.Tasks;
 using Telegraph.Sharp.Exceptions;
@@ -43,7 +44,7 @@ public sealed class TelegraphClient : ITelegraphClient
     /// <exception cref="ArgumentNullException">
     ///     <paramref name="request" /> is null.
     /// </exception>
-    /// <exception cref="RequestException">
+    /// <exception cref="TelegraphRequestException">
     ///     Request failed.
     /// </exception>
     public async Task<TResponse> MakeRequestAsync<TResponse>(
@@ -55,7 +56,7 @@ public sealed class TelegraphClient : ITelegraphClient
             case null:
                 throw new ArgumentNullException(nameof(request));
             case IAccessTokenTarget when AccessToken == null:
-                throw new ArgumentNullException(nameof(AccessToken));
+                throw new InvalidOperationException($"{nameof(AccessToken)} must be set.");
         }
 
         using HttpRequestMessage httpRequest = new(HttpMethod.Post, $"https://api.telegra.ph/{request.MethodName}");
@@ -64,11 +65,11 @@ public sealed class TelegraphClient : ITelegraphClient
         using HttpResponseMessage httpResponse = await SendRequestAsync(_httpClient, httpRequest, cancellationToken).ConfigureAwait(false);
         if (httpResponse.StatusCode != HttpStatusCode.OK)
         {
-            throw new RequestException($"Response with code: {httpResponse.StatusCode}");
+            throw new TelegraphRequestException($"Response with code: {httpResponse.StatusCode}");
         }
 
         TelegraphApiResponse<TResponse> apiResponse = await httpResponse.DeserializeContentAsync<TelegraphApiResponse<TResponse>>().ConfigureAwait(false);
-        return apiResponse.Ok ?  apiResponse.Result! : throw new RequestException(apiResponse.Error!);
+        return apiResponse.Ok ?  apiResponse.Result! : throw new TelegraphRequestException(apiResponse.Error!);
     }
 
     private static async Task<HttpResponseMessage> SendRequestAsync(
@@ -89,12 +90,11 @@ public sealed class TelegraphClient : ITelegraphClient
             {
                 throw;
             }
-
-            throw new RequestException("Request timed out", exception);
+            throw new TelegraphRequestException("Request timed out", exception);
         }
         catch (Exception exception)
         {
-            throw new RequestException(
+            throw new TelegraphRequestException(
                 "Exception during making request",
                 exception
             );

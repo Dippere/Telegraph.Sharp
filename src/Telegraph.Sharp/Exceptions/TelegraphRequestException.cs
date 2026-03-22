@@ -6,19 +6,19 @@ namespace Telegraph.Sharp.Exceptions;
 /// <summary>
 ///     Represents a request error.
 /// </summary>
-public class RequestException : Exception
+public class TelegraphRequestException : Exception
 {
     /// <summary>
-    ///     Initializes a new instance of the <see cref="RequestException" /> class.
+    ///     Initializes a new instance of the <see cref="TelegraphRequestException" /> class.
     /// </summary>
     /// <param name="message">The message that describes the error.</param>
-    public RequestException(string message)
+    public TelegraphRequestException(string message)
         : base(message)
     {
     }
 
     /// <summary>
-    ///     Initializes a new instance of the <see cref="RequestException" /> class.
+    ///     Initializes a new instance of the <see cref="TelegraphRequestException" /> class.
     /// </summary>
     /// <param name="message">
     ///     The error message that explains the reason for the exception.
@@ -27,13 +27,13 @@ public class RequestException : Exception
     ///     The exception that is the cause of the current exception, or a null reference
     ///     (Nothing in Visual Basic) if no inner exception is specified.
     /// </param>
-    public RequestException(string message, Exception innerException)
+    public TelegraphRequestException(string message, Exception innerException)
         : base(message, innerException)
     {
     }
 
     /// <summary>
-    ///     Initializes a new instance of the <see cref="RequestException" /> class.
+    ///     Initializes a new instance of the <see cref="TelegraphRequestException" /> class.
     /// </summary>
     /// <param name="message">
     ///     The error message that explains the reason for the exception.
@@ -41,12 +41,12 @@ public class RequestException : Exception
     /// <param name="httpStatusCode">
     ///     <see cref="HttpStatusCode" /> of the received response.
     /// </param>
-    public RequestException(string message, HttpStatusCode httpStatusCode)
+    public TelegraphRequestException(string message, HttpStatusCode httpStatusCode)
         : base(message) =>
         HttpStatusCode = httpStatusCode;
 
     /// <summary>
-    ///     Initializes a new instance of the <see cref="RequestException" /> class.
+    ///     Initializes a new instance of the <see cref="TelegraphRequestException" /> class.
     /// </summary>
     /// <param name="message">
     ///     The error message that explains the reason for the exception.
@@ -58,7 +58,7 @@ public class RequestException : Exception
     ///     The exception that is the cause of the current exception, or a null reference
     ///     (Nothing in Visual Basic) if no inner exception is specified.
     /// </param>
-    public RequestException(string message, HttpStatusCode httpStatusCode, Exception innerException)
+    public TelegraphRequestException(string message, HttpStatusCode httpStatusCode, Exception innerException)
         : base(message, innerException) =>
         HttpStatusCode = httpStatusCode;
 

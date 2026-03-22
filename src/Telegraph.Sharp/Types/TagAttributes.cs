@@ -7,8 +7,6 @@ namespace Telegraph.Sharp.Types;
 /// </summary>
 public class TagAttributes
 {
-    private readonly string? _src;
-
     /// <summary>
     ///     Link value.
     /// </summary>
@@ -21,11 +19,11 @@ public class TagAttributes
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public string? Src
     {
-        get => _src;
+        get;
         init
         {
             const string telegraphUrl = "https://telegra.ph";
-            _src = value is null ? null :
+            field = value is null ? null :
                 value.StartsWith(telegraphUrl) ? value.Substring(telegraphUrl.Length) : value;
         }
     }
