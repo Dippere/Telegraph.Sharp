@@ -55,7 +55,7 @@ public class NodeTests
         await Assert.That(node3.Tag).IsEqualTo(TagEnum.A);
         await Assert.That(node3.Children).IsNotNull();
         await Assert.That(node3.Children!.Count).IsEqualTo(2);
-        await Assert.That<Node>(node3.Children[0]).IsEqualTo(child1,SNodeComparer);
+        await Assert.That<Node>(node3.Children[0]).IsEqualTo(child1, SNodeComparer);
         await Assert.That<Node>(node3.Children[1]).IsEqualTo(child2, SNodeComparer);
         await Assert.That(node3.Attributes).IsNotNull();
         await Assert.That(node3.Attributes!.Href).IsEqualTo(url);

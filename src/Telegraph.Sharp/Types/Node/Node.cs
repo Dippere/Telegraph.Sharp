@@ -596,10 +596,12 @@ public partial class Node
         }
 
         KeyValuePair<string, string> resource = resources.FirstOrDefault(r => uri.Host.EndsWith(r.Key, StringComparison.OrdinalIgnoreCase));
-        return resource.Key == null ? throw new TelegraphException("Invalid link.") : CreateNode(TagEnum.Iframe, attributes: new TagAttributes
-        {
-            Src = $"/embed/{resource.Value}?url={src}"
-        });
+        return resource.Key == null
+            ? throw new TelegraphException("Invalid link.")
+            : CreateNode(TagEnum.Iframe, attributes: new TagAttributes
+            {
+                Src = $"/embed/{resource.Value}?url={src}"
+            });
     }
 
     #endregion

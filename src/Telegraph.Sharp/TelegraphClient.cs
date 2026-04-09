@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using System.Security.AccessControl;
 using System.Threading;
 using System.Threading.Tasks;
 using Telegraph.Sharp.Exceptions;
@@ -69,7 +68,7 @@ public sealed class TelegraphClient : ITelegraphClient
         }
 
         TelegraphApiResponse<TResponse> apiResponse = await httpResponse.DeserializeContentAsync<TelegraphApiResponse<TResponse>>().ConfigureAwait(false);
-        return apiResponse.Ok ?  apiResponse.Result! : throw new TelegraphRequestException(apiResponse.Error!);
+        return apiResponse.Ok ? apiResponse.Result! : throw new TelegraphRequestException(apiResponse.Error!);
     }
 
     private static async Task<HttpResponseMessage> SendRequestAsync(
