@@ -25,7 +25,7 @@ public sealed class TelegraphClient : ITelegraphClient
     /// <exception cref="ArgumentException">
     ///     Thrown if <paramref name="accessToken" /> format is invalid.
     /// </exception>
-    public TelegraphClient(string accessToken, HttpClient? httpClient = null) : this(httpClient) =>
+    public TelegraphClient(string accessToken, HttpClient httpClient) : this(httpClient) =>
         AccessToken = !string.IsNullOrEmpty(accessToken)
             ? accessToken
             : throw new ArgumentNullException(nameof(accessToken));
@@ -34,7 +34,7 @@ public sealed class TelegraphClient : ITelegraphClient
     ///     Create a new <see cref="TelegraphClient" /> instance.
     /// </summary>
     /// <param name="httpClient">A custom <see cref="HttpClient" />.</param>
-    public TelegraphClient(HttpClient? httpClient = null) => _httpClient = httpClient ?? new HttpClient();
+    public TelegraphClient(HttpClient httpClient) => _httpClient = httpClient;
 
     /// <inheritdoc />
     public string? AccessToken { get; init; }
@@ -55,7 +55,7 @@ public sealed class TelegraphClient : ITelegraphClient
             case null:
                 throw new ArgumentNullException(nameof(request));
             case IAccessTokenTarget when AccessToken == null:
-                throw new InvalidOperationException($"{nameof(AccessToken)} must be set.");
+                throw new TelegraphRequestException($"{nameof(AccessToken)} must be set.");
         }
 
         using HttpRequestMessage httpRequest = new(HttpMethod.Post, $"https://api.telegra.ph/{request.MethodName}");
