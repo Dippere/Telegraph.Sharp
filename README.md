@@ -12,8 +12,9 @@ Sample code to create a new page:
 using Telegraph.Sharp;
 using Telegraph.Sharp.Types;
 
+using HttpClient httpClient = new();
 // Create client
-ITelegraphClient telegraphClient = new TelegraphClient();
+ITelegraphClient telegraphClient = new TelegraphClient(httpClient);
 
 // Or with API access token for access to all methods
 ITelegraphClient telegraphClient = new TelegraphClient("<ACCESS TOKEN>");
